@@ -1,0 +1,391 @@
+/* ===== Global Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    direction: rtl;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #20b2aa;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0a192f;
+}
+
+/* ===== Header Styles ===== */
+#header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+}
+
+#header.at-top {
+    background: rgba(10, 25, 47, 0.75);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 2px 20px rgba(32, 178, 170, 0.2);
+}
+
+.nav-link {
+    color: #0a192f;
+}
+
+#header.at-top .nav-link {
+    color: white;
+}
+
+#header.at-top .nav-link:hover {
+    color: #64ffda;
+}
+
+#header-title {
+    color: #0a192f;
+}
+
+#header.at-top #header-title {
+    color: white;
+}
+
+#header-subtitle {
+    color: #6b7280;
+}
+
+#header.at-top #header-subtitle {
+    color: #d1d5db;
+}
+
+#mobile-menu-btn {
+    color: #0a192f;
+}
+
+#header.at-top #mobile-menu-btn {
+    color: white;
+}
+
+#header.at-top #header-cta {
+    background: rgba(100, 255, 218, 0.2);
+    border: 2px solid #64ffda;
+    color: white;
+}
+
+#header.at-top #header-cta:hover {
+    background: #64ffda;
+    color: #0a192f;
+}
+
+/* ===== Hero Section ===== */
+section#home {
+    position: relative;
+    padding-bottom: 150px;
+}
+
+section#home .animate-bounce {
+    z-index: 20;
+    filter: drop-shadow(0 0 10px rgba(100, 255, 218, 0.5));
+}
+
+/* ===== Filter Buttons ===== */
+.filter-btn {
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #0a192f;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: #20b2aa;
+    color: white;
+    box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+}
+
+/* ===== Product Cards ===== */
+.product-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #20b2aa;
+}
+
+/* ===== Catalog Cards ===== */
+.catalog-card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.catalog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.catalog-card img {
+    transition: transform 0.5s ease;
+}
+
+.catalog-card:hover img {
+    transform: scale(1.1);
+}
+
+/* ===== Portfolio Cards ===== */
+.portfolio-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.95), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    cursor: pointer;
+}
+
+.portfolio-card:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+/* ===== Price Table ===== */
+#full-price-table tbody tr,
+#price-preview-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#full-price-table tbody tr:hover,
+#price-preview-table tbody tr:hover {
+    background: #f0fdfa;
+    transform: scale(1.01);
+}
+
+/* ===== FAQ Accordion ===== */
+.faq-question i {
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding-top: 1rem;
+}
+
+/* ===== Modal Animations ===== */
+#consultation-modal {
+    animation: fadeIn 0.3s ease;
+}
+
+#consultation-modal > div {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===== Lightbox ===== */
+#lightbox {
+    animation: fadeIn 0.3s ease;
+}
+
+#lightbox img {
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== Pulse Animation ===== */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ===== Badge Styles ===== */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* ===== Image Thumbnail ===== */
+.image-thumbnail {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.image-thumbnail:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Line Clamp ===== */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===== Selection Color ===== */
+::selection {
+    background: #20b2aa;
+    color: white;
+}
+
+::-moz-selection {
+    background: #20b2aa;
+    color: white;
+}
+
+/* ===== Focus Styles ===== */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #20b2aa;
+    outline-offset: 2px;
+}
+
+/* ===== Custom Checkbox & Radio ===== */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: #20b2aa;
+}
+
+/* ===== Form Validation ===== */
+input:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: #10b981;
+}
+
+/* ===== Disabled State ===== */
+button:disabled,
+input:disabled,
+select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    #full-price-table {
+        font-size: 0.875rem;
+    }
+
+    #full-price-table th,
+    #full-price-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .portfolio-overlay {
+        opacity: 1;
+    }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    header,
+    footer,
+    #scroll-top,
+    .filter-btn {
+        display: none !important;
+    }
+
+    #full-price-table {
+        page-break-inside: avoid;
+    }
+}

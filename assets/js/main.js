@@ -1,7 +1,6 @@
 // ===== Initialize AOS Animations =====
 AOS.init({
     once: true,
-    disableMutationObserver: true
 });
 
 // ===== Header Scroll Effect =====

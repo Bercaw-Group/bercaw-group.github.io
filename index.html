@@ -39,53 +39,53 @@
 <body class="font-vazir bg-gray-50 overflow-x-hidden">
 
     <!-- Header -->
-    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white shadow-lg">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="assets/images/logo.png" alt="بَرچاو" class="h-12 w-auto" id="header-logo">
-                <div class="hidden md:block">
-                    <h1 class="text-xl font-bold transition-colors duration-300" id="header-title">به‌رچاو</h1>
-                    <p class="text-xs transition-colors duration-300" id="header-subtitle">راهکارهای هوشمند ساختمان</p>
-                </div>
+    <header id="header" class="fixed inset-x-0 top-0 w-full max-w-full z-50 bg-white shadow-lg transition-colors duration-300">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center w-full">
+        <div class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="بَرچاو" class="h-12 w-auto" id="header-logo">
+            <div class="hidden md:block">
+                <h1 class="text-xl font-bold transition-colors duration-300" id="header-title">به‌رچاو</h1>
+                <p class="text-xs transition-colors duration-300" id="header-subtitle">راهکارهای هوشمند ساختمان</p>
             </div>
-
-            <ul class="hidden lg:flex gap-8 font-medium" id="desktop-menu">
-                <li><a href="#home" class="nav-link transition-colors duration-300">خانه</a></li>
-                <li><a href="#about" class="nav-link transition-colors duration-300">درباره ما</a></li>
-                <li><a href="products.html" class="nav-link transition-colors duration-300">محصولات</a></li>
-                <li><a href="#catalogs" class="nav-link transition-colors duration-300">کاتالوگ‌ها</a></li>
-                <li><a href="#portfolio" class="nav-link transition-colors duration-300">نمونه کارها</a></li>
-                <li><a href="prices.html" class="nav-link transition-colors duration-300">لیست قیمت</a></li>
-                <li><a href="#contact" class="nav-link transition-colors duration-300">تماس با ما</a></li>
-            </ul>
-
-            <button onclick="openConsultationModal()" id="header-cta" class="hidden lg:block bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-teal-light transition shadow-lg hover:shadow-xl">
-                <i class="fas fa-comments ml-2"></i>
-                درخواست مشاوره رایگان
-            </button>
-
-            <button id="mobile-menu-btn" class="lg:hidden text-2xl transition-colors duration-300">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-
-        <div id="mobile-menu" class="lg:hidden hidden bg-white shadow-lg">
-            <ul class="flex flex-col gap-4 p-6 font-medium">
-                <li><a href="#home" class="block text-navy hover:text-teal">خانه</a></li>
-                <li><a href="#about" class="block text-navy hover:text-teal">درباره ما</a></li>
-                <li><a href="products.html" class="block text-navy hover:text-teal">محصولات</a></li>
-                <li><a href="#catalogs" class="block text-navy hover:text-teal">کاتالوگ‌ها</a></li>
-                <li><a href="#portfolio" class="block text-navy hover:text-teal">نمونه کارها</a></li>
-                <li><a href="prices.html" class="block text-navy hover:text-teal">لیست قیمت</a></li>
-                <li><a href="#contact" class="block text-navy hover:text-teal">تماس با ما</a></li>
-                <li>
-                    <button onclick="openConsultationModal()" class="w-full bg-teal text-white px-6 py-2.5 rounded-lg">
-                        درخواست مشاوره رایگان
-                    </button>
-                </li>
-            </ul>
         </div>
-    </header>
+
+        <ul class="hidden lg:flex gap-8 font-medium" id="desktop-menu">
+            <li><a href="#home" class="nav-link transition-colors duration-300">خانه</a></li>
+            <li><a href="#about" class="nav-link transition-colors duration-300">درباره ما</a></li>
+            <li><a href="products.html" class="nav-link transition-colors duration-300">محصولات</a></li>
+            <li><a href="#catalogs" class="nav-link transition-colors duration-300">کاتالوگ‌ها</a></li>
+            <li><a href="#portfolio" class="nav-link transition-colors duration-300">نمونه کارها</a></li>
+            <li><a href="prices.html" class="nav-link transition-colors duration-300">لیست قیمت</a></li>
+            <li><a href="#contact" class="nav-link transition-colors duration-300">تماس با ما</a></li>
+        </ul>
+
+        <button onclick="openConsultationModal()" id="header-cta" class="hidden lg:block bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-teal-light transition shadow-lg hover:shadow-xl">
+            <i class="fas fa-comments ml-2"></i>
+            درخواست مشاوره رایگان
+        </button>
+
+        <button id="mobile-menu-btn" class="lg:hidden text-2xl transition-colors duration-300">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <div id="mobile-menu" class="lg:hidden hidden bg-white shadow-lg w-full">
+        <ul class="flex flex-col gap-4 p-6 font-medium">
+            <li><a href="#home" class="block text-navy hover:text-teal">خانه</a></li>
+            <li><a href="#about" class="block text-navy hover:text-teal">درباره ما</a></li>
+            <li><a href="products.html" class="block text-navy hover:text-teal">محصولات</a></li>
+            <li><a href="#catalogs" class="block text-navy hover:text-teal">کاتالوگ‌ها</a></li>
+            <li><a href="#portfolio" class="block text-navy hover:text-teal">نمونه کارها</a></li>
+            <li><a href="prices.html" class="block text-navy hover:text-teal">لیست قیمت</a></li>
+            <li><a href="#contact" class="block text-navy hover:text-teal">تماس با ما</a></li>
+            <li>
+                <button onclick="openConsultationModal()" class="w-full bg-teal text-white px-6 py-2.5 rounded-lg">
+                    درخواست مشاوره رایگان
+                </button>
+            </li>
+        </ul>
+    </div>
+</header>
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="padding-bottom: 120px;">

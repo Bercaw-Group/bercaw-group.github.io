@@ -1,9 +1,7 @@
 // ===== Initialize AOS Animations =====
 AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
     once: true,
-    offset: 100
+    disableMutationObserver: true
 });
 
 // ===== Header Scroll Effect =====

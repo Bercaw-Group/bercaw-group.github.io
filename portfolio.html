@@ -97,25 +97,12 @@
         </div>
 
         <!-- کانتینر اصلی نمایش محتوا (جدول یا کارت‌ها) -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden" id="portfolio-container" style="display: none;">
-            <div class="overflow-x-auto">
-                <table class="w-full" id="full-portfolio-table">
-                    <thead class="bg-navy text-white sticky top-0">
-                        <tr>
-                            <th class="px-4 py-4 text-right">ردیف</th>
-                            <th class="px-4 py-4 text-right">تصویر</th>
-                            <th class="px-4 py-4 text-right">عنوان پروژه</th>
-                            <th class="px-4 py-4 text-right">دسته‌بندی</th>
-                            <th class="px-4 py-4 text-right">توضیحات</th>
-                            <th class="px-4 py-4 text-right">مشاهده</th>
-                        </tr>
-                    </thead>
-                    <tbody id="full-portfolio-body">
-                        <!-- محتوا توسط JS بارگذاری می‌شود -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!-- کانتینر اصلی نمایش شبکه کارت‌های نمونه‌کار -->
+<div id="portfolio-container" style="display: none;">
+    <div id="full-portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- کارت‌های نمونه‌کار توسط جاوااسکریپت اینجا ساخته می‌شوند -->
+    </div>
+</div>
 
         <!-- وضعیت خالی بودن جستجو -->
         <div id="empty-state" class="hidden text-center py-20">
@@ -139,34 +126,68 @@
         </div>
     </footer>
 
-    <!-- Lightbox برای نمایش تصاویر -->
-    <div id="lightbox-portfolio" class="fixed inset-0 bg-black/90 z-[110] hidden items-center justify-center p-4">
-        <button onclick="closeLightboxPortfolio()" class="absolute top-4 left-4 text-white text-3xl hover:text-teal transition">
-            <i class="fas fa-times"></i>
-        </button>
-        <img id="lightbox-img-portfolio" src="" alt="" class="max-w-full max-h-[90vh] rounded-lg">
+    <!-- پاپ‌آوری دو بخشی جزئیات پروژه (تصویر تمام‌صفحه و بدون حاشیه) -->
+    <div id="project-modal" class="fixed inset-0 bg-black/80 z-[110] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <!-- کادر اصلی پاپ‌آپ (overflow-hidden باعث حفظ پخ گوشه‌ها می‌شود) -->
+        <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative flex flex-col md:flex-row max-h-[90vh] dir-rtl">
+            
+            <!-- دکمه بستن -->
+            <button onclick="closeProjectModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 text-2xl transition z-30 bg-white/80 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center shadow">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- سمت راست: اسلایدر عکس‌ها (پوشش ۱۰۰٪ محدوده بدون حاشیه) -->
+            <div class="w-full md:w-1/2 bg-gray-100 relative min-h-[350px] md:min-h-[520px] overflow-hidden">
+                <img id="modal-img" src="" alt="" class="w-full h-full object-cover absolute inset-0">
+
+                <!-- دکمه قبلی (راست) -->
+                <button id="modal-prev-btn" onclick="changeModalImg(-1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- دکمه بعدی (چپ) -->
+                <button id="modal-next-btn" onclick="changeModalImg(1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <!-- شمارنده عکس -->
+                <div id="modal-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs px-3 py-1 rounded-full dir-ltr z-20 font-sans">
+                    1 / 1
+                </div>
+            </div>
+
+            <!-- سمت چپ: مشخصات و اطلاعات پروژه -->
+            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <!-- دسته‌بندی و شهر -->
+                    <div class="flex flex-wrap items-center gap-2 mb-4">
+                        <span id="modal-category" class="bg-teal/10 text-teal px-3.5 py-1 rounded-full text-xs font-semibold"></span>
+                        <span id="modal-city" class="text-xs text-gray-500 flex items-center"></span>
+                    </div>
+
+                    <!-- عنوان پروژه -->
+                    <h2 id="modal-title" class="text-2xl font-bold text-navy mb-4 leading-snug"></h2>
+
+                    <!-- توضیحات -->
+                    <div class="border-t border-gray-100 pt-4 mb-4">
+                        <h4 class="text-sm font-bold text-gray-700 mb-2 flex items-center">
+                            <i class="fas fa-info-circle text-teal ml-2"></i>توضیحات پروژه:
+                        </h4>
+                        <p id="modal-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 mt-auto">
+                    <button onclick="closeProjectModal()" class="w-full bg-navy hover:bg-teal text-white py-3 rounded-xl transition font-medium">
+                        بستن صفحه
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <script>
-        function closeLightboxPortfolio() {
-            document.getElementById('lightbox-portfolio').classList.add('hidden');
-            document.getElementById('lightbox-portfolio').classList.remove('flex');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openLightbox(src) {
-            document.getElementById('lightbox-img-portfolio').src = src;
-            document.getElementById('lightbox-portfolio').classList.remove('hidden');
-            document.getElementById('lightbox-portfolio').classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        }
-
-        document.getElementById('lightbox-portfolio')?.addEventListener('click', (e) => {
-            if (e.target === document.getElementById('lightbox-portfolio')) closeLightboxPortfolio();
-        });
-    </script>
-
-    <!-- اتصال به اسکریپت اختصاصی پورتفولیو -->
+<!-- فراخوانی اسکریپت نمونه‌کارها -->
     <script src="assets/js/portfolio.js"></script>
+
 </body>
 </html>

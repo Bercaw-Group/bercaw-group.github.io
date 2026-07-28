@@ -432,7 +432,7 @@
                 <p class="text-gray-600 mt-4">در حال بارگذاری محصولات...</p>
             </div>
 
-            <div id="products-preview-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div id="products-categories-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             </div>
 
             <div class="text-center">
@@ -472,26 +472,42 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">نمونه کارهای اجرایی</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-12"></div>
+<section id="portfolio" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
 
-            <div class="flex flex-wrap justify-center gap-3 mb-12" id="portfolio-filters">
-                <button class="filter-btn active px-6 py-2 rounded-full bg-teal text-white font-medium transition" data-category="all">
-                    همه
-                </button>
-            </div>
+        <!-- Title -->
+        <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">
+            نمونه کارهای اجرایی
+        </h2>
 
-            <div id="portfolio-loading" class="text-center py-12">
-                <i class="fas fa-spinner fa-spin text-5xl text-teal"></i>
-                <p class="text-gray-600 mt-4">در حال بارگذاری نمونه کارها...</p>
-            </div>
+        <div class="w-24 h-1 bg-teal mx-auto mb-6"></div>
 
-            <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
+        <p class="text-center text-gray-600 mb-12" data-aos="fade-up" data-aos-delay="100">
+            بخشی از پروژه‌های اجرا شده توسط تیم بهرچاو
+        </p>
+
+        <!-- Loading -->
+        <div id="portfolio-loading" class="text-center py-12">
+            <i class="fas fa-spinner fa-spin text-5xl text-teal"></i>
+            <p class="text-gray-600 mt-4">در حال بارگذاری نمونه کارها...</p>
         </div>
-    </section>
+
+        <!-- Grid (فقط 3 مورد توسط JS پر می‌شود) -->
+        <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="portfolio.html"
+               class="inline-block bg-teal text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-navy transition shadow-xl hover:shadow-2xl hover:scale-105 transform">
+                <i class="fas fa-images ml-2"></i>
+                مشاهده تمام نمونه کارها
+                <i class="fas fa-arrow-left mr-2"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-20 bg-navy text-white">

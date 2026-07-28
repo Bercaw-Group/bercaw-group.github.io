@@ -155,5 +155,57 @@
     </script>
     
     <script src="assets/js/full-products.js"></script>
+
+    <!-- Product Detail Modal -->
+<div id="product-modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[200] p-4">
+
+  <div id="product-modal-content"
+       class="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative p-6">
+
+    <!-- Close Button -->
+    <button onclick="closeProductModal()"
+            class="absolute top-4 left-4 text-2xl text-gray-600 hover:text-red-500 transition">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+
+      <!-- Image -->
+      <div>
+        <img id="modal-product-image"
+             src=""
+             class="w-full rounded-xl shadow-lg object-cover max-h-[400px]">
+      </div>
+
+      <!-- Details -->
+      <div>
+        <h2 id="modal-product-title"
+            class="text-3xl font-bold text-navy mb-4"></h2>
+
+        <p id="modal-product-brand"
+           class="text-gray-600 mb-2"></p>
+
+        <p id="modal-product-unit"
+           class="text-gray-600 mb-2"></p>
+
+        <p id="modal-product-price"
+           class="text-2xl font-bold text-teal mb-4"></p>
+
+        <p id="modal-product-status"
+           class="mb-4"></p>
+
+        <div>
+          <h3 class="font-semibold text-lg mb-2">توضیحات محصول</h3>
+          <p id="modal-product-description"
+             class="text-gray-700 leading-relaxed"></p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>

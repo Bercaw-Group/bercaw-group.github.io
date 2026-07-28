@@ -6,6 +6,11 @@ let allProducts = [];
 let filteredProducts = [];
 let currentCategory = 'all';
 
+function getCategoryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category');
+}
+
 function parseCSV(csvText) {
     const lines = csvText.split(/\r?\n/).filter(line => line.trim().length > 0);
     if (lines.length < 2) return [];
@@ -61,9 +66,14 @@ function formatPrice(price) {
 }
 
 function getStatusClass(status) {
+
     if (!status) return 'info';
-    if (status.includes('موجود')) return 'success';
-    if (status.includes('ناموجود')) return 'warning';
+
+    const trimmedStatus = status.trim();
+
+    if (trimmedStatus === 'موجود') return 'success';
+    if (trimmedStatus === 'ناموجود') return 'warning';
+
     return 'info';
 }
 
@@ -168,29 +178,43 @@ function renderProducts(products) {
     if (emptyState) emptyState.classList.add('hidden');
     
     products.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'product-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2';
-        
-        const imageHtml = p.ImageLink && p.ImageLink.trim()
-            ? `<img src="${p.ImageLink}" alt="${p.Title}" class="w-full h-48 object-cover cursor-pointer" onclick="openLightbox('${p.ImageLink}')">`
-            : `<div class="w-full h-48 bg-gradient-to-br from-teal/10 to-navy/10 flex items-center justify-center"><i class="fas fa-box text-5xl text-gray-300"></i></div>`;
-        
-        card.innerHTML = `
-            ${imageHtml}
-            <div class="p-5">
-                ${p.Category ? `<span class="bg-teal/10 text-teal px-3 py-1 rounded-full text-xs font-semibold mb-3 inline-block">${p.Category}</span>` : ''}
-                <h3 class="text-lg font-bold text-navy mb-2 line-clamp-2 min-h-[3.5rem]">${p.Title || 'محصول'}</h3>
-                ${p.Brand ? `<p class="text-gray-600 text-sm mb-3"><i class="fas fa-tag ml-1 text-teal"></i>${p.Brand}</p>` : ''}
-                <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
-                    <span class="text-xl font-bold text-teal">${formatPrice(p.Price)} <span class="text-xs">تومان</span></span>
-                    ${p.Unit ? `<span class="text-gray-500 text-xs bg-gray-100 px-2 py-1 rounded">${p.Unit}</span>` : ''}
-                </div>
-                ${p.Status ? `<div><span class="badge badge-${getStatusClass(p.Status)} text-xs">${p.Status}</span></div>` : ''}
+
+    const card = document.createElement('div');
+    card.className = 'product-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer';
+
+    const imageHtml = p.ImageLink && p.ImageLink.trim()
+        ? `<img src="${p.ImageLink}" alt="${p.Title}" class="w-full h-48 object-cover">`
+        : `<div class="w-full h-48 bg-gradient-to-br from-teal/10 to-navy/10 flex items-center justify-center">
+               <i class="fas fa-box text-5xl text-gray-300"></i>
+           </div>`;
+
+    card.innerHTML = `
+        ${imageHtml}
+        <div class="p-5">
+            ${p.Category ? `<span class="bg-teal/10 text-teal px-3 py-1 rounded-full text-xs font-semibold mb-3 inline-block">${p.Category}</span>` : ''}
+            <h3 class="text-lg font-bold text-navy mb-2 line-clamp-2 min-h-[3.5rem]">${p.Title || 'محصول'}</h3>
+            ${p.Brand ? `<p class="text-gray-600 text-sm mb-3"><i class="fas fa-tag ml-1 text-teal"></i>${p.Brand}</p>` : ''}
+            <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
+                <span class="text-xl font-bold text-teal">
+    ${
+        !isNaN(p.Price) && p.Price.trim() !== ''
+            ? `${formatPrice(p.Price)} <span class="text-xs">تومان</span>`
+            : p.Price
+    }
+</span>
+                ${p.Unit ? `<span class="text-gray-500 text-xs bg-gray-100 px-2 py-1 rounded">${p.Unit}</span>` : ''}
             </div>
-        `;
-        
-        grid.appendChild(card);
+            ${p.Status ? `<div><span class="badge badge-${getStatusClass(p.Status)} text-xs">${p.Status}</span></div>` : ''}
+        </div>
+    `;
+
+    // ✅ این خط مهم است
+    card.addEventListener('click', () => {
+        openProductModal(p);
     });
+
+    grid.appendChild(card);
+});
 }
 
 function showEmptyState() {
@@ -224,6 +248,77 @@ function closeLightbox() {
     }
 }
 
+// ===== Open Product Modal =====
+function openProductModal(product) {
+
+    const modal = document.getElementById('product-modal');
+    const modalContent = document.getElementById('product-modal-content');
+
+    document.getElementById('modal-product-image').src =
+        product.ImageLink && product.ImageLink.trim()
+            ? product.ImageLink
+            : 'assets/images/placeholder.jpg';
+
+    document.getElementById('modal-product-title').textContent =
+        product.Title || 'بدون عنوان';
+
+    document.getElementById('modal-product-brand').textContent =
+        product.Brand ? `برند: ${product.Brand}` : '';
+
+    document.getElementById('modal-product-unit').textContent =
+        product.Unit ? `واحد: ${product.Unit}` : '';
+
+    const numericPrice = Number(product.Price?.toString().replace(/,/g, ''));
+
+if (!isNaN(numericPrice) && numericPrice > 0) {
+    document.getElementById('modal-product-price').innerHTML =
+        `${formatPrice(numericPrice)} <span class="text-sm">تومان</span>`;
+} else {
+    document.getElementById('modal-product-price').textContent =
+        product.Price || '';
+}
+    document.getElementById('modal-product-status').innerHTML =
+        product.Status
+            ? `<span class="badge badge-${getStatusClass(product.Status)}">${product.Status}</span>`
+            : '';
+
+    document.getElementById('modal-product-description').textContent =
+        product.Description || 'توضیحاتی ثبت نشده است.';
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+
+// ===== Close Product Modal =====
+function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+
+// ===== Close on Outside Click =====
+const productModal = document.getElementById('product-modal');
+
+if (productModal) {
+    productModal.addEventListener('click', (e) => {
+        if (e.target.id === 'product-modal') {
+            closeProductModal();
+        }
+    });
+}
+
+
+// ===== Close on ESC =====
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeProductModal();
+    }
+});
+
 const lightbox = document.getElementById('lightbox');
 if (lightbox) {
     lightbox.addEventListener('click', (e) => {
@@ -236,16 +331,57 @@ document.addEventListener('keydown', (e) => {
 });
 
 const allFilterBtn = document.querySelector('[data-category="all"]');
+
 if (allFilterBtn) {
     allFilterBtn.addEventListener('click', () => {
         currentCategory = 'all';
+
+        // ریست جستجو
         const search = document.getElementById('product-search');
         if (search) search.value = '';
+
         filterProducts();
+
+        // ریست ظاهر همه دکمه‌ها
+        document.querySelectorAll('#category-filters .filter-btn').forEach(btn => {
+            btn.classList.remove('active', 'bg-teal', 'text-white');
+            btn.classList.add('bg-gray-200', 'text-navy');
+        });
+
+        // فعال کردن دکمه همه محصولات
+        allFilterBtn.classList.add('active', 'bg-teal', 'text-white');
+        allFilterBtn.classList.remove('bg-gray-200', 'text-navy');
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing products page...');
-    fetchProducts();
+
+    await fetchProducts();
+
+    const params = new URLSearchParams(window.location.search);
+    const categoryFromURL = params.get('category');
+
+    console.log("URL category:", categoryFromURL);
+
+   if (categoryFromURL) {
+    currentCategory = categoryFromURL;
+    filterProducts();
+
+    const allButtons = document.querySelectorAll('#category-filters .filter-btn');
+
+    // ریست همه دکمه‌ها
+    allButtons.forEach(btn => {
+        btn.classList.remove('active', 'bg-teal', 'text-white');
+        btn.classList.add('bg-gray-200', 'text-navy');
+    });
+
+    // فعال کردن فقط دکمه مربوط به URL
+    allButtons.forEach(btn => {
+        if (btn.textContent.trim() === categoryFromURL) {
+            btn.classList.add('active', 'bg-teal', 'text-white');
+            btn.classList.remove('bg-gray-200', 'text-navy');
+        }
+    });
+}
 });

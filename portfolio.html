@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمونه کارها - بهرچاو</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="bg-gray-50 font-vazir">
+
+<header class="bg-white shadow p-4 text-center text-xl font-bold text-navy">
+    تمام نمونه کارها
+</header>
+
+<main class="container mx-auto px-4 py-12">
+
+    <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+</main>
+
+<!-- Modal -->
+<div id="portfolio-modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[200] p-4">
+    <div id="portfolio-modal-content"
+         class="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative p-6">
+
+        <button onclick="closePortfolioModal()"
+                class="absolute top-4 left-4 text-2xl text-gray-600 hover:text-red-500">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <h2 id="modal-title" class="text-3xl font-bold mb-4 text-navy"></h2>
+        <p id="modal-location" class="text-gray-500 mb-6"></p>
+
+        <!-- Image Slider -->
+        <div class="relative">
+            <div id="modal-images" class="flex overflow-x-auto gap-4 scroll-smooth"></div>
+        </div>
+
+        <div class="mt-6">
+            <h3 class="font-bold mb-2">توضیحات پروژه</h3>
+            <p id="modal-description" class="text-gray-700 leading-relaxed"></p>
+        </div>
+
+    </div>
+</div>
+
+<script src="assets/js/portfolio.js"></script>
+
+</body>
+</html>

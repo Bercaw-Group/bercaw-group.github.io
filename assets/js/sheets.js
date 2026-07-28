@@ -95,7 +95,7 @@ async function fetchProducts() {
     console.log('📦 fetchProducts started');
     
     const loading = document.getElementById('products-loading');
-    const grid = document.getElementById('products-preview-grid');
+    const grid = document.getElementById('products-categories-grid');
     
     if (!grid) {
         console.error('❌ Grid element not found');
@@ -137,7 +137,7 @@ async function fetchProducts() {
         const count = document.getElementById('total-products-count');
         if (count) count.textContent = productsData.length;
         
-        renderProducts(productsData.slice(0, 6));
+        renderCategories(productsData);
         
     } catch (error) {
         console.error('❌ Error:', error);
@@ -427,6 +427,46 @@ function closePortfolioModal() {
         modal.remove();
         document.body.style.overflow = 'auto';
     }
+}
+
+function renderCategories(products) {
+  const grid = document.getElementById('products-categories-grid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+
+  // گرفتن دسته‌بندی‌های یکتا
+  const categories = [...new Set(
+    products
+      .map(p => p.Category)
+      .filter(c => c && c.trim() !== '')
+  )];
+
+  categories.forEach(category => {
+    const card = document.createElement('div');
+    card.className = `
+      bg-white rounded-2xl shadow-lg p-8 text-center cursor-pointer
+      hover:shadow-2xl transition-all duration-300 hover:-translate-y-2
+      border-2 border-transparent hover:border-teal
+    `;
+    
+    card.innerHTML = `
+      <div class="w-16 h-16 bg-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-layer-group text-2xl text-teal"></i>
+      </div>
+      <h3 class="text-xl font-bold text-navy">${category}</h3>
+    `;
+
+    card.addEventListener('click', () => {
+      window.location.href = `products.html?category=${encodeURIComponent(category)}`;
+    });
+
+    grid.appendChild(card);
+  });
+
+  if (typeof AOS !== 'undefined') {
+    AOS.refresh();
+  }
 }
 
 // ===== Initialize =====

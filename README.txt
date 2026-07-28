@@ -27,3 +27,12 @@ cd bercaw
 
 py -3.14 -m http.server 8000
 http://localhost:8000
+
+git status
+git add .
+git commit -m "Fix AOS issue on homepage"
+git push origin main
+
+git add .
+git commit -m "update"
+git push

@@ -353,6 +353,26 @@ function renderPortfolioFilters() {
     });
 }
 
+// ===== تابع کمکی جهت دریافت هوشمند لینک عکس =====
+function getSampleImage(s) {
+    // ۱. بررسی نام‌های متداول ستون عکس
+    if (s.Image && s.Image.trim()) return s.Image.trim();
+    if (s['Image 1'] && s['Image 1'].trim()) return s['Image 1'].trim();
+    if (s.Image1 && s.Image1.trim()) return s.Image1.trim();
+    if (s.ImageLink && s.ImageLink.trim()) return s.ImageLink.trim();
+    
+    // ۲. پشتیبانی از ترتیب ستون‌ها (اگر نام هدر متفاوت باشد)
+    const keys = Object.keys(s);
+    for (let i = 3; i <= 7; i++) {
+        if (keys[i] && s[keys[i]] && s[keys[i]].trim()) {
+            return s[keys[i]].trim();
+        }
+    }
+    
+    return 'assets/images/logo.png';
+}
+
+// ===== Render Portfolio Cards =====
 function renderPortfolio(samples) {
     const grid = document.getElementById('portfolio-grid');
     if (!grid) return;
@@ -364,29 +384,45 @@ function renderPortfolio(samples) {
         return;
     }
     
-    samples.forEach(s => {
+    samples.forEach((s) => {
         const card = document.createElement('div');
-        card.className = 'portfolio-card group cursor-pointer';
-        card.setAttribute('data-aos', 'zoom-in');
+        card.className = 'bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition duration-300 flex flex-col group cursor-pointer';
+        card.setAttribute('data-aos', 'fade-up');
         
-        const imageHtml = s.Image && s.Image.trim()
-            ? `<img src="${s.Image}" alt="${s.Title}" class="w-full h-64 object-cover">`
-            : `<div class="w-full h-64 bg-gradient-to-br from-teal/20 to-navy/20 flex items-center justify-center">
-                <i class="fas fa-building text-6xl text-gray-300"></i>
-               </div>`;
+        // دریافت هوشمند آدرس تصویر، موقعیت و توضیحات
+        const imageSrc = getSampleImage(s);
+        const keys = Object.keys(s);
+        const location = s.Location || s.City || s.city || (keys[8] ? s[keys[8]] : '');
+        const description = s.Description || (keys[9] ? s[keys[9]] : '');
         
+        // بخش تصویر بالای کارت با ارتفاع h-96 (هم‌اندازه با صفحه portfolio)
+        const imageHtml = `
+            <div class="relative h-96 bg-gray-100 overflow-hidden select-none">
+                <img src="${imageSrc}" alt="${s.Title || 'نمونه کار'}" 
+                     class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+                     onerror="this.src='assets/images/logo.png'; this.classList.add('p-8','object-contain');">
+            </div>
+        `;
+        
+        // بخش اطلاعات زیر تصویر
         card.innerHTML = `
             ${imageHtml}
-            <div class="portfolio-overlay">
-                ${s.Category ? `<span class="inline-block bg-teal px-4 py-2 rounded-full text-sm font-semibold mb-3">${s.Category}</span>` : ''}
-                <h3 class="text-2xl font-bold text-white mb-2">${s.Title || 'بدون عنوان'}</h3>
-                ${s.Location ? `<p class="text-gray-200 mb-2 text-lg"><i class="fas fa-map-marker-alt ml-2"></i>${s.Location}</p>` : ''}
-                ${s.Description ? `<p class="text-gray-300 text-sm line-clamp-2">${s.Description}</p>` : ''}
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    ${s.Category ? `<span class="bg-teal/10 text-teal px-3 py-1 rounded-full text-xs font-semibold">${s.Category}</span>` : ''}
+                    ${location ? `
+                        <span class="text-xs text-gray-500 flex items-center">
+                            <i class="fas fa-map-marker-alt text-teal ml-1"></i>${location}
+                        </span>
+                    ` : ''}
+                </div>
+
+                <h3 class="text-xl font-bold text-navy mb-2 group-hover:text-teal transition">${s.Title || 'بدون عنوان'}</h3>
+                <p class="text-gray-600 text-sm line-clamp-2 leading-relaxed mt-1">${description || 'برای مشاهده جزئیات کلیک کنید'}</p>
             </div>
         `;
         
         card.addEventListener('click', () => openPortfolioModal(s));
-        
         grid.appendChild(card);
     });
 }

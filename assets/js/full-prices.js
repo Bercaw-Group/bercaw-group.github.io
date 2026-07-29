@@ -62,8 +62,9 @@ function formatPrice(price) {
 
 function getStatusClass(status) {
     if (!status) return 'info';
-    if (status.includes('موجود')) return 'success';
-    if (status.includes('ناموجود')) return 'warning';
+    const trimmedStatus = status.trim();
+    if (trimmedStatus === 'موجود') return 'success';
+    if (trimmedStatus === 'ناموجود') return 'warning';
     return 'info';
 }
 
@@ -108,23 +109,43 @@ async function fetchProducts() {
 }
 
 function renderCategoryFilters() {
-    const categories = [...new Set(allProducts.map(p => p.Category).filter(c => c && c.trim()))];
     const container = document.getElementById('category-filters');
-    
     if (!container) return;
     
+    container.innerHTML = ''; // پاک‌سازی محتوای قبلی
+
+    // افزودن گزینه 'all' در کنار سایر دسته‌بندی‌ها
+    const uniqueCategories = [...new Set(allProducts.map(p => p.Category).filter(c => c && c.trim()))];
+    const categories = ['all', ...uniqueCategories];
+    
     categories.forEach(cat => {
+        const isAll = cat === 'all';
+        const label = isAll ? 'همه محصولات' : cat;
+        const icon = isAll ? 'fa-th' : 'fa-tag';
+        const isSelected = currentCategory === cat;
+
         const btn = document.createElement('button');
-        btn.className = 'filter-btn px-6 py-2.5 rounded-full bg-gray-200 text-navy font-medium transition hover:bg-teal hover:text-white';
-        btn.innerHTML = `<i class="fas fa-tag ml-2"></i>${cat}`;
+        btn.className = `filter-btn px-6 py-2.5 rounded-full font-medium transition duration-200 ${
+            isSelected 
+                ? 'active bg-teal text-white' 
+                : 'bg-gray-200 text-navy hover:bg-teal hover:text-white'
+        }`;
+        btn.setAttribute('data-category', cat);
+        btn.innerHTML = `<i class="fas ${icon} ml-2"></i>${label}`;
         
         btn.addEventListener('click', () => {
             currentCategory = cat;
+            
+            // ۱. پاک کردن استایل فعال از تمامی دکمه‌ها
             document.querySelectorAll('#category-filters .filter-btn').forEach(b => {
                 b.classList.remove('active', 'bg-teal', 'text-white');
                 b.classList.add('bg-gray-200', 'text-navy');
             });
+            
+            // ۲. اعمال رنگ سبز تنها روی دکمه کلیک‌شده
             btn.classList.add('active', 'bg-teal', 'text-white');
+            btn.classList.remove('bg-gray-200', 'text-navy');
+            
             filterProducts();
         });
         
@@ -133,7 +154,8 @@ function renderCategoryFilters() {
 }
 
 function filterProducts() {
-    const searchQuery = document.getElementById('price-search').value.toLowerCase().trim();
+    const searchInput = document.getElementById('price-search');
+    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
     
     filteredProducts = allProducts.filter(p => {
         const matchesCategory = currentCategory === 'all' || p.Category === currentCategory;
@@ -181,6 +203,15 @@ function renderPriceTable(products) {
             ? `<td class="px-4 py-4"><img src="${p.ImageLink}" alt="${p.Title}" class="w-16 h-16 object-cover rounded-lg cursor-pointer hover:scale-110 transition" onclick="openLightbox('${p.ImageLink}')"></td>`
             : `<td class="px-4 py-4"><div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center"><i class="fas fa-image text-gray-400"></i></div></td>`;
         
+        // بررسی عددی بودن قیمت
+        const rawPrice = p.Price ? p.Price.toString().replace(/,/g, '').trim() : '';
+        const isNumeric = rawPrice !== '' && !isNaN(rawPrice);
+
+        // تعیین نحوه نمایش قیمت
+        const priceDisplay = isNumeric 
+            ? `${formatPrice(p.Price)} <span class="text-sm font-normal">تومان</span>` 
+            : (p.Price || 'تماس بگیرید');
+
         row.innerHTML = `
             <td class="px-4 py-4 font-bold text-gray-500">${index + 1}</td>
             ${imageCell}
@@ -188,7 +219,7 @@ function renderPriceTable(products) {
             <td class="px-4 py-4 font-semibold text-navy">${p.Title || '-'}</td>
             <td class="px-4 py-4 text-gray-600">${p.Brand || '-'}</td>
             <td class="px-4 py-4 text-gray-600">${p.Unit || '-'}</td>
-            <td class="px-4 py-4 font-bold text-teal text-lg">${formatPrice(p.Price)} <span class="text-sm">تومان</span></td>
+            <td class="px-4 py-4 font-bold text-teal text-lg">${priceDisplay}</td>
             <td class="px-4 py-4">${p.Status ? `<span class="badge badge-${getStatusClass(p.Status)}">${p.Status}</span>` : '-'}</td>
         `;
         
@@ -237,16 +268,6 @@ if (lightbox) {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
 });
-
-const allFilterBtn = document.querySelector('[data-category="all"]');
-if (allFilterBtn) {
-    allFilterBtn.addEventListener('click', () => {
-        currentCategory = 'all';
-        const search = document.getElementById('price-search');
-        if (search) search.value = '';
-        filterProducts();
-    });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Initializing prices page...');

@@ -800,5 +800,44 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/sheets.js"></script>
     <script src="assets/js/form.js"></script>
+    <!-- پاپ‌آور دو بخشی جزئیات پروژه (مطابق portfolio.html) -->
+<div id="project-modal" class="fixed inset-0 bg-black/80 z-[110] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative flex flex-col md:flex-row max-h-[90vh] dir-rtl">
+        
+        <!-- دکمه بستن -->
+        <button onclick="closeProjectModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 text-2xl transition z-30 bg-white/80 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center shadow">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- سمت راست: اسلایدر عکس‌ها -->
+        <div class="w-full md:w-1/2 bg-gray-100 relative min-h-[350px] md:min-h-[520px] overflow-hidden">
+            <img id="modal-img" src="" alt="" class="w-full h-full object-cover absolute inset-0">
+
+            <!-- دکمه قبلی (راست) -->
+            <button id="modal-prev-btn" onclick="changeModalImg(-1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <!-- دکمه بعدی (چپ) -->
+            <button id="modal-next-btn" onclick="changeModalImg(1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- شمارنده عکس -->
+            <div id="modal-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs px-3 py-1 rounded-full dir-ltr z-20 font-sans">
+                1 / 1
+            </div>
+        </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-auto">
+                <button onclick="closeProjectModal()" class="w-full bg-navy hover:bg-teal text-white py-3 rounded-xl transition font-medium">
+                    بستن صفحه
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>

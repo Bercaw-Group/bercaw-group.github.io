@@ -801,6 +801,7 @@
     <script src="assets/js/sheets.js"></script>
     <script src="assets/js/form.js"></script>
     <!-- پاپ‌آور دو بخشی جزئیات پروژه (مطابق portfolio.html) -->
+<!-- پاپ‌آوری دو بخشی جزئیات پروژه (اصلاح شده) -->
 <div id="project-modal" class="fixed inset-0 bg-black/80 z-[110] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
     <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative flex flex-col md:flex-row max-h-[90vh] dir-rtl">
         
@@ -814,12 +815,12 @@
             <img id="modal-img" src="" alt="" class="w-full h-full object-cover absolute inset-0">
 
             <!-- دکمه قبلی (راست) -->
-            <button id="modal-prev-btn" onclick="changeModalImg(-1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+            <button id="modal-prev-btn" onclick="changeModalImg(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
                 <i class="fas fa-chevron-right"></i>
             </button>
 
             <!-- دکمه بعدی (چپ) -->
-            <button id="modal-next-btn" onclick="changeModalImg(1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+            <button id="modal-next-btn" onclick="changeModalImg(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
                 <i class="fas fa-chevron-left"></i>
             </button>
 
@@ -828,6 +829,27 @@
                 1 / 1
             </div>
         </div>
+
+        <!-- سمت چپ: مشخصات و اطلاعات پروژه (بخش اضافه شده) -->
+        <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+            <div>
+                <!-- دسته‌بندی و شهر -->
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                    <span id="modal-category" class="bg-teal/10 text-teal px-3.5 py-1 rounded-full text-xs font-semibold"></span>
+                    <span id="modal-city" class="text-xs text-gray-500 flex items-center"></span>
+                </div>
+
+                <!-- عنوان پروژه -->
+                <h2 id="modal-title" class="text-2xl font-bold text-navy mb-4 leading-snug"></h2>
+
+                <!-- توضیحات -->
+                <div class="border-t border-gray-100 pt-4 mb-4">
+                    <h4 class="text-sm font-bold text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-info-circle text-teal ml-2"></i>توضیحات پروژه:
+                    </h4>
+                    <p id="modal-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
+                </div>
+            </div>
 
             <div class="pt-4 border-t border-gray-100 mt-auto">
                 <button onclick="closeProjectModal()" class="w-full bg-navy hover:bg-teal text-white py-3 rounded-xl transition font-medium">

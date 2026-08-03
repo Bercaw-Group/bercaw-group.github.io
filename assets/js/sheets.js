@@ -428,40 +428,103 @@ function renderPortfolio(samples) {
 }
 
 function openPortfolioModal(sample) {
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4';
-    modal.id = 'portfolio-modal';
+    const modal = document.getElementById('project-modal');
+    if (!modal) {
+        console.error('پاپ‌آپ اصلی یافت نشد. مطمئن شوید کدهای HTML در index.html قرار دارند.');
+        return;
+    }
+
+    // ۱. استخراج تمامی عکس‌ها از ردیف گوگل شیت برای اسلایدر
+    let images = [];
+    const keys = Object.keys(sample);
     
-    modal.innerHTML = `
-        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="bg-navy text-white p-6 flex justify-between items-center rounded-t-2xl sticky top-0 z-10">
-                <h3 class="text-2xl font-bold">${sample.Title || 'نمونه کار'}</h3>
-                <button onclick="closePortfolioModal()" class="text-2xl hover:text-teal transition">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-6 text-center">
-                ${sample.Image ? `<img src="${sample.Image}" alt="${sample.Title}" class="max-w-full max-h-[60vh] rounded-lg mb-6 mx-auto">` : ''}
-                ${sample.Category ? `<span class="inline-block bg-teal/10 text-teal px-4 py-2 rounded-full font-semibold mb-4">${sample.Category}</span>` : ''}
-                ${sample.Location ? `<p class="text-gray-600 mb-4 text-lg"><i class="fas fa-map-marker-alt text-teal ml-2"></i>${sample.Location}</p>` : ''}
-                ${sample.Description ? `<p class="text-gray-700 leading-relaxed text-right">${sample.Description}</p>` : ''}
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target.id === 'portfolio-modal') closePortfolioModal();
+    // الف) جستجو در ستون‌های رایج عکس
+    const possibleImageKeys = ['Image', 'Image 1', 'Image1', 'ImageLink'];
+    possibleImageKeys.forEach(key => {
+        if (sample[key] && sample[key].trim()) images.push(sample[key].trim());
     });
+
+    // ب) جستجو در ستون‌های ۳ تا ۷ (طبق منطق قبلی شما) برای عکس‌های چندگانه
+    for (let i = 3; i <= 7; i++) {
+        if (keys[i] && sample[keys[i]] && typeof sample[keys[i]] === 'string') {
+            const val = sample[keys[i]].trim();
+            // فقط مقادیری که شبیه به لینک عکس هستند را استخراج کن
+            if (val.includes('http') || val.includes('assets/') || val.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                images.push(val);
+            }
+        }
+    }
+    
+    // ج) حذف لینک‌های تکراری
+    images = [...new Set(images)];
+    
+    // د) اگر هیچ عکسی پیدا نشد، از عکس اصلی یا لوگو استفاده کن
+    if (images.length === 0) {
+        images = [getSampleImage(sample)];
+    }
+
+    // ۲. جمع‌آوری داده‌های مکانی و توضیحات
+    const location = sample.Location || sample.City || sample.city || (keys[8] ? sample[keys[8]] : '');
+    const description = sample.Description || (keys[9] ? sample[keys[9]] : '');
+
+    // ۳. مقداردهی متغیرهای سراسری برای کارکرد صحیح اسلایدر (موجود در main.js)
+    window.currentModalProject = {
+        title: sample.Title || 'بدون عنوان',
+        category: sample.Category || '',
+        city: location,
+        description: description,
+        images: images
+    };
+    window.currentModalImgIndex = 0;
+
+    // ۴. آپدیت کردن محتوای المان‌های پاپ‌آپ جدید
+    const imgEl = document.getElementById('modal-img');
+    const counterEl = document.getElementById('modal-counter');
+    const titleEl = document.getElementById('modal-title');
+    const categoryEl = document.getElementById('modal-category');
+    const cityEl = document.getElementById('modal-city');
+    const descEl = document.getElementById('modal-description');
+    const prevBtn = document.getElementById('modal-prev-btn');
+    const nextBtn = document.getElementById('modal-next-btn');
+
+    if (imgEl) imgEl.src = images[0];
+    if (counterEl) counterEl.textContent = `1 / ${images.length}`;
+    if (titleEl) titleEl.textContent = window.currentModalProject.title;
+    
+    if (categoryEl) {
+        categoryEl.textContent = window.currentModalProject.category;
+        categoryEl.style.display = window.currentModalProject.category ? 'inline-block' : 'none';
+    }
+    
+    if (cityEl) {
+        cityEl.innerHTML = window.currentModalProject.city ? `<i class="fas fa-map-marker-alt text-teal ml-1"></i>${window.currentModalProject.city}` : '';
+    }
+    
+    if (descEl) descEl.textContent = window.currentModalProject.description || 'توضیحات تکمیلی برای این پروژه ثبت نشده است.';
+
+    // کنترل نمایش دکمه‌های اسلایدر در صورتی که بیش از یک عکس وجود داشته باشد
+    const hasMultiple = images.length > 1;
+    if (prevBtn) prevBtn.style.display = hasMultiple ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = hasMultiple ? 'flex' : 'none';
+    if (counterEl) counterEl.style.display = hasMultiple ? 'block' : 'none';
+
+    // ۵. نمایش نهایی پاپ‌آپ
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
 }
 
 function closePortfolioModal() {
-    const modal = document.getElementById('portfolio-modal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = 'auto';
+    // در صورت فراخوانی این تابع، پاپ‌آپ اصلی بسته می‌شود
+    if (typeof window.closeProjectModal === 'function') {
+        window.closeProjectModal();
+    } else {
+        const modal = document.getElementById('project-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
     }
 }
 

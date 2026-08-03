@@ -281,6 +281,90 @@ if ('IntersectionObserver' in window) {
     });
 }
 
+// ===== Portfolio Modal & Slider Logic =====
+window.currentModalProject = null;
+window.currentModalImgIndex = 0;
+
+// باز کردن پاپ‌آپ پروژه‌ها
+window.openProjectModal = function(index) {
+    // نکته: متغیر داده‌ها بسته به کدهای فایل sheets.js شما ممکن است allProjects باشد
+    let project = null;
+    if (typeof filteredProjects !== 'undefined' && filteredProjects[index]) {
+        project = filteredProjects[index];
+    } else if (typeof allProjects !== 'undefined' && allProjects[index]) {
+        project = allProjects[index];
+    }
+    
+    if (!project) return;
+
+    window.currentModalProject = project;
+    window.currentModalImgIndex = 0;
+
+    updateModalUI();
+
+    const modal = document.getElementById('project-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+// بستن پاپ‌آپ
+window.closeProjectModal = function() {
+    const modal = document.getElementById('project-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+};
+
+// تغییر عکس داخل پاپ‌آپ
+window.changeModalImg = function(direction) {
+    if (!window.currentModalProject || !window.currentModalProject.images || !window.currentModalProject.images.length) return;
+
+    window.currentModalImgIndex += direction;
+    
+    if (window.currentModalImgIndex < 0) {
+        window.currentModalImgIndex = window.currentModalProject.images.length - 1;
+    } else if (window.currentModalImgIndex >= window.currentModalProject.images.length) {
+        window.currentModalImgIndex = 0;
+    }
+
+    updateModalUI();
+};
+
+// بروزرسانی اطلاعات المان‌های داخل پاپ‌آپ
+function updateModalUI() {
+    if (!window.currentModalProject) return;
+
+    const imgEl = document.getElementById('modal-img');
+    const counterEl = document.getElementById('modal-counter');
+    const titleEl = document.getElementById('modal-title');
+    const categoryEl = document.getElementById('modal-category');
+    const cityEl = document.getElementById('modal-city');
+    const descEl = document.getElementById('modal-description');
+    const prevBtn = document.getElementById('modal-prev-btn');
+    const nextBtn = document.getElementById('modal-next-btn');
+
+    if (imgEl) imgEl.src = window.currentModalProject.images[window.currentModalImgIndex];
+    if (counterEl) counterEl.textContent = `${window.currentModalImgIndex + 1} / ${window.currentModalProject.images.length}`;
+    if (titleEl) titleEl.textContent = window.currentModalProject.title;
+    if (categoryEl) categoryEl.textContent = window.currentModalProject.category;
+    
+    if (cityEl) {
+        cityEl.innerHTML = window.currentModalProject.city ? `<i class="fas fa-map-marker-alt text-teal ml-1"></i>${window.currentModalProject.city}` : '';
+    }
+    
+    if (descEl) descEl.textContent = window.currentModalProject.description || 'توضیحات تکمیلی برای این پروژه ثبت نشده است.';
+
+    const hasMultiple = window.currentModalProject.images.length > 1;
+    if (prevBtn) prevBtn.style.display = hasMultiple ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = hasMultiple ? 'flex' : 'none';
+    if (counterEl) counterEl.style.display = hasMultiple ? 'block' : 'none';
+}
+
 // ===== Console Message =====
 console.log('%c به‌رچاو | راهکارهای هوشمند ساختمان', 'color: #20b2aa; font-size: 20px; font-weight: bold;');
 console.log('%c Website developed with ❤️', 'color: #0a192f; font-size: 14px;');

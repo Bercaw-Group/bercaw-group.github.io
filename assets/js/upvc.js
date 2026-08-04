@@ -9,17 +9,17 @@ if (tg) {
 }
 
 // بستن صفحه با دکمه ضربدر هدر
-// اگر داخل تلگرام هستیم از tg.close() استفاده می‌کنیم، در غیر این صورت
-// می‌گذاریم لینک href="index.html" به‌صورت طبیعی مرورگر عمل کند.
-const closeBtn = document.getElementById('close-btn');
-if (closeBtn) {
-    closeBtn.addEventListener('click', (e) => {
-        if (tg) {
-            e.preventDefault();
-            tg.close();
-        }
-    });
-}
+document.getElementById('close-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    // بررسی می‌کنیم که آیا واقعاً داخل محیط تلگرام هستیم یا خیر
+    if (tg && tg.platform !== "unknown" && tg.platform !== "") {
+        tg.close(); // بستن مینی‌اپ در تلگرام
+    } else {
+        window.location.href = 'index.html'; // بازگشت به صفحه اصلی در مرورگر عادی
+    }
+});
+
 
 // ===== ۲. ساخت ردیف‌های پویا برای هر درب/پنجره =====
 const quantityInput = document.getElementById('item-quantity');

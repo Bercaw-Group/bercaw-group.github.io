@@ -1,4 +1,4 @@
-<script>
+
         // ۱. مقداردهی اولیه تلگرام (اگر صفحه داخل ربات باز شده باشد)
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) {
@@ -6,11 +6,16 @@
         }
 
         // بستن صفحه با دکمه ضربدر هدر
-        document.getElementById('close-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg) tg.close();
-            else window.location.href = 'index.html';
-        });
+document.getElementById('close-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    // بررسی می‌کنیم که آیا واقعاً داخل محیط تلگرام هستیم یا خیر
+    if (tg && tg.platform !== "unknown" && tg.platform !== "") {
+        tg.close(); // بستن مینی‌اپ در تلگرام
+    } else {
+        window.location.href = 'index.html'; // بازگشت به صفحه اصلی در مرورگر عادی
+    }
+});
 
         // ۲. هندل کردن ارسال فرم
         const form = document.getElementById('elevator-form');
@@ -60,10 +65,14 @@
 
             try {
                 // ارسال به گوگل شیت
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(dataObj)
-                });
+const response = await fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'text/plain;charset=utf-8' // برای جلوگیری از خطای پیش‌درخواست CORS
+    },
+    body: JSON.stringify(dataObj),
+    redirect: 'follow' // بسیار مهم برای Google Apps Script
+});
                 
                 const result = await response.json();
                 
@@ -90,4 +99,3 @@
                 submitBtn.classList.replace('bg-gray-400', 'bg-teal');
             }
         });
-    </script>

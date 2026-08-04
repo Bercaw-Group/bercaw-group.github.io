@@ -59,21 +59,25 @@
                 <i class="fas fa-sync-alt text-teal ml-2"></i>
                 آخرین به‌روزرسانی: <span id="last-update">در حال بارگذاری...</span>
             </p>
-            <p class="text-sm text-gray-500 mt-2">قیمت‌ها هفتگی به‌روزرسانی می‌شوند</p>
+            <p class="text-sm text-gray-500 mt-2">قیمت‌ها دوره‌ای به‌روزرسانی می‌شوند</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
-            <h3 class="text-xl font-bold text-navy mb-4">
-                <i class="fas fa-filter ml-2"></i>
-                فیلتر بر اساس دسته‌بندی
-            </h3>
-            <div class="flex flex-wrap gap-3" id="category-filters">
-                <button class="filter-btn active px-6 py-2.5 rounded-full bg-teal text-white font-medium transition" data-category="all">
-                    <i class="fas fa-th ml-2"></i>
-                    همه محصولات
-                </button>
-            </div>
-        </div>
+    <h3 class="text-xl font-bold text-navy mb-4">
+        <i class="fas fa-filter ml-2"></i>
+        فیلتر بر اساس دسته‌بندی و برند
+    </h3>
+    <div class="flex flex-wrap gap-3 mb-4" id="category-filters">
+        <button class="filter-btn active px-6 py-2.5 rounded-full bg-teal text-white font-medium transition" data-category="all">
+            <i class="fas fa-th ml-2"></i>
+            همه محصولات
+        </button>
+    </div>
+    <!-- این بخش برای فیلتر برندها اضافه شده است -->
+    <div class="flex flex-wrap gap-3 pt-4 border-t border-gray-100" id="brand-filters">
+        <!-- دکمه‌های برند توسط جاوااسکریپت در اینجا ساخته می‌شوند -->
+    </div>
+</div>
 
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <div class="relative">
@@ -117,6 +121,14 @@
                 </table>
             </div>
         </div>
+
+        <!-- دکمه نمایش ردیف‌های بیشتر -->
+<div id="load-more-container" class="text-center mt-6 hidden">
+    <button id="load-more-btn" class="bg-teal text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-navy transition-all duration-300">
+        <i class="fas fa-chevron-down ml-2"></i>
+        نمایش ردیف‌های بیشتر
+    </button>
+</div>
 
         <div id="empty-state" class="hidden text-center py-20">
             <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>

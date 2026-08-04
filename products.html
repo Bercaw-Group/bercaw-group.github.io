@@ -79,6 +79,19 @@
                 </button>
             </div>
         </div>
+<!-- این بخش را دقیقاً زیر "فیلتر بر اساس دسته‌بندی" اضافه کنید -->
+<div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+    <h3 class="text-xl font-bold text-navy mb-4">
+        <i class="fas fa-tags ml-2"></i>
+        فیلتر بر اساس برند
+    </h3>
+    <div class="flex flex-wrap gap-3" id="brand-filters">
+        <button class="filter-btn active px-6 py-2.5 rounded-full bg-teal text-white font-medium transition" data-brand="all">
+            <i class="fas fa-check-circle ml-2"></i>
+            همه برندها
+        </button>
+    </div>
+</div>
 
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <div class="relative">
@@ -104,7 +117,9 @@
 
         <div id="products-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" style="display: none;">
         </div>
-
+<!-- این کانتینر را دقیقاً زیر محصولات اضافه کنید (برای دکمه‌های صفحه‌بندی) -->
+<div id="pagination-container" class="flex justify-center items-center flex-wrap gap-2 mt-12 mb-8">
+</div>
         <div id="empty-state" class="hidden text-center py-20">
             <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
             <p class="text-xl text-gray-600">هیچ محصولی یافت نشد</p>

@@ -51,6 +51,18 @@ if (mobileMenuBtn && mobileMenu) {
     });
 }
 
+// ===== Mobile Forms Submenu Toggle =====
+const mobileFormsToggle = document.getElementById('mobile-forms-toggle');
+const mobileFormsSubmenu = document.getElementById('mobile-forms-submenu');
+const mobileFormsIcon = document.getElementById('mobile-forms-icon');
+
+if (mobileFormsToggle && mobileFormsSubmenu) {
+    mobileFormsToggle.addEventListener('click', () => {
+        mobileFormsSubmenu.classList.toggle('hidden');
+        if (mobileFormsIcon) mobileFormsIcon.classList.toggle('rotate-180');
+    });
+}
+
 // ===== Smooth Scroll =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

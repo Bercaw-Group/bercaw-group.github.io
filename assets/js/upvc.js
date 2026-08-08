@@ -95,7 +95,8 @@ function addNewWindow() {
         <input type="hidden" id="frame-type-${winId}" value="T-1101">
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 print-grid">
-            <div class="lg:col-span-4 builder-ui bg-slate-100 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <!-- پنل مشخصات ابعادی و ساخت (کوچک‌تر شده به 3 ستون) -->
+            <div class="lg:col-span-3 builder-ui bg-slate-100 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center border-b border-slate-300 pb-3 mb-4 no-print">
                         <h3 class="font-bold text-sm text-slate-800"><i class="fas fa-ruler-combined ml-1 text-slate-500"></i> مشخصات ابعادی و ساخت</h3>
@@ -126,7 +127,8 @@ function addNewWindow() {
                 <div id="production-report-container-${winId}" class="mt-2 print-show"></div>
             </div>
 
-            <div class="lg:col-span-8 bg-white border-2 border-slate-300 rounded-xl p-3 relative shadow-sm svg-wrapper flex flex-col justify-between" style="min-height: 540px;">
+            <!-- پنل نمایش نقشه (بزرگ‌تر شده به 9 ستون) -->
+            <div class="lg:col-span-9 bg-white border-2 border-slate-300 rounded-xl p-3 relative shadow-sm svg-wrapper flex flex-col justify-between" style="min-height: 480px; max-height: 760px;">
                 <div class="absolute top-2 right-4 z-10 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-slate-500 border border-slate-200 shadow-sm pointer-events-none no-print">
                     <i class="fas fa-info-circle text-blue-500"></i> برای ویرایش مشخصات، روی یک پروفیل یا شیشه در نقشه کلیک کنید.
                 </div>
@@ -235,16 +237,16 @@ function autoCalculateRemainders(winId) {
 
 function drawDimLine(x1, y1, x2, y2, text, isVertical) {
     let svg = '';
-    svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="1" />`;
+    svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="0.8" />`;
     
     if (isVertical) {
-        svg += `<line x1="${x1-4}" y1="${y1}" x2="${x1+4}" y2="${y1}" stroke="#64748b" stroke-width="1.5" />`;
-        svg += `<line x1="${x1-4}" y1="${y2}" x2="${x1+4}" y2="${y2}" stroke="#64748b" stroke-width="1.5" />`;
-        svg += `<text x="${x1-8}" y="${(y1+y2)/2}" fill="#334155" font-size="11" font-weight="bold" font-family="Vazirmatn" text-anchor="middle" transform="rotate(-90 ${x1-8},${(y1+y2)/2})">${text}</text>`;
+        svg += `<line x1="${x1-3}" y1="${y1}" x2="${x1+3}" y2="${y1}" stroke="#64748b" stroke-width="1.2" />`;
+        svg += `<line x1="${x1-3}" y1="${y2}" x2="${x1+3}" y2="${y2}" stroke="#64748b" stroke-width="1.2" />`;
+        svg += `<text x="${x1-6}" y="${(y1+y2)/2}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle" transform="rotate(-90 ${x1-6},${(y1+y2)/2})">${text}</text>`;
     } else {
-        svg += `<line x1="${x1}" y1="${y1-4}" x2="${x1}" y2="${y1+4}" stroke="#64748b" stroke-width="1.5" />`;
-        svg += `<line x1="${x2}" y1="${y2-4}" x2="${x2}" y2="${y2+4}" stroke="#64748b" stroke-width="1.5" />`;
-        svg += `<text x="${(x1+x2)/2}" y="${y1+15}" fill="#334155" font-size="11" font-weight="bold" font-family="Vazirmatn" text-anchor="middle">${text}</text>`;
+        svg += `<line x1="${x1}" y1="${y1-3}" x2="${x1}" y2="${y1+3}" stroke="#64748b" stroke-width="1.2" />`;
+        svg += `<line x1="${x2}" y1="${y2-3}" x2="${x2}" y2="${y2+3}" stroke="#64748b" stroke-width="1.2" />`;
+        svg += `<text x="${(x1+x2)/2}" y="${y1+12}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle">${text}</text>`;
     }
     return svg;
 }
@@ -270,8 +272,8 @@ function renderGeneralSummary(winId) {
     }
 
     container.innerHTML = `
-        <div class="text-[10px] bg-indigo-50 border border-indigo-100 p-2.5 rounded-lg text-indigo-900 shadow-sm space-y-1">
-            <div class="font-bold border-b border-indigo-200 pb-1 mb-1.5 text-indigo-800"><i class="fas fa-layer-group ml-1"></i> مشخصات مقاطع این آیتم:</div>
+        <div class="text-[10px] bg-indigo-50 border border-indigo-100 p-2 rounded-lg text-indigo-900 shadow-sm space-y-1">
+            <div class="font-bold border-b border-indigo-200 pb-1 mb-1 text-indigo-800"><i class="fas fa-layer-group ml-1"></i> مشخصات مقاطع این آیتم:</div>
             <div class="flex justify-between items-center"><span class="opacity-80">فریم اصلی:</span> <span class="font-bold">${frameName}</span></div>
             <div class="flex justify-between items-center"><span class="opacity-80">وادار (مولیون):</span> <span class="font-bold">${mullionName}</span></div>
             <div class="flex justify-between items-center"><span class="opacity-80">زهوار شیشه:</span> <span class="font-bold">${beadName}</span></div>
@@ -389,13 +391,13 @@ function renderProductionReport(winId) {
     });
 
     let reportHTML = `
-        <div class="bg-white border border-slate-300 rounded-lg p-2.5 shadow-sm text-[11px] space-y-2">
+        <div class="bg-white border border-slate-300 rounded-lg p-2 shadow-sm text-[11px] space-y-1.5">
             <div class="font-bold text-slate-800 border-b border-slate-200 pb-1 flex items-center justify-between">
                 <span><i class="fas fa-file-invoice text-indigo-600 ml-1"></i> مشخصات فنی و گزارش برش آیتم</span>
                 <span class="text-[9px] bg-slate-100 px-2 py-0.5 rounded text-slate-500">کد آیتم: #${winId}</span>
             </div>
 
-            <div class="grid grid-cols-2 gap-2 text-slate-700 bg-slate-50 p-2 rounded">
+            <div class="grid grid-cols-2 gap-2 text-slate-700 bg-slate-50 p-1.5 rounded">
                 <div><strong>ابعاد کل:</strong> ${totalW} × ${totalH} cm</div>
                 <div><strong>نوع فریم:</strong> ${frameType}</div>
                 <div><strong>بازشو / ثابت:</strong> ${totalSashCount} لنگه / ${totalFixedCount} ثابت</div>
@@ -426,7 +428,7 @@ function renderProductionReport(winId) {
 }
 
 // ==========================================
-// موتور رندر اصلی نقشه (با سایز کاملاً فیت در کادر)
+// موتور رندر اصلی نقشه (ابعاد سفارشی و بزرگ‌تر روی 400)
 // ==========================================
 function updateDrawing(winId) {
     autoCalculateRemainders(winId);
@@ -437,8 +439,7 @@ function updateDrawing(winId) {
     const totalW = parseFloat(document.getElementById(`total-w-${winId}`).value) || 100;
     const totalH = parseFloat(document.getElementById(`total-h-${winId}`).value) || 100;
 
-    // تنظیم ابعاد استاندارد برای فیت شدن کامل داخل کارت نمایشی و چاپ
-    const svgMaxDim = 480; 
+    const svgMaxDim = 450; // تنظیم اندازه روی 400 برای نمایش بزرگ‌تر و ایده‌آل‌تر
     const scale = svgMaxDim / Math.max(totalW, totalH);
     const W = totalW * scale;
     const H = totalH * scale;
@@ -458,9 +459,8 @@ function updateDrawing(winId) {
     const Ts = 6 * scale;              
     const Tb = 3.5 * scale;            
 
-    // حاشیه‌های متناسب برای جلوگیری از بیرون‌زدگی خطوط ابعاد
-    const offsetX = 35; 
-    const offsetY = 35;
+    const offsetX = 50; 
+    const offsetY = 35; 
 
     const st = getState(winId);
     const isSel = (elId) => st.selected && st.selected.elId === elId;
@@ -622,8 +622,8 @@ function updateDrawing(winId) {
 
     shapes += hardwareShapes;
 
-    dimensions += drawDimLine(0, H + Tm + 20, W, H + Tm + 20, `${totalW} cm`, false); 
-    dimensions += drawDimLine(-Tm - 22, 0, -Tm - 22, H, `${totalH} cm`, true); 
+    dimensions += drawDimLine(0, H + Tm + 14, W, H + Tm + 14, `${totalW} cm`, false); 
+    dimensions += drawDimLine(-Tm - 16, 0, -Tm - 16, H, `${totalH} cm`, true); 
     
     let maxColsRowIdx = 0; let maxColsCount = 0;
     grid.forEach((r, idx) => {
@@ -637,7 +637,7 @@ function updateDrawing(winId) {
         let lx = 0;
         grid[maxColsRowIdx].colWidths.forEach((cw, idx) => {
             const rawW = grid[maxColsRowIdx].rawWs[idx];
-            dimensions += drawDimLine(lx, H + Tm + 8, lx+cw, H + Tm + 8, `${rawW || 0} cm`, false);
+            dimensions += drawDimLine(lx, H + Tm + 6, lx+cw, H + Tm + 6, `${rawW || 0} cm`, false);
             lx += cw;
         });
     }
@@ -645,7 +645,7 @@ function updateDrawing(winId) {
     if (rowHeights.length > 1) {
         let ly = 0;
         rowHeights.forEach((rh, idx) => {
-            dimensions += drawDimLine(-Tm - 10, ly, -Tm - 10, ly+rh, `${rawHs[idx] || 0} cm`, true);
+            dimensions += drawDimLine(-Tm - 8, ly, -Tm - 8, ly+rh, `${rawHs[idx] || 0} cm`, true);
             ly += rh;
         });
     }
@@ -865,7 +865,7 @@ function injectPrintStyles() {
 
             .print-grid {
                 display: grid !important;
-                grid-template-columns: 260px 1fr !important;
+                grid-template-columns: 220px 1fr !important;
                 gap: 10px !important;
                 flex: 1 !important;
                 align-items: stretch !important;

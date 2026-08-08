@@ -383,16 +383,20 @@ select:disabled {
     }
 }
 
-/* ===== Print Styles ===== */
+/* ===== Print & Summary Box Control ===== */
+#project-summary-sheet {
+    display: none !important;
+}
+
 @media print {
+    #project-summary-sheet {
+        display: flex !important;
+    }
+    
     header,
     footer,
     #scroll-top,
     .filter-btn {
         display: none !important;
-    }
-
-    #full-price-table {
-        page-break-inside: avoid;
     }
 }

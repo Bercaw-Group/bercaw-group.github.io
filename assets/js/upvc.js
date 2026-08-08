@@ -426,7 +426,7 @@ function renderProductionReport(winId) {
 }
 
 // ==========================================
-// موتور رندر اصلی نقشه (با مقیاس بزرگ‌شده)
+// موتور رندر اصلی نقشه (با سایز کاملاً فیت در کادر)
 // ==========================================
 function updateDrawing(winId) {
     autoCalculateRemainders(winId);
@@ -437,8 +437,8 @@ function updateDrawing(winId) {
     const totalW = parseFloat(document.getElementById(`total-w-${winId}`).value) || 100;
     const totalH = parseFloat(document.getElementById(`total-h-${winId}`).value) || 100;
 
-    // افزایش دقت و سایز داخلی SVG برای بزرگ‌تر شدن نقشه
-    const svgMaxDim = 900; 
+    // تنظیم ابعاد استاندارد برای فیت شدن کامل داخل کارت نمایشی و چاپ
+    const svgMaxDim = 480; 
     const scale = svgMaxDim / Math.max(totalW, totalH);
     const W = totalW * scale;
     const H = totalH * scale;
@@ -458,9 +458,9 @@ function updateDrawing(winId) {
     const Ts = 6 * scale;              
     const Tb = 3.5 * scale;            
 
-    // کاهش حاشیه‌های اطراف برای اینکه خود پنجره حداکثر فضا را بگیرد
-    const offsetX = 50; 
-    const offsetY = 50;
+    // حاشیه‌های متناسب برای جلوگیری از بیرون‌زدگی خطوط ابعاد
+    const offsetX = 35; 
+    const offsetY = 35;
 
     const st = getState(winId);
     const isSel = (elId) => st.selected && st.selected.elId === elId;
@@ -622,8 +622,8 @@ function updateDrawing(winId) {
 
     shapes += hardwareShapes;
 
-    dimensions += drawDimLine(0, H + Tm + 25, W, H + Tm + 25, `${totalW} cm`, false); 
-    dimensions += drawDimLine(-Tm - 30, 0, -Tm - 30, H, `${totalH} cm`, true); 
+    dimensions += drawDimLine(0, H + Tm + 20, W, H + Tm + 20, `${totalW} cm`, false); 
+    dimensions += drawDimLine(-Tm - 22, 0, -Tm - 22, H, `${totalH} cm`, true); 
     
     let maxColsRowIdx = 0; let maxColsCount = 0;
     grid.forEach((r, idx) => {
@@ -637,7 +637,7 @@ function updateDrawing(winId) {
         let lx = 0;
         grid[maxColsRowIdx].colWidths.forEach((cw, idx) => {
             const rawW = grid[maxColsRowIdx].rawWs[idx];
-            dimensions += drawDimLine(lx, H + Tm + 10, lx+cw, H + Tm + 10, `${rawW || 0} cm`, false);
+            dimensions += drawDimLine(lx, H + Tm + 8, lx+cw, H + Tm + 8, `${rawW || 0} cm`, false);
             lx += cw;
         });
     }
@@ -645,7 +645,7 @@ function updateDrawing(winId) {
     if (rowHeights.length > 1) {
         let ly = 0;
         rowHeights.forEach((rh, idx) => {
-            dimensions += drawDimLine(-Tm - 14, ly, -Tm - 14, ly+rh, `${rawHs[idx] || 0} cm`, true);
+            dimensions += drawDimLine(-Tm - 10, ly, -Tm - 10, ly+rh, `${rawHs[idx] || 0} cm`, true);
             ly += rh;
         });
     }
@@ -794,7 +794,7 @@ function updateAllDrawings() {
 }
 
 // ==========================================
-// تزریق استایل‌های مخصوص چاپ A4 Landscape و گسترش کادر نقشه
+// تزریق استایل‌های مخصوص چاپ A4 Landscape و کادر نقشه
 // ==========================================
 function injectPrintStyles() {
     if (document.getElementById('a4-print-styles')) return;

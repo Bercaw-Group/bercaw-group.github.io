@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درخواست سفارش ویدیو | به‌رچاو</title>
+    <meta name="description" content="فرم آنلاین ثبت سفارش تولید ویدیو و تیزر تبلیغاتی آژانس مارکتینگ به‌رچاو">
+    <link rel="canonical" href="https://bercaw-group.github.io/video.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    
+    <!-- فونت و استایل‌های اصلی -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- اسکریپت وب‌اپ تلگرام -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <meta name="google-site-verification" content="Vr9kcqHG18VAC2rq0hGF0u9VVzyWwtoEndu4UY-qhDs" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#0a192f',
+                        'navy-light': '#112240',
+                        'teal': '#20b2aa',
+                        'teal-light': '#64ffda',
+                    },
+                    fontFamily: {
+                        'vazir': ['Vazirmatn', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-vazir bg-gray-50 pb-20">
+
+    <!-- هدر -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="assets/images/logo.png" alt="بَرچاو" class="h-10 w-auto">
+                <div>
+                    <h1 class="text-lg font-bold text-navy">به‌رچاو</h1>
+                    <p class="text-xs text-gray-600">فرم سفارش تولید ویدیو (BER-VID-001)</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-gray-500 hover:text-teal transition" id="close-btn">
+                <i class="fas fa-times text-2xl"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-3xl">
+        
+        <form id="video-form" class="space-y-6">
+            
+            <!-- بخش ۱: اطلاعات اولیه و ارتباطی -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
+                    <i class="fas fa-user-tie"></i>
+                    <h2 class="font-bold">۱. اطلاعات اولیه و ارتباطی</h2>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">نام و نام خانوادگی *</label>
+                        <input type="text" name="fullName" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">شماره تماس (واتساپ) *</label>
+                        <input type="tel" name="phone" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-left" dir="ltr">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm text-gray-600 mb-1">نام کسب‌ و کار / شرکت *</label>
+                        <input type="text" name="businessName" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش ۲: مشخصات کسب‌وکار و مخاطب -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
+                    <i class="fas fa-briefcase"></i>
+                    <h2 class="font-bold">۲. مشخصات کسب‌وکار و مخاطب</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">حوزه فعالیت شما چیست؟ *</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="ساختمان و ساخت‌وساز" required> ساختمان و ساخت‌وساز</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="صنعت و تولید"> صنعت و تولید</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="کشاورزی و دامداری"> کشاورزی و دامداری</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="خدمات"> خدمات</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="پزشکی و سلامت"> پزشکی و سلامت</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="فناوری و نرم‌افزار"> فناوری و نرم‌افزار</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="آموزش"> آموزش</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="گردشگری و اقامتی"> گردشگری و اقامتی</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="industry" value="سایر"> سایر</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">توضیح کوتاه محصول یا خدمت (۱ تا ۲ جمله) *</label>
+                        <textarea name="productDescription" rows="2" required placeholder="چه محصول یا خدمتی قرار است در این ویدیو معرفی شود؟" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">مخاطب هدف شما چه اقشاری هستند؟ *</label>
+                        <input type="text" name="targetAudience" required placeholder="مثلاً: سازندگان ساختمان، عموم مردم، بانوان خانه‌دار و..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش ۳: مشخصات و خصوصیات ویدیو -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
+                    <i class="fas fa-video"></i>
+                    <h2 class="font-bold">۳. مشخصات ویدیو و انتشار</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">مدت زمان مورد نظر برای ویدیو</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="۱۵ تا ۳۰ ثانیه (ریلز کوتاه)"> ۱۵ تا ۳۰ ثانیه (ریلز کوتاه)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="۳۰ ثانیه تا ۱ دقیقه (تیزر)"> ۳۰ ثانیه تا ۱ دقیقه (تیزر)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="۱ تا ۲ دقیقه (معرفی محصول)"> ۱ تا ۲ دقیقه (معرفی محصول)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="۲ تا ۵ دقیقه (معرفی کامل)"> ۲ تا ۵ دقیقه (معرفی کامل)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="بیش از ۵ دقیقه (مستند)"> بیش از ۵ دقیقه (مستند)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="videoDuration" value="نمی‌دانم (پیشنهاد شما)"> نمی‌دانم (پیشنهاد شما)</label>
+                        </div>
+                    </div>
+                    <hr class="border-gray-100">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">پلتفرم‌های پخش ویدیو *</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="اینستاگرام"> اینستاگرام</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="تلگرام"> تلگرام</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="فیسبوک"> فیسبوک</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="یوتیوب"> یوتیوب</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="سایت"> وب‌سایت</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="واتساپ"> واتساپ</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="تلویزیون و محیطی"> تلویزیون و محیطی</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="platforms" value="سایر"> سایر</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش ۴: شرایط اجرا، بودجه و زمان‌بندی -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
+                    <i class="fas fa-coins"></i>
+                    <h2 class="font-bold">۴. شرایط اجرا، بودجه و زمان‌بندی</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">محل و روزهای امکان فیلم‌برداری *</label>
+                        <input type="text" name="locationAndDays" required placeholder="آدرس تقریبی محل پروژه و روزهای آزاد جهت تصاوبرداری" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">بازه بودجه تقریبی پروژه *</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="۱۰ تا ۲۰ میلیون" required> ۱۰ تا ۲۰ میلیون تومان</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="۲۰ تا ۳۵ میلیون"> ۲۰ تا ۳۵ میلیون تومان</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="۳۵ تا ۶۰ میلیون"> ۳۵ تا ۶۰ میلیون تومان</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="۶۰ تا ۱۰۰ میلیون"> ۶۰ تا ۱۰۰ میلیون تومان</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="بیش از ۱۰۰ میلیون"> بیش از ۱۰۰ میلیون تومان</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="budgetRange" value="ترجیح می‌دهم در تماس صحبت کنیم"> ترجیح می‌دهم در تماس صحبت کنیم</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">زمان انتظار برای تحویل پروژه *</label>
+                        <input type="text" name="deadline" required placeholder="مثلاً: تا ۱۰ روز آینده یا قبل از تاریخ خاص" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش ۵: توضیحات و ایده‌های تکمیلی -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
+                    <i class="fas fa-comment-dots"></i>
+                    <h2 class="font-bold">۵. ایده‌ها و نکات تکمیلی</h2>
+                </div>
+                <div class="p-6">
+                    <textarea name="additionalNotes" rows="3" placeholder="اگر ایده خاص، لینک نمونه ویدیو، سبک سناریوی مدنظر یا نکته تکمیلی دارید اینجا بنویسید..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition"></textarea>
+                </div>
+            </div>
+
+            <!-- دکمه ثبت -->
+            <button type="submit" id="submit-btn" class="w-full bg-teal text-white text-lg font-bold py-4 rounded-xl shadow-lg hover:bg-navy transition flex justify-center items-center gap-2">
+                <i class="fas fa-paper-plane"></i>
+                ثبت فرم سفارش ویدیو در سیستم
+            </button>
+
+            <!-- پیام موفقیت -->
+            <div id="success-message" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-center mt-4">
+                اطلاعات سفارش ویدیو با موفقیت ثبت شد! کارشناسان ما به زودی با شما تماس خواهند گرفت.
+            </div>
+
+        </form>
+    </main>
+    
+    <script src="assets/js/video.js"></script>
+    
+</body>
+</html>

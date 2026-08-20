@@ -31,4 +31,16 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://bercaw-group.github.io/UPVC.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bercaw-group.github.io/video.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
 </urlset>

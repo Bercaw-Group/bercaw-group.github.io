@@ -3,27 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[عنوان مرتبط با این صفحه] | به‌رچاو</title>
-<meta name="description" content="[فرم اولیه اطلاعات مشخصات آسانسور و ابعاد آن در بازدید اولیه]">
-<link rel="canonical" href="https://bercaw-group.github.io/elevator.html">
+    <title>فرم برآورد آسانسور | به‌رچاو</title>
+    <meta name="description" content="فرم آنلاین برآورد و ثبت مشخصات فنی آسانسور — شرکت به‌رچاو.">
+    <link rel="canonical" href="https://bercaw-group.github.io/elevator.html">
 
-    
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    
-    <!-- فونت و استایل‌های اصلی طبق ساختار سایت شما -->
+    <link rel="alternate icon" type="image/x-icon" href="assets/images/favicon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    
-    <!-- اسکریپت وب‌اپ تلگرام -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <meta name="google-site-verification" content="Vr9kcqHG18VAC2rq0hGF0u9VVzyWwtoEndu4UY-qhDs" />
-    
     <script>
         tailwind.config = {
             theme: {
@@ -41,189 +35,178 @@
             }
         }
     </script>
-</head>
-<body class="font-vazir bg-gray-50 pb-20">
 
-    <!-- هدر مشابه صفحات دیگر -->
+    <style>
+        @media print {
+            header, footer, .no-print { display: none !important; }
+            body { background: #fff; }
+            .print-card { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
+        }
+        #draft-status { transition: opacity .4s ease; }
+    </style>
+</head>
+<body class="font-vazir bg-gray-50">
+
     <header class="bg-white shadow-lg sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="assets/images/logo.png" alt="بَرچاو" class="h-10 w-auto">
+                <img src="assets/images/logo.png" alt="بَرچاو" class="h-12 w-auto">
                 <div>
-                    <h1 class="text-lg font-bold text-navy">به‌رچاو</h1>
-                    <p class="text-xs text-gray-600">فرم بازدید اولیه (BER-EV-001)</p>
+                    <h1 class="text-xl font-bold text-navy">به‌رچاو</h1>
+                    <p class="text-xs text-gray-600">فرم برآورد آسانسور</p>
                 </div>
             </div>
-            <a href="index.html" class="text-gray-500 hover:text-teal transition" id="close-btn">
-                <i class="fas fa-times text-2xl"></i>
+            <a href="index.html" class="bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-navy transition">
+                <i class="fas fa-home ml-2"></i>
+                بازگشت به صفحه اصلی
             </a>
         </nav>
     </header>
 
-    <main class="container mx-auto px-4 py-8 max-w-3xl">
-        
-        <form id="elevator-form" class="space-y-6">
-            
-            <!-- بخش 1: اطلاعات کارفرما و پروژه -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                    <i class="fas fa-user-tie"></i>
-                    <h2 class="font-bold">۱. اطلاعات کارفرما و پروژه</h2>
-                </div>
-                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">نام کارفرما *</label>
-                        <input type="text" name="clientName" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">شماره تماس *</label>
-                        <input type="tel" name="phone" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-left" dir="ltr">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">نام بازدیدکننده به‌رچاو *</label>
-                        <input type="text" name="visitorName" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm text-gray-600 mb-1">آدرس پروژه</label>
-                        <textarea name="projectAddress" rows="2" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition"></textarea>
-                    </div>
-                </div>
+    <main class="container mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-navy mb-4">فرم برآورد و مشخصات فنی آسانسور</h1>
+            <p class="text-gray-600">اطلاعات کارفرما و مشخصات فنی پروژه را به‌طور کامل تکمیل کنید.</p>
+            <p id="draft-status" class="text-sm text-teal mt-2 opacity-0">پیش‌نویس در همین مرورگر ذخیره شد ✓</p>
+        </div>
+
+        <!-- ناوبری سریع بخش‌ها -->
+        <div class="bg-white rounded-2xl shadow-lg p-4 mb-8 no-print">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-client">
+                    <i class="fas fa-user ml-1.5"></i>کارفرما
+                </button>
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-project">
+                    <i class="fas fa-clipboard-list ml-1.5"></i>مشخصات کلی
+                </button>
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-stage1">
+                    <i class="fas fa-door-closed ml-1.5"></i>ریل و درب
+                </button>
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-stage2">
+                    <i class="fas fa-gears ml-1.5"></i>مکانیکال
+                </button>
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-stage3">
+                    <i class="fas fa-bolt ml-1.5"></i>راه‌اندازی
+                </button>
+                <button type="button" class="section-nav-btn px-5 py-2 rounded-full bg-gray-200 text-navy hover:bg-teal hover:text-white transition text-sm font-medium" data-target="section-scope">
+                    <i class="fas fa-list-check ml-1.5"></i>خدمات و شرایط
+                </button>
             </div>
+        </div>
 
-            <!-- بخش 2: مشخصات ساختمان -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                    <i class="fas fa-building"></i>
-                    <h2 class="font-bold">۲. مشخصات ساختمان</h2>
-                </div>
-                <div class="p-6 space-y-4">
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-2">کاربری ساختمان</label>
-                        <div class="flex flex-wrap gap-4">
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="buildingType" value="مسکونی"> مسکونی</label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="buildingType" value="تجاری"> تجاری</label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="buildingType" value="اداری"> اداری</label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="buildingType" value="درمانی"> درمانی</label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="buildingType" value="ویلایی"> ویلایی</label>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">تعداد طبقات</label>
-                            <input type="number" name="floors" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">تعداد توقف</label>
-                            <input type="number" name="stops" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">ارتفاع تقریبی (متر)</label>
-                            <input type="number" name="approxHeight" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition">
-                        </div>
-                    </div>
-                </div>
+        <form id="elevator-form" novalidate>
+
+            <!-- باکس ۱: اطلاعات کارفرما -->
+            <section id="section-client" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-5 pb-3 border-b border-gray-100">
+                    <i class="fas fa-user text-teal ml-2"></i>
+                    اطلاعات کارفرما
+                </h3>
+                <div id="client-fields" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+            </section>
+
+            <!-- مشخصات کلی پروژه و آسانسور -->
+            <section id="section-project" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-5 pb-3 border-b border-gray-100">
+                    <i class="fas fa-clipboard-list text-teal ml-2"></i>
+                    مشخصات کلی پروژه و آسانسور
+                </h3>
+                <div id="project-fields" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+            </section>
+
+            <!-- باکس ۲: مرحله اول - ریل‌گذاری و نصب درب -->
+            <section id="section-stage1" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
+                    <i class="fas fa-door-closed text-teal ml-2"></i>
+                    مرحله اول: ریل‌گذاری و نصب درب
+                </h3>
+                <p class="text-xs text-gray-400 mb-4 mt-2">برای هر پارامتر، در صورت نیاز تیک را بردارید و مشخصات مدنظر را از فهرست انتخاب کنید.</p>
+                <div id="stage1-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <!-- بخش دوم: مرحله دوم - نصب مکانیکال -->
+            <section id="section-stage2" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
+                    <i class="fas fa-gears text-teal ml-2"></i>
+                    مرحله دوم: نصب مکانیکال
+                </h3>
+                <p class="text-xs text-gray-400 mb-4 mt-2">مشخصات فنی و ساخت/برند هر قطعه را تعیین کنید.</p>
+                <div id="stage2-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <!-- مرحله سوم: راه‌اندازی -->
+            <section id="section-stage3" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
+                    <i class="fas fa-bolt text-teal ml-2"></i>
+                    مرحله سوم: راه‌اندازی
+                </h3>
+                <p class="text-xs text-gray-400 mb-4 mt-2">تجهیزات تابلو برق، ایمنی و اقلام داخل کابین.</p>
+                <div id="stage3-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <!-- خدمات و شرایط مدنظر -->
+            <section id="section-scope" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
+                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
+                    <i class="fas fa-list-check text-teal ml-2"></i>
+                    خدمات و شرایط مدنظر
+                </h3>
+                <p class="text-xs text-gray-400 mb-4 mt-2">مواردی که مایلید در این برآورد لحاظ شود را انتخاب کنید.</p>
+                <div id="scope-fields"></div>
+            </section>
+
+            <!-- دکمه‌های عملیات -->
+            <div class="flex flex-wrap gap-3 justify-center mb-12 no-print">
+                <button type="submit" class="bg-teal text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:bg-navy transition-all duration-300">
+                    <i class="fas fa-paper-plane ml-2"></i>
+                    مشاهده خلاصه و ارسال فرم
+                </button>
+                <button type="button" id="btn-clear-form" class="bg-gray-200 text-navy px-8 py-3.5 rounded-xl font-bold hover:bg-gray-300 transition-all duration-300">
+                    <i class="fas fa-eraser ml-2"></i>
+                    پاک کردن فرم
+                </button>
             </div>
-
-            <!-- بخش 3: ابعاد چاه آسانسور -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                    <i class="fas fa-ruler-combined"></i>
-                    <h2 class="font-bold">۳. ابعاد چاه آسانسور (سانتی‌متر)</h2>
-                </div>
-                <div class="p-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">عرض چاه (W)</label>
-                        <input type="number" name="wellWidth" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-center" dir="ltr">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">عمق چاه (D)</label>
-                        <input type="number" name="wellDepth" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-center" dir="ltr">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">ارتفاع چاه (H)</label>
-                        <input type="number" name="wellHeight" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-center" dir="ltr">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">عمق چاهک (Pit)</label>
-                        <input type="number" name="pitDepth" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-center" dir="ltr">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">ارتفاع اورهد (OH)</label>
-                        <input type="number" name="overheadHeight" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition text-center" dir="ltr">
-                    </div>
-                </div>
-            </div>
-
-            <!-- بخش 4 و 5: وضعیت و نوع آسانسور -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- وضعیت اجرا -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                        <i class="fas fa-tools"></i>
-                        <h2 class="font-bold">۴. وضعیت اجرا</h2>
-                    </div>
-                    <div class="p-6 space-y-3">
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="execStatus" value="چاه آماده است"> چاه آماده است</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="execStatus" value="نیاز به آهن‌کشی"> نیاز به آهن‌کشی</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="execStatus" value="نیاز به برق سه‌فاز"> نیاز به برق سه‌فاز</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="execStatus" value="نیاز به داربست"> نیاز به داربست</label>
-                    </div>
-                </div>
-
-                <!-- نوع آسانسور -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                        <i class="fas fa-elevator"></i>
-                        <h2 class="font-bold">۵. نوع آسانسور</h2>
-                    </div>
-                    <div class="p-6 space-y-4">
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-2">سیستم محرکه</label>
-                            <div class="flex flex-wrap gap-3">
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="elevatorType" value="کششی گیربکس"> گیربکس</label>
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="elevatorType" value="کششی گیرلس"> گیرلس</label>
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="elevatorType" value="هیدرولیک"> هیدرولیک</label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-2">ظرفیت کابین</label>
-                            <div class="flex flex-wrap gap-3">
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="capacity" value="4 نفره"> ۴ نفره</label>
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="capacity" value="6 نفره"> ۶ نفره</label>
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="capacity" value="8 نفره"> ۸ نفره</label>
-                                <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="capacity" value="13 نفره"> ۱۳ نفره</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- بخش آخر: توضیحات و برآورد -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="bg-navy text-white px-6 py-3 flex items-center gap-2">
-                    <i class="fas fa-clipboard-list"></i>
-                    <h2 class="font-bold">۶. توضیحات و تجهیزات پیشنهادی</h2>
-                </div>
-                <div class="p-6">
-                    <textarea name="description" rows="4" placeholder="موارد تکمیلی، برندهای پیشنهادی (موتور، تابلو، کابین و...) و برآورد هزینه تقریبی را اینجا بنویسید..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-teal outline-none transition"></textarea>
-                </div>
-            </div>
-
-            <!-- دکمه ثبت -->
-            <button type="submit" id="submit-btn" class="w-full bg-teal text-white text-lg font-bold py-4 rounded-xl shadow-lg hover:bg-navy transition flex justify-center items-center gap-2">
-                <i class="fas fa-paper-plane"></i>
-                ثبت فرم بازدید در سیستم
-            </button>
-
-            <!-- پیام موفقیت -->
-            <div id="success-message" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-center mt-4">
-                اطلاعات با موفقیت در شیت Elevator ثبت شد!
-            </div>
-
         </form>
+
+        <!-- پنل خلاصه فرم -->
+        <div id="summary-panel" class="hidden bg-white rounded-2xl shadow-xl p-6 mb-12 print-card">
+            <h3 class="text-xl font-bold text-navy mb-4">
+                <i class="fas fa-file-lines text-teal ml-2"></i>
+                خلاصه فرم برآورد
+            </h3>
+            <pre id="summary-text" class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-navy whitespace-pre-wrap leading-7 max-h-[28rem] overflow-y-auto"></pre>
+            <div class="flex flex-wrap gap-3 mt-5 no-print">
+                <button id="btn-whatsapp" type="button" class="bg-[#25D366] text-white px-6 py-2.5 rounded-lg font-bold hover:opacity-90 transition">
+                    <i class="fab fa-whatsapp ml-2"></i>
+                    ارسال به واتساپ
+                </button>
+                <button id="btn-copy" type="button" class="bg-teal text-white px-6 py-2.5 rounded-lg font-bold hover:bg-navy transition">
+                    <i class="fas fa-copy ml-2"></i>
+                    کپی متن خلاصه
+                </button>
+                <button id="btn-print" type="button" class="bg-gray-200 text-navy px-6 py-2.5 rounded-lg font-bold hover:bg-gray-300 transition">
+                    <i class="fas fa-print ml-2"></i>
+                    چاپ فرم
+                </button>
+            </div>
+        </div>
     </main>
-    
-<script src="assets/js/elevator.js"></script>
-    
+
+    <footer class="bg-navy text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2026 به‌رچاو. تمامی حقوق محفوظ است.</p>
+            <div class="flex justify-center gap-6 text-sm text-gray-400">
+                <a href="tel:09188797939" class="hover:text-teal transition">
+                    <i class="fas fa-phone ml-1"></i>
+                    09188797939
+                </a>
+                <a href="https://instagram.com/bercaw_marketing" target="_blank" class="hover:text-teal transition">
+                    <i class="fab fa-instagram ml-1"></i>
+                    @bercaw_marketing
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/elevator.js"></script>
 </body>
 </html>

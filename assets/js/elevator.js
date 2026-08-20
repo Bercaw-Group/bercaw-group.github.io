@@ -33,7 +33,7 @@ const PROJECT_FIELDS = [
 
 /* ------------- بخش ۲: مرحله اول — ریل‌گذاری و نصب درب --------------- */
 /* گزینه‌های هر پارامتر مطابق ستون A شیت «به‌روز رسانی قیمت» */
-const STAGE1_ITEMS = [{"id": "rail", "label": "ریل", "options": ["ریل کششی سرد  T5&T9 ایتالیا / مارازی", "ریل کششی سرد  T5&T9 چین / MF", "ریل کششی سرد  T5&T9 چین / MOF", "ریل کششی سرد  T5&T9 ترکیه / ترکعلی", "ریل کششی سرد  T5&T9 ترکیه / چیلک", "ریل کششی سرد  T5&T9 چین/سوپر ساورا", "ریل کششی سرد  T5&T9 ترکیه/چیلک", "ریل کششی سرد  T5&T16 ایتالیا / مارازی", "ریل کششی سرد  T5&T16 چین / MF", "ریل کششی سرد  T5&T16 چین / MOF", "ریل کششی سرد  T5&T16 ترکیه / ترکعلی", "ریل کششی سرد  T5&T16 ترکیه / چیلک", "ریل کششی سرد  T5&T16 چین/سوپر ساورا", "ریل کششی سرد  T5&T16 ترکیه/چیلک"]}, {"id": "bracket", "label": "براکت", "options": ["براکت از نوع آبکاری شده -T5&T9", "براکت از نوع آبکاری شده -T5&T16"]}, {"id": "boltnut", "label": "پیچ و مهره", "options": ["پیچ و مهره  نمره 12 مخصوص براکت و پشت بند ایران", "پیچ و مهره  نمره 10 مخصوص براکت  ایران", "پیچ و مهره  نمره 8 مخصوص پشت بند ایران"]}, {"id": "loghme", "label": "لقمه", "options": ["لقمه  از نوع چدن - T5&T9 ایران / مبین", "لقمه  از نوع چدن - T5&T16 ایران / مبین"]}, {"id": "floordoor", "label": "درب طبقات", "options": ["درب طبقات اتوماتیک ایران / روانکار", "درب طبقات اتوماتیک ایران / غدیر", "درب طبقات اتوماتیک ایران / یاران", "درب طبقات اتوماتیک ایران / پارسیان", "درب طبقات اتوماتیک ایران/طرح دار", "درب طبقات اتوماتیک ایران/بهران", "درب طبقات  لولایی ایران/بهران", "درب طبقات  لولایی ایران/طرح دار"]}, {"id": "floorcover", "label": "روکش درب طبقات", "options": ["روکش درب طبقات رنگ ایران", "روکش درب طبقات استیل دودی آینه ای ایران", "روکش درب طبقات استیل طلائی خشدار ایران", "روکش درب طبقات استیل نقره ای آینه ای ایران", "روکش درب طبقات استیل نقره ای خشدار ایران", "روکش درب طبقات استیل نقره ای خش دار آنتی فینگر ایران"]}];
+const STAGE1_ITEMS = [{"id": "rail", "label": "ریل", "options": ["ریل کششی سرد  T5&T9 ایتالیا / مارازی", "ریل کششی سرد  T5&T9 چین / MF", "ریل کششی سرد  T5&T9 چین / MOF", "ریل کششی سرد  T5&T9 ترکیه / ترکعلی", "ریل کششی سرد  T5&T9 ترکیه / چیلک", "ریل کششی سرد  T5&T9 چین/سوپر ساورا", "ریل کششی سرد  T5&T9 ترکیه/چیلک", "ریل کششی سرد  T5&T16 ایتالیا / مارازی", "ریل کششی سرد  T5&T16 چین / MF", "ریل کششی سرد  T5&T16 چین / MOF", "ریل کششی سرد  T5&T16 ترکیه / ترکعلی", "ریل کششی سرد  T5&T16 ترکیه / چیلک", "ریل کششی سرد  T5&T16 چین/سوپر ساورا", "ریل کششی سرد  T5&T16 ترکیه/چیلک"]}, {"id": "bracket", "label": "براکت", "options": ["براکت از نوع آبکاری شده -T5&T9", "براکت از نوع آبکاری شده -T5&T16"]}, {"id": "boltnut1", "label": "پیچ و مهره ۱", "options": ["پیچ و مهره  نمره 12 مخصوص براکت و پشت بند ایران", "پیچ و مهره  نمره 10 مخصوص براکت  ایران", "پیچ و مهره  نمره 8 مخصوص پشت بند ایران"]}, {"id": "boltnut2", "label": "پیچ و مهره ۲", "options": ["پیچ و مهره  نمره 12 مخصوص براکت و پشت بند ایران", "پیچ و مهره  نمره 10 مخصوص براکت  ایران", "پیچ و مهره  نمره 8 مخصوص پشت بند ایران"]}, {"id": "boltnut3", "label": "پیچ و مهره ۳", "options": ["پیچ و مهره  نمره 12 مخصوص براکت و پشت بند ایران", "پیچ و مهره  نمره 10 مخصوص براکت  ایران", "پیچ و مهره  نمره 8 مخصوص پشت بند ایران"]}, {"id": "loghme", "label": "لقمه", "options": ["لقمه  از نوع چدن - T5&T9 ایران / مبین", "لقمه  از نوع چدن - T5&T16 ایران / مبین"]}, {"id": "floordoor", "label": "درب طبقات", "options": ["درب طبقات اتوماتیک ایران / روانکار", "درب طبقات اتوماتیک ایران / غدیر", "درب طبقات اتوماتیک ایران / یاران", "درب طبقات اتوماتیک ایران / پارسیان", "درب طبقات اتوماتیک ایران/طرح دار", "درب طبقات اتوماتیک ایران/بهران", "درب طبقات  لولایی ایران/بهران", "درب طبقات  لولایی ایران/طرح دار"]}, {"id": "floorcover", "label": "روکش درب طبقات", "options": ["روکش درب طبقات رنگ ایران", "روکش درب طبقات استیل دودی آینه ای ایران", "روکش درب طبقات استیل طلائی خشدار ایران", "روکش درب طبقات استیل نقره ای آینه ای ایران", "روکش درب طبقات استیل نقره ای خشدار ایران", "روکش درب طبقات استیل نقره ای خش دار آنتی فینگر ایران"]}];
 
 const STAGE1_EXTRA = { id: 'floorCoverCount', label: 'تعداد درب‌هایی که مدنظر است روکش شوند', type: 'number' };
 
@@ -50,6 +50,10 @@ const SCOPE_ITEMS = ["حمل، بارگیری و تخلیه بار", "جرثقی
 
 const COMPANY_PHONE_INTL = '989188797939';
 const DRAFT_KEY = 'bercaw_elevator_form_draft_v1';
+
+// 🔗 آدرس‌های ارسال داده (باید توسط کاربر تنظیم شوند)
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztx9C3R5Mm3VBnMU9OPGXbb7RIgZMcX8K6yUtuLeYaQ6ai-mtyJWIQu-joQws1CtLO/exec'; // ← آدرس Google Apps Script خود را اینجا قرار دهید
+const CLOUDFLARE_WORKER_URL = 'https://flat-fire-a0d0.zeya-hashemi.workers.dev'; // ← آدرس Cloudflare Worker خود را اینجا قرار دهید
 
 /* رجیستری همه فیلدهای رندر شده، برای جمع‌آوری مقادیر هنگام ثبت فرم */
 const fieldRegistry = [];
@@ -338,7 +342,7 @@ function buildSummaryText() {
     return lines.join('\n');
 }
 
-function showSummary() {
+async function submitFormAndShowSummary() {
     const text = buildSummaryText();
     const panel = document.getElementById('summary-panel');
     const pre = document.getElementById('summary-text');
@@ -346,10 +350,30 @@ function showSummary() {
     panel.classList.remove('hidden');
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    document.getElementById('btn-whatsapp').onclick = () => {
-        const url = `https://wa.me/${COMPANY_PHONE_INTL}?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
-    };
+    // جمع‌آوری تمام داده‌های فرم
+    const formDataObj = {};
+    fieldRegistry.forEach(f => {
+        const val = f.isCheckbox ? (f.el.checked ? 'بله' : 'خیر') : (f.el.value || '').trim();
+        if (val) {
+            if (f.includeEl && !f.includeEl.checked) return;
+            formDataObj[f.label] = val;
+        }
+    });
+
+    // ارسال به سرور
+    const result = await submitFormToServer(formDataObj);
+    
+    const successMsg = document.getElementById('success-message');
+    if (result.googleSuccess || result.workerSuccess) {
+        successMsg.classList.remove('hidden');
+    } else {
+        // در صورت خطا، پیام خطا نمایش داده شود
+        successMsg.innerHTML = '<i class="fas fa-exclamation-circle text-2xl ml-2"></i><span class="text-red-600">خطا در ثبت اطلاعات. لطفاً مجدداً تلاش کنید یا با پشتیبانی تماس بگیرید.</span>';
+        successMsg.classList.remove('hidden');
+        successMsg.classList.remove('bg-green-50', 'border-green-200', 'text-green-800');
+        successMsg.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
+    }
+
     document.getElementById('btn-copy').onclick = async () => {
         try {
             await navigator.clipboard.writeText(text);
@@ -362,6 +386,89 @@ function showSummary() {
         }
     };
     document.getElementById('btn-print').onclick = () => window.print();
+}
+
+function showSummary() {
+    submitFormAndShowSummary();
+}
+
+/* ===================== ارسال فرم به سرور (Google Sheets + Telegram) ===================== */
+async function submitFormToServer(formDataObj) {
+    const submitBtn = document.querySelector('#elevator-form button[type="submit"]');
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+        submitBtn.disabled = true;
+        submitBtn.classList.replace('bg-teal', 'bg-gray-400');
+    }
+
+    // اضافه کردن تگ شناسایی فرم
+    const dataObj = { 
+        formType: "elevator",
+        timestamp: new Date().toLocaleString('fa-IR'),
+        ...formDataObj
+    };
+
+    // تبدیل آرایه‌ها به رشته متنی
+    for (let key in dataObj) {
+        if (Array.isArray(dataObj[key])) {
+            dataObj[key] = dataObj[key].join('، ');
+        }
+    }
+
+    let googleSuccess = false;
+    let workerSuccess = false;
+
+    try {
+        // ۱. ارسال به Google Apps Script
+        if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(dataObj),
+                redirect: 'follow'
+            });
+            
+            const result = await response.json();
+            if (result.result === 'success') {
+                googleSuccess = true;
+            } else {
+                console.warn('Google Apps Script error:', result.message);
+            }
+        }
+
+        // ۲. ارسال به Cloudflare Worker (برای ربات تلگرام)
+        if (CLOUDFLARE_WORKER_URL && !CLOUDFLARE_WORKER_URL.includes('your-worker')) {
+            const workerResponse = await fetch(CLOUDFLARE_WORKER_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataObj)
+            });
+            
+            const workerResult = await workerResponse.json();
+            if (workerResult.success) {
+                workerSuccess = true;
+            } else {
+                console.warn('Cloudflare Worker error:', workerResult.message);
+            }
+        }
+
+        return { googleSuccess, workerSuccess };
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        return { googleSuccess: false, workerSuccess: false, error: error.message };
+    } finally {
+        if (submitBtn) {
+            submitBtn.innerHTML = originalBtnHtml;
+            submitBtn.disabled = false;
+            submitBtn.classList.replace('bg-gray-400', 'bg-teal');
+        }
+    }
 }
 
 /* ===================== راه‌اندازی ===================== */

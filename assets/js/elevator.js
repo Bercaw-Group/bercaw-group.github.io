@@ -53,7 +53,7 @@ const DRAFT_KEY = 'bercaw_elevator_form_draft_v1';
 
 // 🔗 آدرس‌های ارسال داده (باید توسط کاربر تنظیم شوند)
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztx9C3R5Mm3VBnMU9OPGXbb7RIgZMcX8K6yUtuLeYaQ6ai-mtyJWIQu-joQws1CtLO/exec'; // ← آدرس Google Apps Script خود را اینجا قرار دهید
-const CLOUDFLARE_WORKER_URL = 'https://flat-fire-a0d0.zeya-hashemi.workers.dev'; // ← آدرس Cloudflare Worker خود را اینجا قرار دهید
+const CLOUDFLARE_WORKER_URL = 'https://flat-fire-a0d0.zeya-hashemi.workers.dev/api/submit'; // ← آدرس Cloudflare Worker خود را اینجا قرار دهید
 
 /* رجیستری همه فیلدهای رندر شده، برای جمع‌آوری مقادیر هنگام ثبت فرم */
 const fieldRegistry = [];

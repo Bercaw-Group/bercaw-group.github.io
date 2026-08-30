@@ -215,16 +215,42 @@
                 خلاصه فرم برآورد
             </h3>
             <pre id="summary-text" class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-navy whitespace-pre-wrap leading-7 max-h-[28rem] overflow-y-auto"></pre>
-            <div class="flex flex-wrap gap-3 mt-5 no-print">
-                <button id="btn-copy" type="button" class="bg-teal text-white px-6 py-2.5 rounded-lg font-bold hover:bg-navy transition">
-                    <i class="fas fa-copy ml-2"></i>
-                    کپی متن خلاصه
-                </button>
-                <button id="btn-print" type="button" class="bg-gray-200 text-navy px-6 py-2.5 rounded-lg font-bold hover:bg-gray-300 transition">
-                    <i class="fas fa-print ml-2"></i>
-                    چاپ فرم
-                </button>
-            </div>
+            <!-- دکمه‌های قبلی خلاصه فرم -->
+<div class="flex flex-wrap gap-3 mt-5 no-print">
+    <button id="btn-copy" type="button" class="bg-teal text-white px-6 py-2.5 rounded-lg font-bold hover:bg-navy transition">
+        <i class="fas fa-copy ml-2"></i>
+        کپی متن خلاصه
+    </button>
+    <button id="btn-print" type="button" class="bg-gray-200 text-navy px-6 py-2.5 rounded-lg font-bold hover:bg-gray-300 transition">
+        <i class="fas fa-print ml-2"></i>
+        چاپ فرم
+    </button>
+</div>
+<!-- بخش جدید: ارسال مستقیم PDF به تلگرام -->
+<div class="mt-6 p-5 bg-blue-50 border border-blue-200 rounded-xl no-print">
+    <label class="block text-sm font-bold text-navy mb-3">
+        <i class="fab fa-telegram text-blue-500 ml-1.5 text-lg"></i>
+        ارسال مستقیم پیش‌فاکتور به تلگرام
+    </label>
+    
+    <!-- کانتینر فلکس برای قرار دادن فیلد و دکمه در یک ردیف -->
+    <div class="flex flex-col sm:flex-row items-center gap-3">
+        
+        <!-- کادر ورودی (فقط زمانی که سیستم آیدی را پیدا نکند نمایش داده می‌شود) -->
+        <div id="manual-id-section" class="w-full sm:w-auto">
+            <input type="text" id="tg-chat-id" placeholder="آیدی عددی تلگرام (Chat ID)" 
+                   class="w-full sm:w-64 px-4 py-2.5 text-sm rounded-lg border-2 border-blue-200 focus:border-blue-500 outline-none transition text-left placeholder-gray-400" dir="ltr">
+        </div>
+
+        <!-- دکمه ارسال -->
+        <button id="btn-send-pdf" type="button" 
+                class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2.5 text-sm rounded-lg font-bold hover:bg-blue-600 shadow-md transition flex items-center justify-center gap-2">
+            ارسال به تلگرام من
+            <i class="fas fa-paper-plane"></i>
+        </button>
+        
+    </div>
+</div>
             <div id="success-message" class="hidden mt-5 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-center">
                 <i class="fas fa-check-circle text-2xl ml-2"></i>
                 <span>درخواست شما ثبت شد و بعد از استعلام قیمت روز، پیش‌فاکتور در اسرع وقت برای شما ارسال خواهد شد.</span>

@@ -473,36 +473,84 @@ async function submitFormAndShowSummary() {
             alert('کپی خودکار ممکن نشد؛ متن را به صورت دستی انتخاب و کپی کنید.');
         }
     };
-    document.getElementById('btn-print').onclick = () => {
-    // تشخیص مرورگر تلگرام یا اینستاگرام
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isSocialApp = /Telegram|Instagram/i.test(userAgent);
     
-    if (isSocialApp) {
-        alert('مرورگر داخلی تلگرام/اینستاگرام اجازه چاپ یا دانلود را نمی‌دهد.\n\nلطفاً از منوی سه‌نقطه بالای صفحه، گزینه\n"Open in Chrome" یا "Open in Safari"\nرا انتخاب کنید.');
-        return; // توقف عملیات برای جلوگیری از گیر کردن مرورگر
+    document.getElementById('btn-send-pdf').onclick = async () => {
+    // تلاش برای دریافت آیدی خودکار از تلگرام
+    let autoChatId = null;
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (user && user.id) {
+            autoChatId = user.id;
+        }
     }
 
-    try {
-        const element = document.getElementById('summary-panel');
-        
-        // تنظیمات ساخت PDF
-        const opt = {
-            margin:       0.5,
-            filename:     'پیش‌فاکتور-آسانسور-به‌رچاو.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
+    // اگر آیدی خودکار پیدا نشد، از کادر متنی می‌خواند
+    const manualChatId = document.getElementById('tg-chat-id').value.trim();
+    const finalChatId = autoChatId || manualChatId;
 
-        // تلاش برای ساخت و دانلود فایل
-        html2pdf().set(opt).from(element).save();
-      } catch (error) {
-        console.error("کتابخانه PDF بارگذاری نشده است:", error);
-        // اگر کتابخانه به هر دلیلی لود نشد، پنجره پرینت پیش‌فرض سیستم باز شود
-        window.print();
-      }
+    if (!finalChatId) {
+        alert('لطفاً آیدی عددی تلگرام خود را وارد کنید.');
+        document.getElementById('manual-id-section').classList.remove('hidden');
+        return;
+    }
+
+    const btn = document.getElementById('btn-send-pdf');
+    const originalHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i>در حال ساخت و ارسال...';
+    btn.disabled = true;
+
+    const element = document.getElementById('summary-panel');
+    const opt = {
+        margin:       0.3,
+        filename:     'برآورد-آسانسور.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
+
+    try {
+        const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // ⚠️ توکن ربات
+        
+        const formData = new FormData();
+        formData.append('chat_id', finalChatId);
+        formData.append('document', pdfBlob, 'Bercaw-Elevator.pdf');
+        formData.append('caption', '📄 فایل PDF برآورد فنی و پیش‌فاکتور آسانسور شما.');
+
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        
+        if (result.ok) {
+            alert('✅ پیش‌فاکتور به پی‌وی شما در تلگرام ارسال شد!');
+        } else {
+            console.error('Telegram API Error:', result);
+            alert('❌ ارسال ناموفق! ربات باید حتماً توسط کاربر Start شده باشد.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('❌ خطا در ارتباط با سرور.');
+    }
+
+    btn.innerHTML = originalHtml;
+    btn.disabled = false;
+};
+
+// مخفی کردن کادر دستی اگر داخل تلگرام باشیم
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.Telegram && window.Telegram.WebApp) {
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (user && user.id) {
+            // کاربر در محیط Web App تلگرام است، کادر دستی را مخفی می‌کنیم
+            const manualSection = document.getElementById('manual-id-section');
+            if(manualSection) manualSection.style.display = 'none';
+        }
+    }
+});
 }
 
 function showSummary() {

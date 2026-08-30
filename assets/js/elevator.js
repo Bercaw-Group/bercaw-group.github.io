@@ -474,22 +474,32 @@ async function submitFormAndShowSummary() {
         }
     };
     document.getElementById('btn-print').onclick = () => {
-      const isTelegram = /Telegram/i.test(navigator.userAgent);
-      const element = document.getElementById('summary-panel');
+    // تشخیص مرورگر تلگرام یا اینستاگرام
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isSocialApp = /Telegram|Instagram/i.test(userAgent);
+    
+    if (isSocialApp) {
+        alert('مرورگر داخلی تلگرام/اینستاگرام اجازه چاپ یا دانلود را نمی‌دهد.\n\nلطفاً از منوی سه‌نقطه بالای صفحه، گزینه\n"Open in Chrome" یا "Open in Safari"\nرا انتخاب کنید.');
+        return; // توقف عملیات برای جلوگیری از گیر کردن مرورگر
+    }
 
-      // تنظیمات ساخت PDF
-      const opt = {
-        margin:       0.5,
-        filename:     'برآورد-آسانسور-به‌رچاو.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
+    try {
+        const element = document.getElementById('summary-panel');
+        
+        // تنظیمات ساخت PDF
+        const opt = {
+            margin:       0.5,
+            filename:     'پیش‌فاکتور-آسانسور-به‌رچاو.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
 
-      if (isTelegram) {
-        // در تلگرام به جای دیالوگ چاپ، فایل PDF دانلود می‌شود
+        // تلاش برای ساخت و دانلود فایل
         html2pdf().set(opt).from(element).save();
-      } else {
+      } catch (error) {
+        console.error("کتابخانه PDF بارگذاری نشده است:", error);
+        // اگر کتابخانه به هر دلیلی لود نشد، پنجره پرینت پیش‌فرض سیستم باز شود
         window.print();
       }
     };

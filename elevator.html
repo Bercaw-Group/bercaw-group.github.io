@@ -44,6 +44,7 @@
         }
         #draft-status { transition: opacity .4s ease; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.min.js"></script>
 </head>
 <body class="font-vazir bg-gray-50">
 
@@ -98,58 +99,94 @@
 
             <!-- باکس ۱: اطلاعات کارفرما -->
             <section id="section-client" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-5 pb-3 border-b border-gray-100">
-                    <i class="fas fa-user text-teal ml-2"></i>
-                    اطلاعات کارفرما
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-user text-teal ml-2"></i>
+                        اطلاعات کارفرما
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-client">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <div id="client-fields" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
             </section>
 
             <!-- مشخصات کلی پروژه و آسانسور -->
             <section id="section-project" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-5 pb-3 border-b border-gray-100">
-                    <i class="fas fa-clipboard-list text-teal ml-2"></i>
-                    مشخصات کلی پروژه و آسانسور
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-clipboard-list text-teal ml-2"></i>
+                        مشخصات کلی پروژه و آسانسور
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-project">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <div id="project-fields" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
             </section>
 
             <!-- باکس ۲: مرحله اول - ریل‌گذاری و نصب درب -->
             <section id="section-stage1" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
-                    <i class="fas fa-door-closed text-teal ml-2"></i>
-                    مرحله اول: ریل‌گذاری و نصب درب
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-door-closed text-teal ml-2"></i>
+                        مرحله اول: ریل‌گذاری و نصب درب
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-stage1">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <p class="text-xs text-gray-400 mb-4 mt-2">برای هر پارامتر، در صورت نیاز تیک را بردارید و مشخصات مدنظر را از فهرست انتخاب کنید.</p>
                 <div id="stage1-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
             <!-- بخش دوم: مرحله دوم - نصب مکانیکال -->
             <section id="section-stage2" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
-                    <i class="fas fa-gears text-teal ml-2"></i>
-                    مرحله دوم: نصب مکانیکال
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-gears text-teal ml-2"></i>
+                        مرحله دوم: نصب مکانیکال
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-stage2">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <p class="text-xs text-gray-400 mb-4 mt-2">مشخصات فنی و ساخت/برند هر قطعه را تعیین کنید.</p>
                 <div id="stage2-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
             <!-- مرحله سوم: راه‌اندازی -->
             <section id="section-stage3" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
-                    <i class="fas fa-bolt text-teal ml-2"></i>
-                    مرحله سوم: راه‌اندازی
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-bolt text-teal ml-2"></i>
+                        مرحله سوم: راه‌اندازی
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-stage3">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <p class="text-xs text-gray-400 mb-4 mt-2">تجهیزات تابلو برق، ایمنی و اقلام داخل کابین.</p>
                 <div id="stage3-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
             <!-- خدمات و شرایط مدنظر -->
             <section id="section-scope" class="bg-white rounded-2xl shadow-lg p-6 mb-8 print-card scroll-mt-24">
-                <h3 class="text-xl font-bold text-navy mb-1 pb-3 border-b border-gray-100">
-                    <i class="fas fa-list-check text-teal ml-2"></i>
-                    خدمات و شرایط مدنظر
-                </h3>
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-navy">
+                        <i class="fas fa-list-check text-teal ml-2"></i>
+                        خدمات و شرایط مدنظر
+                    </h3>
+                    <button type="button" class="btn-reset-section text-sm text-teal hover:text-navy font-medium flex items-center gap-1.5" data-section="section-scope">
+                        <i class="fas fa-undo"></i>
+                        بازگشت به پیش‌فرض
+                    </button>
+                </div>
                 <p class="text-xs text-gray-400 mb-4 mt-2">مواردی که مایلید در این برآورد لحاظ شود را انتخاب کنید.</p>
                 <div id="scope-fields"></div>
             </section>

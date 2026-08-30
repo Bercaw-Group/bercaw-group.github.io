@@ -58,6 +58,9 @@ const CLOUDFLARE_WORKER_URL = 'https://flat-fire-a0d0.zeya-hashemi.workers.dev/a
 /* رجیستری همه فیلدهای رندر شده، برای جمع‌آوری مقادیر هنگام ثبت فرم */
 const fieldRegistry = [];
 
+/* نگهداری مقادیر پیش‌فرض برای هر فیلد */
+const defaultValues = {};
+
 function el(tag, className, html) {
     const e = document.createElement(tag);
     if (className) e.className = className;
@@ -107,6 +110,11 @@ function renderSimpleField(container, field) {
     wrap.appendChild(err);
     container.appendChild(wrap);
     fieldRegistry.push({ id: field.id, label: field.label, el: control, required: !!field.required });
+    
+    // ذخیره مقدار پیش‌فرض
+    if (field.default !== undefined) {
+        defaultValues[field.id] = field.default;
+    }
     return control;
 }
 
@@ -149,6 +157,11 @@ function renderTechRow(container, item) {
     specWrap.appendChild(specControl);
     grid.appendChild(specWrap);
     fieldRegistry.push({ id: 'spec_' + item.id, label: item.label + ' — مشخصات فنی', el: specControl, includeEl: cb, required: false });
+    
+    // ذخیره مقدار پیش‌فرض برای مشخصات فنی
+    if (item.spec.default !== undefined) {
+        defaultValues['spec_' + item.id] = item.spec.default;
+    }
 
     const hasBrand = !(item.brand.type === 'text' && (!item.brand.default || item.brand.default.trim() === ''));
     if (hasBrand) {
@@ -158,6 +171,11 @@ function renderTechRow(container, item) {
         brandWrap.appendChild(brandControl);
         grid.appendChild(brandWrap);
         fieldRegistry.push({ id: 'brand_' + item.id, label: item.label + ' — ساخت/برند', el: brandControl, includeEl: cb, required: false });
+        
+        // ذخیره مقدار پیش‌فرض برای ساخت/برند
+        if (item.brand.default !== undefined) {
+            defaultValues['brand_' + item.id] = item.brand.default;
+        }
     }
 
     row.appendChild(grid);
@@ -264,16 +282,69 @@ function restoreDraft() {
 }
 
 function clearDraft() {
-    if (!confirm('آیا از پاک کردن تمام اطلاعات فرم مطمئن هستید؟')) return;
+    if (!confirm('آیا از بازگرداندن تمام اطلاعات فرم به مقادیر پیش‌فرض مطمئن هستید؟')) return;
     localStorage.removeItem(DRAFT_KEY);
-    document.getElementById('elevator-form').reset();
+    resetFormToDefaults();
+    document.getElementById('summary-panel').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* بازگرداندن کل فرم به مقادیر پیش‌فرض */
+function resetFormToDefaults() {
     fieldRegistry.forEach(f => {
+        const defaultVal = defaultValues[f.id];
+        if (defaultVal !== undefined) {
+            if (f.isCheckbox) {
+                f.el.checked = defaultVal === true || defaultVal === 'true';
+            } else {
+                f.el.value = defaultVal;
+            }
+        } else if (f.isCheckbox) {
+            f.el.checked = false;
+        } else {
+            f.el.value = '';
+        }
         if (f.includeEl) f.includeEl.checked = true;
     });
     const dateInput = document.getElementById('formDate');
     if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10);
-    document.getElementById('summary-panel').classList.add('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* بازگرداندن یک بخش خاص به مقادیر پیش‌فرض */
+function resetSection(sectionId) {
+    const sectionFieldIds = {
+        'section-client': CLIENT_FIELDS.map(f => f.id),
+        'section-project': PROJECT_FIELDS.map(f => f.id),
+        'section-stage1': STAGE1_ITEMS.map(item => 'val_' + item.id).concat('floorCoverCount'),
+        'section-stage2': STAGE2_ITEMS.flatMap(item => ['spec_' + item.id, 'brand_' + item.id]),
+        'section-stage3': STAGE3_ITEMS.flatMap(item => ['spec_' + item.id, 'brand_' + item.id]),
+        'section-scope': SCOPE_ITEMS.map((_, idx) => 'scope_' + idx)
+    };
+    
+    const fieldIds = sectionFieldIds[sectionId];
+    if (!fieldIds) return;
+    
+    fieldIds.forEach(id => {
+        const field = fieldRegistry.find(f => f.id === id);
+        if (!field) return;
+        
+        const defaultVal = defaultValues[id];
+        if (defaultVal !== undefined) {
+            if (field.isCheckbox) {
+                field.el.checked = defaultVal === true || defaultVal === 'true';
+            } else {
+                field.el.value = defaultVal;
+            }
+        } else if (field.isCheckbox) {
+            field.el.checked = false;
+        } else {
+            field.el.value = '';
+        }
+        if (field.includeEl) field.includeEl.checked = true;
+    });
+    
+    // ذخیره پیش‌نویس جدید
+    saveDraft();
 }
 
 /* ===================== اعتبارسنجی و ثبت فرم ===================== */
@@ -290,8 +361,25 @@ function validateForm() {
             if (errEl) errEl.classList.remove('hidden');
             if (!firstInvalid) firstInvalid = f.el;
         } else {
-            f.el.classList.remove('border-red-400');
-            if (errEl) errEl.classList.add('hidden');
+            // اعتبارسنجی مخصوص شماره تماس: حداقل ۱۱ رقم
+            if (f.id === 'clientPhone') {
+                const digits = f.el.value.replace(/\D/g, '');
+                if (digits.length < 11) {
+                    ok = false;
+                    f.el.classList.add('border-red-400');
+                    if (errEl) {
+                        errEl.textContent = 'شماره تماس باید حداقل ۱۱ رقم باشد';
+                        errEl.classList.remove('hidden');
+                    }
+                    if (!firstInvalid) firstInvalid = f.el;
+                } else {
+                    f.el.classList.remove('border-red-400');
+                    if (errEl) errEl.classList.add('hidden');
+                }
+            } else {
+                f.el.classList.remove('border-red-400');
+                if (errEl) errEl.classList.add('hidden');
+            }
         }
     });
     if (firstInvalid) {
@@ -385,7 +473,26 @@ async function submitFormAndShowSummary() {
             alert('کپی خودکار ممکن نشد؛ متن را به صورت دستی انتخاب و کپی کنید.');
         }
     };
-    document.getElementById('btn-print').onclick = () => window.print();
+    document.getElementById('btn-print').onclick = () => {
+      const isTelegram = /Telegram/i.test(navigator.userAgent);
+      const element = document.getElementById('summary-panel');
+
+      // تنظیمات ساخت PDF
+      const opt = {
+        margin:       0.5,
+        filename:     'برآورد-آسانسور-به‌رچاو.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      if (isTelegram) {
+        // در تلگرام به جای دیالوگ چاپ، فایل PDF دانلود می‌شود
+        html2pdf().set(opt).from(element).save();
+      } else {
+        window.print();
+      }
+    };
 }
 
 function showSummary() {
@@ -484,6 +591,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const clearBtn = document.getElementById('btn-clear-form');
     if (clearBtn) clearBtn.addEventListener('click', clearDraft);
+
+    // دکمه‌های بازگشت به پیش‌فرض برای هر بخش
+    document.querySelectorAll('.btn-reset-section').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const sectionId = btn.dataset.section;
+            if (sectionId && confirm('آیا از بازگرداندن این بخش به مقادیر پیش‌فرض مطمئن هستید؟')) {
+                resetSection(sectionId);
+            }
+        });
+    });
 
     document.querySelectorAll('.section-nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {

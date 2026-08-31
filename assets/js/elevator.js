@@ -611,13 +611,18 @@ async function downloadSummaryPDF() {
              *
              * این URL را با URL واقعی API خودت عوض کن.
              */
-            const response = await fetch('/api/upload-pdf', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/pdf'
-                },
-                body: pdfBlob
-            });
+            const response = await fetch(
+    'https://flat-fire-a0d0.zeya-hashemi.workers.dev/api/pdf',
+    {
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/pdf'
+        },
+
+        body: pdfBlob
+    }
+);
 
 
             if (!response.ok) {
@@ -636,6 +641,40 @@ async function downloadSummaryPDF() {
             /*
              * درخواست دانلود Native از Telegram
              */
+            console.log(
+    'PDF URL:',
+    result.url
+);
+
+console.log(
+    'Telegram version:',
+    window.Telegram.WebApp.version
+);
+
+console.log(
+    'Telegram platform:',
+    window.Telegram.WebApp.platform
+);
+
+if (
+    window.Telegram &&
+    window.Telegram.WebApp
+) {
+
+    window.Telegram.WebApp.onEvent(
+        'fileDownloadRequested',
+        function (event) {
+
+            console.log(
+                'Telegram PDF download status:',
+                event.status
+            );
+
+        }
+    );
+
+}
+
             window.Telegram.WebApp.downloadFile(
                 {
                     url: result.url,

@@ -920,6 +920,7 @@ async function downloadSummaryPDF() {
     }
 
 }
+
 if (
     window.Telegram &&
     window.Telegram.WebApp
@@ -942,70 +943,6 @@ if (
         }
     );
 
-}
-
-
-            window.Telegram.WebApp.downloadFile(
-                {
-                    url: result.url,
-                    file_name: 'برآورد-آسانسور.pdf'
-                },
-                function (accepted) {
-
-                    if (accepted) {
-
-                        console.log(
-                            'Telegram download accepted.'
-                        );
-
-                    } else {
-
-                        console.log(
-                            'Telegram download cancelled.'
-                        );
-
-                    }
-
-                }
-            );
-
-        } else {
-
-            /*
-             * اگر صفحه خارج از Telegram باز شده باشد
-             * فایل مستقیماً دانلود می‌شود.
-             */
-
-            const url = URL.createObjectURL(pdfBlob);
-
-            const a = document.createElement('a');
-
-            a.href = url;
-            a.download = 'برآورد-آسانسور.pdf';
-
-            document.body.appendChild(a);
-
-            a.click();
-
-            a.remove();
-
-            URL.revokeObjectURL(url);
-        }
-
-    } catch (error) {
-
-        console.error('PDF Error:', error);
-
-        alert(
-            '❌ دریافت PDF ناموفق بود.\nلطفاً دوباره تلاش کنید.'
-        );
-
-    } finally {
-
-        btn.innerHTML = originalHtml;
-        btn.disabled = false;
-
-    }
 }
 
 /* ===================== ارسال فرم به سرور (Google Sheets + Telegram) ===================== */

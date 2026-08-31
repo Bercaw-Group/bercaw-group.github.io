@@ -543,7 +543,7 @@ async function downloadSummaryPDF() {
     const btn = document.getElementById('btn-download-pdf');
 
     if (!btn) {
-        console.error('دکمه دریافت PDF پیدا نشد.');
+        alert('دکمه دریافت PDF پیدا نشد.');
         return;
     }
 
@@ -555,19 +555,89 @@ async function downloadSummaryPDF() {
         btn.innerHTML =
             '<i class="fas fa-spinner fa-spin ml-2"></i> در حال ساخت PDF...';
 
-        const element = document.getElementById('summary-panel');
-
-        if (!element) {
-            throw new Error('بخش خلاصه فرم پیدا نشد.');
-        }
 
         /*
-         * ساخت PDF از خلاصه فرم
+         * --------------------------------------------------
+         * 1. بررسی Telegram WebApp
+         * --------------------------------------------------
          */
+
+        const tg =
+            window.Telegram &&
+            window.Telegram.WebApp
+                ? window.Telegram.WebApp
+                : null;
+
+
+        console.log('Telegram WebApp:', tg);
+
+        if (tg) {
+
+            tg.ready();
+
+            console.log(
+                'Telegram version:',
+                tg.version
+            );
+
+            console.log(
+                'Telegram platform:',
+                tg.platform
+            );
+
+            console.log(
+                'downloadFile:',
+                typeof tg.downloadFile
+            );
+
+        }
+
+
+        /*
+         * --------------------------------------------------
+         * 2. پیدا کردن خلاصه
+         * --------------------------------------------------
+         */
+
+        const element =
+            document.getElementById('summary-panel');
+
+
+        if (!element) {
+            throw new Error(
+                'summary-panel پیدا نشد.'
+            );
+        }
+
+
+        /*
+         * اطمینان از اینکه خلاصه واقعاً نمایش داده شده
+         */
+
+        element.classList.remove('hidden');
+
+
+        /*
+         * صبر برای آماده شدن فونت‌ها
+         */
+
+        if (document.fonts) {
+            await document.fonts.ready;
+        }
+
+
+        /*
+         * --------------------------------------------------
+         * 3. ساخت PDF
+         * --------------------------------------------------
+         */
+
         const options = {
+
             margin: 0.3,
 
-            filename: 'برآورد-آسانسور.pdf',
+            filename:
+                'برآورد-آسانسور.pdf',
 
             image: {
                 type: 'jpeg',
@@ -575,87 +645,281 @@ async function downloadSummaryPDF() {
             },
 
             html2canvas: {
+
                 scale: 2,
+
                 useCORS: true,
-                backgroundColor: '#ffffff'
+
+                allowTaint: false,
+
+                backgroundColor: '#ffffff',
+
+                logging: true
+
             },
 
             jsPDF: {
+
                 unit: 'in',
+
                 format: 'a4',
+
                 orientation: 'portrait'
+
             }
+
         };
 
-        const pdfBlob = await html2pdf()
-            .set(options)
-            .from(element)
-            .output('blob');
+
+        console.log(
+            'شروع ساخت PDF...'
+        );
+
+
+        const pdfBlob =
+            await html2pdf()
+                .set(options)
+                .from(element)
+                .output('blob');
 
 
         /*
-         * فقط در Telegram Mini App
+         * --------------------------------------------------
+         * 4. بررسی بسیار مهم PDF
+         * --------------------------------------------------
          */
+
+        console.log(
+            'PDF Blob:',
+            pdfBlob
+        );
+
+        console.log(
+            'PDF size:',
+            pdfBlob.size,
+            'bytes'
+        );
+
+
+        /*
+         * PDF سالم باید چندین KB باشد.
+         */
+
         if (
-            window.Telegram &&
-            window.Telegram.WebApp &&
-            typeof window.Telegram.WebApp.downloadFile === 'function'
+            !pdfBlob ||
+            pdfBlob.size < 5000
         ) {
 
-            btn.innerHTML =
-                '<i class="fas fa-spinner fa-spin ml-2"></i> در حال آماده‌سازی دانلود...';
+            throw new Error(
+                'PDF ساخته شد اما حجم آن غیرعادی و بسیار کم است: ' +
+                pdfBlob.size +
+                ' bytes'
+            );
+
+        }
+
+
+        /*
+         * --------------------------------------------------
+         * 5. اگر Telegram باشد
+         * --------------------------------------------------
+         */
+
+        if (tg) {
+
+            /*
+             * Telegram باید downloadFile داشته باشد.
+             */
+
+            if (
+                typeof tg.downloadFile !==
+                'function'
+            ) {
+
+                throw new Error(
+                    'نسخه Telegram WebApp فعلی downloadFile را پشتیبانی نمی‌کند.'
+                );
+
+            }
 
 
             /*
-             * ارسال PDF به سرور
-             *
-             * این URL را با URL واقعی API خودت عوض کن.
+             * آپلود PDF به Worker
              */
-            const response = await fetch(
-    'https://flat-fire-a0d0.zeya-hashemi.workers.dev/api/pdf',
-    {
-        method: 'POST',
 
-        headers: {
-            'Content-Type': 'application/pdf'
-        },
+            btn.innerHTML =
+                '<i class="fas fa-spinner fa-spin ml-2"></i> در حال آماده‌سازی فایل...';
 
-        body: pdfBlob
-    }
-);
+
+            const response =
+                await fetch(
+                    'https://flat-fire-a0d0.zeya-hashemi.workers.dev/api/pdf',
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/pdf'
+                        },
+
+                        body: pdfBlob
+                    }
+                );
+
+
+            console.log(
+                'Worker status:',
+                response.status
+            );
 
 
             if (!response.ok) {
-                throw new Error('آپلود PDF به سرور ناموفق بود.');
+
+                const errorText =
+                    await response.text();
+
+                console.error(
+                    'Worker error:',
+                    errorText
+                );
+
+                throw new Error(
+                    'Worker خطا داد: HTTP ' +
+                    response.status
+                );
+
             }
 
 
-            const result = await response.json();
+            const result =
+                await response.json();
 
 
-            if (!result.url) {
-                throw new Error('سرور URL فایل PDF را برنگرداند.');
+            console.log(
+                'Worker result:',
+                result
+            );
+
+
+            if (
+                !result ||
+                !result.url
+            ) {
+
+                throw new Error(
+                    'Worker URL فایل PDF را برنگرداند.'
+                );
+
             }
+
+
+            console.log(
+                'PDF URL:',
+                result.url
+            );
 
 
             /*
-             * درخواست دانلود Native از Telegram
+             * ------------------------------------------------
+             * Telegram Download
+             * ------------------------------------------------
              */
-            console.log(
-    'PDF URL:',
-    result.url
-);
 
-console.log(
-    'Telegram version:',
-    window.Telegram.WebApp.version
-);
+            btn.innerHTML =
+                '<i class="fas fa-spinner fa-spin ml-2"></i> در انتظار Telegram...';
 
-console.log(
-    'Telegram platform:',
-    window.Telegram.WebApp.platform
-);
 
+            tg.downloadFile(
+
+                {
+                    url: result.url,
+
+                    file_name:
+                        'برآورد-آسانسور.pdf'
+                },
+
+                function (accepted) {
+
+                    console.log(
+                        'Telegram download accepted:',
+                        accepted
+                    );
+
+                    if (!accepted) {
+
+                        alert(
+                            'دانلود توسط Telegram لغو شد.'
+                        );
+
+                    }
+
+                }
+
+            );
+
+
+            return;
+        }
+
+
+        /*
+         * --------------------------------------------------
+         * 6. خارج از Telegram
+         * --------------------------------------------------
+         */
+
+        const url =
+            URL.createObjectURL(pdfBlob);
+
+
+        const a =
+            document.createElement('a');
+
+
+        a.href = url;
+
+        a.download =
+            'برآورد-آسانسور.pdf';
+
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+
+        setTimeout(
+            () => URL.revokeObjectURL(url),
+            1000
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            'PDF DOWNLOAD ERROR:',
+            error
+        );
+
+
+        alert(
+            '❌ خطا در دریافت PDF:\n\n' +
+            error.message
+        );
+
+
+    } finally {
+
+        btn.innerHTML =
+            originalHtml;
+
+        btn.disabled =
+            false;
+
+    }
+
+}
 if (
     window.Telegram &&
     window.Telegram.WebApp
@@ -666,7 +930,12 @@ if (
         function (event) {
 
             console.log(
-                'Telegram PDF download status:',
+                'Telegram fileDownloadRequested:',
+                event
+            );
+
+            console.log(
+                'Download status:',
                 event.status
             );
 
@@ -674,6 +943,7 @@ if (
     );
 
 }
+
 
             window.Telegram.WebApp.downloadFile(
                 {

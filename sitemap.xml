@@ -1,46 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- صفحه اصلی اصلی سایت -->
   <url>
     <loc>https://bercaw-group.github.io/index.html</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
+  <!-- صفحه فرم درخواست -->
   <url>
-    <loc>https://bercaw-group.github.io/products.html</loc>
+    <loc>https://bercaw-group.github.io/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- بخش آجر نما نسوز (brick) -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://bercaw-group.github.io/brick/brick-index.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://bercaw-group.github.io/portfolio.html</loc>
+    <loc>https://bercaw-group.github.io/brick/brick-products.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/brick/brick-portfolio.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- ========================================== -->
+  <!-- بخش آسانسور (elevator) -->
+  <!-- ========================================== -->
   <url>
-    <loc>https://bercaw-group.github.io/prices.html</loc>
+    <loc>https://bercaw-group.github.io/elevator/elevator-index.html</loc>
     <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/elevator/elevator-products.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/elevator/elevator-portfolio.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/elevator/elevator-module.html</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
+  <!-- ========================================== -->
+  <!-- بخش درب و پنجره (window) -->
+  <!-- ========================================== -->
   <url>
-    <loc>https://bercaw-group.github.io/elevator.html</loc>
+    <loc>https://bercaw-group.github.io/window/window-index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/window/window-products.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/window/window-portfolio.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/window/window-render.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 
+  <!-- ========================================== -->
+  <!-- بخش طراحی معماری، دکوراسیون و نما (architect) -->
+  <!-- ========================================== -->
   <url>
-    <loc>https://bercaw-group.github.io/UPVC.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://bercaw-group.github.io/architect/architect-index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://bercaw-group.github.io/video.html</loc>
+    <loc>https://bercaw-group.github.io/architect/architect-portfolio.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- میلگرد بستر و والمش (wallmesh) -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://bercaw-group.github.io/wallmesh/wallmesh-index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/wallmesh/wallmesh-products.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/wallmesh/wallmesh-portfolio.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- بخش استودیو به‌رچاو (video) -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://bercaw-group.github.io/video/video-index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/video/video-products.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/video/video-portfolio.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bercaw-group.github.io/video/video-form.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

@@ -13,13 +13,14 @@ html, body {
 }
 
 body {
-    font-family: 'Vazirmatn', sans-serif;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
     direction: rtl;
     overflow-x: hidden;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; 
 }
 
 /* ===== Custom Scrollbar ===== */

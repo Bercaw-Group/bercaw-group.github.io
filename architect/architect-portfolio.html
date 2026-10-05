@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمونه های طراحی معماری و نما | به‌رچاو</title>
+    <meta name="description" content="مشاهده نمونه‌کارها و پروژه‌های طراحی شده معماری و نما توسط شرکت به‌رچاو.">
+    <link rel="canonical" href="https://bercaw-group.github.io/architect/architect-portfolio.html">
+
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="../assets/images/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#0a192f',
+                        'navy-light': '#112240',
+                        'teal': '#20b2aa',
+                        'teal-light': '#64ffda',
+                    },
+                    fontFamily: { 'vazir': ['Vazirmatn', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-vazir bg-gray-50">
+
+<!-- Header -->
+<header id="architect-header" class="fixed top-0 left-0 right-0 z-50 text-white transition-all duration-300">
+    <nav class="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex justify-between items-center flex-nowrap gap-2 sm:gap-3">
+        
+        <!-- ۱. سمت راست: لوگو + عنوان (در دسکتاپ) | دکمه همبرگری + لوگو (در موبایل) -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <!-- دکمه همبرگری (فقط موبایل) -->
+            <button id="mobile-menu-btn" type="button" aria-controls="mobile-menu" aria-expanded="false" class="lg:hidden flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white/20 border border-white/30 backdrop-blur-md text-white hover:bg-teal hover:border-teal transition-all shadow-md shrink-0">
+                <span class="sr-only">باز کردن منو</span>
+                <i id="mobile-menu-icon" class="fas fa-bars text-lg sm:text-xl"></i>
+            </button>
+
+            <!-- لوگو -->
+            <a href="../index.html" class="flex items-center shrink-0">
+                <img src="../assets/images/logo-light.png" alt="به‌رچاو" class="h-8 sm:h-12 w-auto object-contain transition-opacity duration-300" id="header-logo-light" onerror="this.src='../assets/images/logo.png'; this.classList.add('brightness-0','invert');">
+                <img src="../assets/images/logo.png" alt="به‌رچاو" class="h-8 sm:h-12 w-auto object-contain hidden transition-opacity duration-300" id="header-logo-dark">
+            </a>
+
+            <!-- متون عنوان و زیرعنوان (دسکتاپ سمت راست) -->
+            <div class="hidden lg:block min-w-0 text-right mr-1">
+                <h1 class="header-title text-lg md:text-xl font-bold text-white transition-colors duration-300 truncate leading-tight" id="header-title">به‌رچاو | طراحی معماری، نما و دکوراسیون</h1>
+                <p class="header-subtitle text-xs text-gray-300 transition-colors duration-300 truncate mt-0.5" id="header-subtitle">طراحی کلاسیک و مدرن</p>
+            </div>
+        </div>
+
+        <!-- ۲. وسط: منوی دسکتاپ -->
+        <ul id="desktop-menu" class="hidden lg:flex gap-6 font-medium text-white transition-colors duration-300">
+            <li><a href="./architect-index.html" class="hover:text-teal-light transition">صفحه اصلی</a></li>
+            <li><a href="./architect-portfolio.html" class="text-teal-light font-bold border-b-2 border-teal-light pb-1">نمونه کارها</a></li>
+            <li><a href="#contact" class="hover:text-teal-light transition">تماس با ما</a></li>
+        </ul>
+
+        <!-- ۳. سمت چپ: دکمه‌های اقدام (در دسکتاپ) | متون عنوان (در موبایل) -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink min-w-0 justify-end">
+            <!-- متون عنوان و زیرعنوان (موبایل سمت چپ) -->
+            <div class="lg:hidden min-w-0 text-left">
+                <!-- کلاس text-white حذف شد تا با اسکرول رنگ را خودکار از هدر بگیرد -->
+                <h1 class="header-title text-xs sm:text-lg font-bold transition-colors duration-300 truncate leading-tight" id="header-title-mobile">به‌رچاو | طراحی معماری، نما و دکوراسیون</h1>
+                <!-- کلاس text-gray-300 حذف و opacity-80 جایگزین شد -->
+                <p class="header-subtitle text-[9px] sm:text-xs opacity-80 transition-colors duration-300 truncate mt-0.5" id="header-subtitle-mobile">طراحی کلاسیک و مدرن</p>
+            </div>
+
+            <!-- دکمه‌های اقدام دسکتاپ -->
+            <a href="../form.html" class="hidden md:inline-block bg-teal text-white px-5 py-2.5 rounded-lg hover:bg-teal-light hover:text-navy transition shadow-md font-medium">
+                <i class="fas fa-comments ml-2"></i>درخواست مشاوره رایگان
+            </a>
+            <a href="./architect-index.html" id="header-home-btn" class="hidden md:inline-flex items-center bg-white/10 text-white px-4 py-2.5 rounded-lg hover:bg-white/20 transition">
+                <i class="fas fa-arrow-right ml-2"></i><span>بازگشت به صفحه قبلی</span>
+            </a>
+        </div>
+
+    </nav>
+
+    <!-- کشوی منوی موبایل -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-[#0f172a] border-t border-slate-700 shadow-2xl">
+        <ul class="flex flex-col font-medium text-white px-4 py-3 gap-1">
+            <li>
+                <a href="./architect-index.html" class="mobile-menu-link flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">
+                    <i class="fas fa-arrow-right ml-3 text-lg"></i>
+                    <span>بازگشت به صفحه قبلی</span>
+                </a>
+            </li>
+            <li><a href="./architect-index.html" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">صفحه اصلی</a></li>
+            <li><a href="./architect-portfolio.html" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base text-teal-light font-bold">نمونه کارها</a></li>
+            <li><a href="#contact" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">تماس با ما</a></li>
+            
+            <li class="pt-2 border-t border-slate-700/60 mt-1">
+                <a href="../form.html" class="mobile-menu-link flex items-center justify-center px-3 py-2.5 rounded-lg bg-teal text-white hover:bg-teal-light hover:text-navy transition text-base">
+                    <i class="fas fa-comments ml-2 text-lg"></i>
+                    <span>درخواست مشاوره رایگان</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+    <!-- فاصله جایگزین ارتفاع هدر ثابت -->
+    <div id="header-spacer"></div>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-navy mb-3">نمونه های طراحی معماری و نما</h1>
+            <p class="text-gray-500 text-sm">
+                <i class="fas fa-sync-alt text-teal ml-1"></i>
+                آخرین بروزرسانی: <span id="last-update">در حال بارگذاری...</span>
+            </p>
+        </div>
+
+        <!-- بخش جستجوی جذاب و مدرن -->
+        <div class="max-w-2xl mx-auto mb-10 px-4">
+            <div class="relative flex items-center group">
+                <div class="absolute right-4 text-slate-400 pointer-events-none transition-colors group-focus-within:text-teal">
+                    <i class="fas fa-search text-lg"></i>
+                </div>
+                
+                <input type="text" id="portfolio-search" 
+                       placeholder="جستجو در نام پروژه، شهر یا توضیحات..." 
+                       class="w-full pr-12 pl-28 py-3.5 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal focus:ring-4 focus:ring-teal/10 transition-all duration-300">
+
+                <div class="absolute left-3 bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded-xl font-medium flex items-center gap-1.5 border border-slate-200/60 pointer-events-none">
+                    <span id="results-count" class="font-bold text-teal">0</span>
+                    <span>پروژه</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="portfolio-loading" class="text-center py-20">
+            <i class="fas fa-spinner fa-spin text-5xl text-teal mb-4"></i>
+            <p class="text-lg text-gray-600">در حال بارگذاری نمونه کارها...</p>
+        </div>
+
+        <!-- گرید 4 ستونه -->
+        <div id="portfolio-container" style="display: none;">
+            <div id="full-portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            
+            <!-- بخش صفحه‌بندی -->
+            <div id="pagination-container" class="flex justify-center items-center gap-2 mt-12 mb-8 dir-ltr"></div>
+        </div>
+
+        <div id="empty-state" class="hidden text-center py-20">
+            <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+            <p class="text-xl text-gray-600">هیچ موردی یافت نشد</p>
+            <p class="text-gray-500 mt-2">لطفاً عبارت جستجو را تغییر دهید</p>
+        </div>
+    </main>
+
+    <!-- پاپ‌آپ دو بخشی جزئیات پروژه با سایز بزرگتر -->
+    <div id="project-modal" class="fixed inset-0 bg-black/80 z-[110] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-6xl w-full overflow-hidden relative flex flex-col md:flex-row min-h-[650px] max-h-[95vh] dir-rtl">
+
+            <button onclick="closeProjectModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 text-2xl transition z-30 bg-white/80 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center shadow">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- بخش نمایش تصویر / ویدیو -->
+            <div class="w-full md:w-3/5 bg-slate-900 relative min-h-[400px] md:min-h-full select-none flex items-center justify-center p-2 overflow-hidden">
+                
+                <!-- تصویر نمونه کار -->
+                <img id="modal-img" src="" alt="" class="w-full h-full object-contain touch-none select-none">
+                
+                <!-- ویدیو برای نمونه‌کارهای ویدیویی -->
+                <video id="modal-video" controls class="w-full h-full object-contain absolute inset-0 hidden z-10"></video>
+
+                <button id="modal-prev-btn" onclick="changeModalImg(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button id="modal-next-btn" onclick="changeModalImg(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div id="modal-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs px-3 py-1 rounded-full dir-ltr z-20 font-sans">
+                    1 / 1
+                </div>
+            </div>
+
+            <!-- بخش توضیحات در پاپ‌آپ -->
+            <div class="w-full md:w-2/5 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-4">
+                        <span id="modal-category" class="bg-teal/10 text-teal px-3.5 py-1 rounded-full text-xs font-semibold"></span>
+                        <span id="modal-city" class="text-xs text-gray-500 flex items-center"></span>
+                    </div>
+
+                    <h2 id="modal-title" class="text-2xl font-bold text-navy mb-4 leading-snug"></h2>
+
+                    <div class="border-t border-gray-100 pt-4 mb-4">
+                        <h4 class="text-sm font-bold text-gray-700 mb-2 flex items-center">
+                            <i class="fas fa-info-circle text-teal ml-2"></i>توضیحات پروژه:
+                        </h4>
+                        <p id="modal-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 mt-auto">
+                    <button onclick="closeProjectModal()" class="w-full bg-navy hover:bg-teal text-white py-3 rounded-xl transition font-medium">
+                        بستن صفحه
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-10 md:py-14 bg-slate-50 text-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none z-0 opacity-40">
+            <div class="absolute top-1/2 -right-20 w-72 h-72 bg-teal/15 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 -left-20 w-72 h-72 bg-teal/10 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-6xl relative z-10">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2" data-aos="fade-up">تماس با ما</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-teal to-teal-light mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 h-full" data-aos="fade-right">
+                    <a href="tel:09188797939" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                                <i class="fas fa-phone-alt text-base"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">تلفن تماس</span>
+                        </div>
+                        <div class="text-left dir-ltr">
+                            <span class="text-sm font-bold text-slate-800 group-hover:text-teal transition-colors font-mono">09188797939</span>
+                        </div>
+                    </a>
+
+                    <div class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between sm:col-span-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                                <i class="fas fa-map-marker-alt text-base"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500">آدرس</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed font-medium">
+                            کردستان، تکیه و چمن، نبش پارک IT
+                        </p>
+                    </div>
+
+                    <a href="https://instagram.com/bercaw_marketing" target="_blank" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">اینستاگرام</span>
+                        </div>
+                        <div class="text-left dir-ltr">
+                            <span class="text-xs font-bold text-slate-700 group-hover:text-teal transition-colors font-mono">bercaw_marketing@</span>
+                        </div>
+                    </a>
+
+                    <a href="https://t.me/bercaw_bot" target="_blank" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                                <i class="fab fa-telegram-plane text-lg"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">ربات تلگرام</span>
+                        </div>
+                        <div class="text-left dir-ltr">
+                            <span class="text-xs font-bold text-slate-700 group-hover:text-teal transition-colors font-mono">bercaw_bot@</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-7 relative rounded-xl overflow-hidden border border-slate-200/80 shadow-md min-h-[280px] lg:min-h-full" data-aos="fade-left">
+                    <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm border border-slate-200/60 z-10 flex items-center gap-2 pointer-events-none">
+                        <span class="w-2 h-2 rounded-full bg-teal animate-pulse"></span>
+                        <span class="text-xs font-bold text-slate-800">موقعیت دفتر به‌رچاو</span>
+                    </div>
+                    <iframe 
+                        src="https://www.google.com/maps?q=35.308114,46.980841&hl=fa&z=15&output=embed"
+                        class="w-full h-full min-h-[280px] border-0 grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Buttons Container -->
+<div id="floating-actions" class="fixed bottom-4 left-4 md:bottom-6 md:left-6 flex flex-row md:flex-col-reverse gap-2 md:gap-3 z-40 opacity-0 pointer-events-none transition-all duration-300">
+    
+    <!-- Back to Top Button -->
+    <button id="scroll-top" class="w-9 h-9 md:w-11 md:h-11 bg-[#1e3a5f] text-white rounded-full shadow-md hover:bg-teal transition flex items-center justify-center text-xs md:text-sm" title="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Phone Call Button -->
+    <a href="tel:09188797939" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fas fa-phone-alt"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300" dir="ltr">
+            09188797939
+        </span>
+    </a>
+
+    <!-- Telegram Bot Button -->
+    <a href="https://t.me/bercaw_bot" target="_blank" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fab fa-telegram-plane"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+            bercaw_bot
+        </span>
+    </a>
+
+    <!-- Instagram Button -->
+    <a href="https://instagram.com/bercaw_marketing" target="_blank" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fab fa-instagram"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+            bercaw_marketing
+        </span>
+    </a>
+
+</div>
+
+    <!-- Image Lightbox -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-[110] hidden items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-4 left-4 text-white text-3xl hover:text-teal transition">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] rounded-lg">
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="relative bg-slate-900 text-slate-300 pt-10 pb-8 overflow-hidden border-t border-slate-800/80 z-10">
+        <div class="absolute inset-0 pointer-events-none z-[-1] overflow-hidden">
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#20B2AA 1px, transparent 1px), linear-gradient(to right, #20B2AA 1px, transparent 1px); background-size: 36px 36px;"></div>
+            <div class="absolute -top-28 right-1/4 w-96 h-96 bg-teal/20 rounded-full blur-[140px]"></div>
+            <div class="absolute -bottom-20 left-1/3 w-[30rem] h-[30rem] bg-teal/15 rounded-full blur-[160px]"></div>
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/60 to-transparent"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-6xl relative z-10">
+            <div class="grid md:grid-cols-3 gap-10 mb-12">
+                <div class="space-y-4">
+                    <img src="../assets/images/logo-light.png" alt="به‌رچاو" class="h-12 brightness-100">
+                    <h3 class="text-xl font-bold text-white">به‌رچاو</h3>
+                    <p class="text-teal font-medium text-sm">راهکارهای هوشمند تامین و اجرای صنعت ساختمان</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        شریک مطمئن شما در تامین مصالح و اجرای پروژه‌های ساختمانی
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                        دسترسی سریع
+                        <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                    </h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="../index.html" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> صفحه خانه</a></li>
+                        <li><a href="./architect-index.html" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> صفحه اصلی طراحی معماری</a></li>
+                        <li><a href="../form.html" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> درخواست مشاوره رایگان</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                        اطلاعات تماس
+                        <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                    </h4>
+                    <ul class="space-y-3.5 text-slate-400 text-sm">
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fas fa-phone text-xs"></i>
+                            </div>
+                            <a href="tel:09188797939" dir="ltr" class="hover:text-teal transition-colors font-mono">09188797939</a>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0 mt-0.5">
+                                <i class="fas fa-map-marker-alt text-xs"></i>
+                            </div>
+                            <span class="leading-relaxed">کردستان، تکیه و چمن، نبش پارک IT</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fab fa-instagram text-xs"></i>
+                            </div>
+                            <a href="https://instagram.com/bercaw_marketing" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_marketing</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fab fa-telegram text-xs"></i>
+                            </div>
+                            <a href="https://t.me/bercaw_bot" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_bot</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800/80 pt-2 text-center text-slate-500 text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+                <p>© 2026 به‌رچاو. تمامی حقوق محفوظ است.</p>
+                <p class="flex items-center gap-1.5">طراحی و توسعه با <i class="fas fa-heart text-red-500 text-xs"></i> توسط 
+                    <a href="https://www.telegram.me/zeya_hashemi" target="_blank" rel="noopener noreferrer">zeya_hashemi</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: true });</script>
+    <script src="js/architect-portfolio.js"></script>
+
+</body>
+</html>

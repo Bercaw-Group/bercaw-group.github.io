@@ -28,8 +28,7 @@
 }
 </script>
     
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="alternate icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +37,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     
     <script>
         tailwind.config = {
@@ -83,500 +82,454 @@
 </head>
 <body class="font-vazir bg-gray-50 overflow-x-hidden">
 
-    <!-- Header -->
-    <header id="header" class="fixed inset-x-0 top-0 w-full max-w-full z-50 bg-white shadow-lg transition-colors duration-300">
+<!-- Header -->
+<header id="header" class="fixed inset-x-0 top-0 w-full max-w-full z-50 bg-white shadow-lg transition-colors duration-300">
     <nav class="container mx-auto px-4 py-4 flex justify-between items-center w-full">
-        <div class="flex items-center gap-3">
-            <img src="assets/images/logo.png" alt="بَرچاو" class="h-12 w-auto" id="header-logo">
+        <!-- بخش لوگو -->
+        <div class="flex items-center gap-3 order-2 lg:order-none">
+            <a href="#home" class="flex items-center">
+                <!-- لوگوی روشن -->
+                <img src="assets/images/logo-light.png" alt="به‌رچاو" class="h-12 w-auto hidden transition-opacity duration-300" id="header-logo-light">
+                
+                <!-- لوگوی تیره -->
+                <img src="assets/images/logo.png" alt="به‌رچاو" class="h-12 w-auto block transition-opacity duration-300" id="header-logo-dark">
+            </a>
             <div class="hidden md:block">
                 <h1 class="text-xl font-bold transition-colors duration-300" id="header-title">به‌رچاو</h1>
                 <p class="text-xs transition-colors duration-300" id="header-subtitle">راهکارهای هوشمند ساختمان</p>
             </div>
         </div>
 
-        <ul class="hidden lg:flex gap-8 font-medium" id="desktop-menu">
-            <li><a href="#home" class="nav-link transition-colors duration-300">خانه</a></li>
-            <li><a href="#about" class="nav-link transition-colors duration-300">درباره ما</a></li>
-            <li><a href="products.html" class="nav-link transition-colors duration-300">محصولات</a></li>
-            <li><a href="#catalogs" class="nav-link transition-colors duration-300">کاتالوگ‌ها</a></li>
-            <li><a href="#portfolio" class="nav-link transition-colors duration-300">نمونه کارها</a></li>
-            <li><a href="prices.html" class="nav-link transition-colors duration-300">لیست قیمت</a></li>
-            <li class="relative group">
-                <button type="button" class="nav-link transition-colors duration-300 flex items-center gap-1">
-                    فرم‌ها
-                    <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                </button>
-                <ul class="absolute top-full right-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
-                    <li><a href="video.html" class="block px-5 py-3 text-navy hover:bg-teal/10 hover:text-teal transition-colors duration-300">فرم درخواست تولید ویدیو</a></li>
-                    <li><a href="elevator.html" class="block px-5 py-3 text-navy hover:bg-teal/10 hover:text-teal transition-colors duration-300">فرم بازدید آسانسور</a></li>
-                    <li><a href="UPVC.html" class="block px-5 py-3 text-navy hover:bg-teal/10 hover:text-teal transition-colors duration-300">فرم بازدید درب و پنجره UPVC و فلزی</a></li>
-                    <li><a href="#" class="block px-5 py-3 text-navy hover:bg-teal/10 hover:text-teal transition-colors duration-300">فرم بازدید جهت طراحی نما</a></li>
-                    <li><a href="#" class="block px-5 py-3 text-navy hover:bg-teal/10 hover:text-teal transition-colors duration-300">فرم بازدید اجرای میلگرد بستر یا والمش</a></li>
-                </ul>
-            </li>
-            <li><a href="#contact" class="nav-link transition-colors duration-300">تماس با ما</a></li>
-        </ul>
+        <!-- منوی دسکتاپ با تراز دقیق عمودی -->
+<ul class="hidden lg:flex items-center gap-8 font-medium" id="desktop-menu">
+    <li><a href="#home" class="nav-link transition-colors duration-300">خانه</a></li>
+    
+    <!-- حوزه‌های فعالیت (هم‌تراز با بقیه گزینه‌ها) -->
+    <li class="relative group flex items-center">
+        <a href="#categories" class="nav-link transition-colors duration-300 flex items-center gap-1">
+            <span>حوزه‌های فعالیت</span>
+            <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </a>
 
-        <button onclick="openConsultationModal()" id="header-cta" class="hidden lg:block bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-teal-light transition shadow-lg hover:shadow-xl">
+        <!-- زیرمنوی دسکتاپ با pt-2 به عنوان پل ارتباطی موس (بدون فاصله افتادن) -->
+        <div class="absolute right-0 top-full hidden group-hover:block w-56 pt-2 z-50">
+            <div class="bg-white rounded-lg shadow-lg py-2 border border-gray-100">
+                <a href="./brick/brick-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">آجر نما نسوز</a>
+                <a href="./elevator/elevator-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">آسانسور</a>
+                <a href="./window/window-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">درب و پنجره</a>
+                <a href="./architect/architect-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">طراحی معماری، دکوراسیون و نما</a>
+                <a href="./wallmesh/wallmesh-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">میلگرد بستر و والمش</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">سایر مصالح ساختمانی</a>
+                <a href="./video/video-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">تصویربرداری، تدوین و خدمات تولید محتوا</a>
+            </div>
+        </div>
+    </li>
+    
+    <li><a href="#about" class="nav-link transition-colors duration-300">درباره ما</a></li>
+    <li><a href="#process" class="nav-link transition-colors duration-300">فرآیند همکاری</a></li>
+    <li><a href="#faq" class="nav-link transition-colors duration-300">سوالات متداول</a></li>
+    <li><a href="#contact" class="nav-link transition-colors duration-300">تماس با ما</a></li>
+</ul>
+
+        <!-- دکمه دسکتاپ -->
+        <a href="form.html" id="header-cta" class="hidden lg:inline-block bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-teal-light hover:text-navy transition shadow-lg hover:shadow-xl">
             <i class="fas fa-comments ml-2"></i>
             درخواست مشاوره رایگان
-        </button>
+        </a>
 
-        <button id="mobile-menu-btn" class="lg:hidden text-2xl transition-colors duration-300">
+        <!-- دکمه منوی موبایل -->
+        <button id="mobile-menu-btn" class="lg:hidden text-2xl transition-colors duration-300 order-1">
             <i class="fas fa-bars"></i>
         </button>
     </nav>
 
+    <!-- منوی موبایل -->
     <div id="mobile-menu" class="lg:hidden hidden bg-white shadow-lg w-full">
-        <ul class="flex flex-col gap-4 p-6 font-medium">
-            <li><a href="#home" class="block text-navy hover:text-teal">خانه</a></li>
-            <li><a href="#about" class="block text-navy hover:text-teal">درباره ما</a></li>
-            <li><a href="products.html" class="block text-navy hover:text-teal">محصولات</a></li>
-            <li><a href="#catalogs" class="block text-navy hover:text-teal">کاتالوگ‌ها</a></li>
-            <li><a href="#portfolio" class="block text-navy hover:text-teal">نمونه کارها</a></li>
-            <li><a href="prices.html" class="block text-navy hover:text-teal">لیست قیمت</a></li>
+        <ul class="flex flex-col gap-3 p-6 font-medium">
+            <li><a href="#home" class="block text-navy hover:text-teal py-1">خانه</a></li>
+            
+            <!-- حوزه‌های فعالیت در موبایل -->
             <li>
-                <button type="button" id="mobile-forms-toggle" class="w-full flex items-center justify-between text-navy hover:text-teal">
-                    <span>فرم‌ها</span>
-                    <i class="fas fa-chevron-down text-xs transition-transform duration-300" id="mobile-forms-icon"></i>
-                </button>
-                <ul id="mobile-forms-submenu" class="hidden flex flex-col gap-3 pt-3 pr-4 mt-1 border-r-2 border-teal/30">
-                    <li><a href="video.html" class="block text-navy hover:text-teal">فرم درخواست تولید ویدیو</a></li>
-                    <li><a href="elevator.html" class="block text-navy hover:text-teal">فرم بازدید آسانسور</a></li>
-                    <li><a href="UPVC.html" class="block text-navy hover:text-teal">فرم بازدید درب و پنجره UPVC و فلزی</a></li>
-                    <li><a href="#" class="block text-navy hover:text-teal">فرم بازدید جهت طراحی نما</a></li>
-                    <li><a href="#" class="block text-navy hover:text-teal">فرم بازدید اجرای میلگرد بستر یا والمش</a></li>
-                </ul>
+                <div class="flex justify-between items-center text-navy hover:text-teal py-1 cursor-pointer" id="mobile-categories-btn">
+                    <span>حوزه‌های فعالیت</span>
+                    <svg id="mobile-arrow" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+                
+                <!-- زیرمنوی کشویی موبایل -->
+                <div id="mobile-categories-submenu" class="hidden flex-col gap-2 pr-4 pt-2 pb-1 border-r-2 border-teal/30 my-1 text-sm text-gray-600">
+                    <a href="./brick/brick-index.html" class="block py-1.5 hover:text-teal">آجر نما نسوز</a>
+                    <a href="./elevator/elevator-index.html" class="block py-1.5 hover:text-teal">آسانسور</a>
+                    <a href="./window/window-index.html" class="block py-1.5 hover:text-teal">درب و پنجره</a>
+                    <a href="./architect/architect-index.html" class="block py-1.5 hover:text-teal">طراحی معماری، دکوراسیون و نما</a>
+                    <a href="./wallmesh/wallmesh-index.html" class="block py-1.5 hover:text-teal">میلگرد بستر و والمش</a>
+                    <a href="#" class="block py-1.5 hover:text-teal">سایر مصالح ساختمانی</a>
+                    <a href="./video/video-index.html" class="block py-1.5 hover:text-teal">تصویربرداری، تدوین و خدمات تولید محتوا</a>
+                </div>
             </li>
-            <li><a href="#contact" class="block text-navy hover:text-teal">تماس با ما</a></li>
-            <li>
-                <button onclick="openConsultationModal()" class="w-full bg-teal text-white px-6 py-2.5 rounded-lg">
+
+            <li><a href="#about" class="block text-navy hover:text-teal py-1">درباره ما</a></li>
+            <li><a href="#process" class="block text-navy hover:text-teal py-1">فرآیند همکاری</a></li>
+            <li><a href="#faq" class="block text-navy hover:text-teal py-1">سوالات متداول</a></li>
+            <li><a href="#contact" class="block text-navy hover:text-teal py-1">تماس با ما</a></li>
+            <li class="pt-2">
+                <a href="form.html" class="block text-center w-full bg-teal text-white px-6 py-2.5 rounded-lg">
                     درخواست مشاوره رایگان
-                </button>
+                </a>
             </li>
         </ul>
     </div>
 </header>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="padding-bottom: 120px;">
-        <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy-light to-teal opacity-95"></div>
+<section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="padding-bottom: 120px;">
+    <!-- کانواس پس‌زمینه پویا -->
+    <canvas id="hero-canvas" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+    
+    <!-- نورهای محو پس‌زمینه (برای عمق بیشتر) -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none z-0">
+        <div class="absolute top-20 right-20 w-64 h-64 bg-teal-light rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 left-20 w-96 h-96 bg-teal rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <div class="relative container mx-auto px-4 text-center z-10" data-aos="fade-up">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+            راهکارهای هوشمند<br>
+            <span class="text-teal-light">تامین و اجرای</span><br>
+            صنعت ساختمان
+        </h1>
         
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 right-20 w-64 h-64 bg-teal-light rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-20 left-20 w-96 h-96 bg-teal rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
+        <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+            به‌رچاو؛ شریک مطمئن شما از ایده تا اجرا
+        </p>
 
-        <div class="absolute top-10 left-10 opacity-30">
-            <div class="grid grid-cols-5 gap-2">
-                <div class="w-2 h-2 bg-teal-light rounded-full"></div>
-                <div class="w-2 h-2 bg-teal-light rounded-full"></div>
-                <div class="w-2 h-2 bg-teal-light rounded-full"></div>
-                <div class="w-2 h-2 bg-teal-light rounded-full"></div>
-                <div class="w-2 h-2 bg-teal-light rounded-full"></div>
-            </div>
-        </div>
-
-        <div class="relative container mx-auto px-4 text-center z-10" data-aos="fade-up">
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                راهکارهای هوشمند<br>
-                <span class="text-teal-light">تامین و اجرای</span><br>
-                صنعت ساختمان
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                به‌رچاو؛ شریک مطمئن شما از ایده تا اجرا
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="prices.html" class="bg-teal text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-teal-light transition shadow-2xl hover:shadow-teal/50 hover:scale-105 transform">
-                    <i class="fas fa-list-ul ml-2"></i>
-                    مشاهده لیست قیمت‌ها
-                </a>
-                <button onclick="openConsultationModal()" class="bg-transparent border-2 border-teal-light text-teal-light px-8 py-4 rounded-lg text-lg font-semibold hover:bg-teal-light hover:text-navy transition hover:scale-105 transform">
-                    <i class="fas fa-phone-alt ml-2"></i>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <!-- دکمه دسکتاپ (به‌صورت لینک مستقیم) -->
+                 <a href="form.html" id="header-cta" class="hidden lg:inline-block bg-teal text-white px-6 py-2.5 rounded-lg hover:bg-teal-light hover:text-navy transition shadow-lg hover:shadow-xl">
+                   <i class="fas fa-comments ml-2"></i>
                     درخواست مشاوره رایگان
-                </button>
-            </div>
+                 </a>
         </div>
+    </div>
 
-        <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 30;">
-            <a href="#about" class="block animate-bounce cursor-pointer">
-                <i class="fas fa-chevron-down text-teal-light" style="font-size: 3rem; text-shadow: 0 0 20px rgba(100, 255, 218, 0.8);"></i>
-            </a>
+    <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 30;">
+        <a href="#categories" class="block animate-bounce cursor-pointer">
+            <i class="fas fa-chevron-down text-teal-light" style="font-size: 3rem; text-shadow: 0 0 20px rgba(100, 255, 218, 0.8);"></i>
+        </a>
+    </div>
+</section>
+
+    <!-- Activity Categories Section -->
+<section id="categories" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-[1250px]">
+        <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">حوزه‌های فعالیت به‌رچاو</h2>
+        <div class="w-24 h-1 bg-teal mx-auto mb-4"></div>
+        <p class="text-center text-gray-600 mb-12 max-w-7xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            هر حوزه فعالیت، محصولات، نمونه کارها و فرم درخواست مخصوص به خود را دارد. حوزه مورد نظر خود را انتخاب کنید.
+        </p>
+
+        <!-- کانتینر دسته‌بندی‌ها با قابلیت ریسپانسیو برای نمایش ۶ ستون در دسکتاپ -->
+        <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- کارت‌های دسته‌بندی به‌صورت پویا توسط main.js ساخته می‌شوند -->
         </div>
-    </section>
+    </div>
 
-    <!-- Services Section -->
-    <section class="py-20 bg-white" data-aos="fade-up">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4">خدمات اصلی ما</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-12"></div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group bg-gray-50 p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-teal" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-20 h-20 bg-teal/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-teal transition">
-                        <i class="fas fa-hard-hat text-4xl text-teal group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-navy mb-4">اجرای حرفه‌ای</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        اجرای پروژه توسط تیم متخصص با نظارت دقیق و استانداردهای بین‌المللی
+   <!-- کارت افقی خدمات تولید محتوا و تصویربرداری -->
+<div class="mt-8 max-w-[1250px] mx-auto px-4">
+    <a href="/video/video-index.html" class="group relative min-h-[160px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-teal block">
+        <!-- عکس پس‌زمینه و گرادیان -->
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('assets/images/cat-camera.jfif')"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/40 opacity-60"></div>
+        
+        <!-- محتوای کارت (چیدمان واکنش‌گرا) -->
+        <div class="relative z-10 p-5 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between text-white min-h-[160px]">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
+                <!-- آیکون (تطبیق سایز برای موبایل و دسکتاپ) -->
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-teal/20 backdrop-blur-md rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-teal transition-colors">
+                    <i class="fas fa-video text-xl md:text-3xl text-teal group-hover:text-white transition-colors"></i>
+                </div>
+                <!-- متن‌ها -->
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">تصویربرداری، تدوین و خدمات تولید محتوا</h3>
+                    <p class="text-xs md:text-sm text-gray-300 max-w-2xl leading-relaxed">
+                        تولید ویدیوهای معرفی پروژه، تیزرهای تبلیغاتی، تدوین حرفه‌ای و پوشش تصویری تخصصی فعالیت‌های ساختمانی و صنعتی.
                     </p>
                 </div>
-
-                <div class="group bg-gray-50 p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-teal" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-20 h-20 bg-teal/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-teal transition">
-                        <i class="fas fa-shield-alt text-4xl text-teal group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-navy mb-4">تامین مطمئن</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        تامین مصالح با بهترین کیفیت و قیمت مناسب از معتبرترین برندها
-                    </p>
-                </div>
-
-                <div class="group bg-gray-50 p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-teal" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-20 h-20 bg-teal/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-teal transition">
-                        <i class="fas fa-users text-4xl text-teal group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-navy mb-4">مشاوره تخصصی</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        مشاوره رایگان از انتخاب مصالح تا اجرای کامل پروژه شما
-                    </p>
-                </div>
+            </div>
+            
+            <!-- دکمه مشاهده جزئیات -->
+            <div class="hidden md:flex items-center gap-2 bg-teal text-white px-6 py-3 rounded-xl font-semibold text-sm transition-transform group-hover:-translate-x-2 shrink-0 mt-4 md:mt-0">
+                <span>مشاهده جزئیات</span>
+                <i class="fas fa-arrow-left"></i>
             </div>
         </div>
-    </section>
+    </a>
+</div>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gradient-to-br from-gray-50 to-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">درباره به‌رچاو</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-12"></div>
 
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-left">
-                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
-                        به‌رچاو مجموعه‌ای پویا و تخصصی در حوزه تامین، مشاوره و اجرای محصولات و خدمات صنعت ساختمان است که با هدف ارائه راهکارهای هوشمند، باکیفیت و متناسب با نیاز پروژه‌های ساختمانی شکل گرفته است.
-                    </p>
+</section>
 
-                    <div class="bg-teal/5 border-r-4 border-teal p-6 rounded-lg mb-8">
-                        <i class="fas fa-quote-right text-4xl text-teal/20 mb-4"></i>
-                        <p class="text-xl text-navy font-semibold italic">
-                            ما در به‌رچاو فقط فروشنده نیستیم؛ شریک مطمئن شما از ایده تا اجرا هستیم.
-                        </p>
-                    </div>
-                </div>
 
-                <div data-aos="fade-right">
-                    <div class="mb-8">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 bg-teal rounded-lg flex items-center justify-center">
-                                <i class="fas fa-bullseye text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy">ماموریت ما</h3>
-                        </div>
-                        <p class="text-gray-700 leading-relaxed pr-15">
-                            تامین بهترین محصولات و ارائه خدمات مهندسی با رویکردی حرفه‌ای، دقیق و متعهدانه برای خلق ارزش ماندگار در هر پروژه.
-                        </p>
-                    </div>
+    <!-- Combined About & Services Section -->
+<section id="about" class="py-20 bg-gradient-to-b from-slate-900 via-navy to-navy-light text-white relative overflow-hidden">
+    <!-- نور تعاملی پس‌زمینه (دنبال‌کننده موس) -->
+    <div id="about-spotlight" class="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-300" style="background: radial-gradient(600px circle at 50% 50%, rgba(32, 178, 170, 0.25), transparent 80%);"></div>
 
-                    <div class="mb-8">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 bg-teal rounded-lg flex items-center justify-center">
-                                <i class="fas fa-eye text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy">چشم‌انداز ما</h3>
-                        </div>
-                        <p class="text-gray-700 leading-relaxed pr-15">
-                            تبدیل شدن به مرجع قابل اعتماد و پیشرو در ارائه راهکارهای جامع صنعت ساختمان در استان کردستان و گسترش این الگو در سطح کشور.
-                        </p>
-                    </div>
-
-                    <div>
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 bg-teal rounded-lg flex items-center justify-center">
-                                <i class="fas fa-gem text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-navy">ارزش‌های ما</h3>
-                        </div>
-                        <ul class="space-y-2 pr-15">
-                            <li class="flex items-center gap-2 text-gray-700">
-                                <i class="fas fa-check-circle text-teal"></i>
-                                کیفیت و ماندگاری
-                            </li>
-                            <li class="flex items-center gap-2 text-gray-700">
-                                <i class="fas fa-check-circle text-teal"></i>
-                                صداقت و شفافیت
-                            </li>
-                            <li class="flex items-center gap-2 text-gray-700">
-                                <i class="fas fa-check-circle text-teal"></i>
-                                تعهد و مسئولیت‌پذیری
-                            </li>
-                            <li class="flex items-center gap-2 text-gray-700">
-                                <i class="fas fa-check-circle text-teal"></i>
-                                نوآوری و به‌روز بودن
-                            </li>
-                            <li class="flex items-center gap-2 text-gray-700">
-                                <i class="fas fa-check-circle text-teal"></i>
-                                احترام به مشتری و شریک تجاری
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Timeline Section -->
-    <section id="process" class="py-20 bg-navy text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);"></div>
-        </div>
-
-        <div class="container mx-auto px-4 relative z-10">
-            <h2 class="text-4xl font-bold text-center mb-4" data-aos="fade-up">فرآیند همکاری با به‌رچاو</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-16"></div>
-
-            <div class="relative">
-                <div class="hidden lg:block absolute top-0 bottom-0 right-1/2 w-1 bg-teal/30"></div>
-
-                <div class="space-y-12">
-                    <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
-                        <div class="lg:w-5/12 lg:text-left text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-comments text-teal ml-2"></i>
-                                    مشاوره اولیه
-                                </h3>
-                                <p class="text-gray-300">بررسی نیازها و گفت‌وگوی اولیه</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            01
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row-reverse items-center gap-8" data-aos="fade-left">
-                        <div class="lg:w-5/12 lg:text-right text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-clipboard-list text-teal ml-2"></i>
-                                    بازدید از پروژه
-                                </h3>
-                                <p class="text-gray-300">بررسی شرایط ساختمان و برداشت اطلاعات</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            02
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
-                        <div class="lg:w-5/12 lg:text-left text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-drafting-compass text-teal ml-2"></i>
-                                    نیازسنجی و طراحی
-                                </h3>
-                                <p class="text-gray-300">انتخاب بهترین راهکار متناسب با پروژه</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            03
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row-reverse items-center gap-8" data-aos="fade-left">
-                        <div class="lg:w-5/12 lg:text-right text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-file-invoice text-teal ml-2"></i>
-                                    ارائه پیشنهاد فنی
-                                </h3>
-                                <p class="text-gray-300">مشخصات فنی، برآورد هزینه و زمان اجرا</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            04
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
-                        <div class="lg:w-5/12 lg:text-left text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-handshake text-teal ml-2"></i>
-                                    عقد قرارداد
-                                </h3>
-                                <p class="text-gray-300">توافق نهایی و برنامه‌ریزی اجرای پروژه</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            05
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row-reverse items-center gap-8" data-aos="fade-left">
-                        <div class="lg:w-5/12 lg:text-right text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-industry text-teal ml-2"></i>
-                                    تامین و تولید
-                                </h3>
-                                <p class="text-gray-300">سفارش، کنترل کیفیت و آماده‌سازی</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            06
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
-                        <div class="lg:w-5/12 lg:text-left text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-tools text-teal ml-2"></i>
-                                    نصب و اجرا
-                                </h3>
-                                <p class="text-gray-300">اجرای استاندارد توسط تیم متخصص</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            07
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row-reverse items-center gap-8" data-aos="fade-left">
-                        <div class="lg:w-5/12 lg:text-right text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-certificate text-teal ml-2"></i>
-                                    تحویل پروژه
-                                </h3>
-                                <p class="text-gray-300">تست، کنترل نهایی و تحویل به کارفرما</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            08
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
-                        <div class="lg:w-5/12 lg:text-left text-center">
-                            <div class="inline-block bg-teal/10 border-2 border-teal p-6 rounded-2xl">
-                                <h3 class="text-2xl font-bold mb-3">
-                                    <i class="fas fa-headset text-teal ml-2"></i>
-                                    خدمات پس از فروش
-                                </h3>
-                                <p class="text-gray-300">پشتیبانی، سرویس و پاسخگویی مستمر</p>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 bg-teal rounded-full flex items-center justify-center text-navy font-bold text-xl shrink-0 border-4 border-navy shadow-lg shadow-teal/50">
-                            09
-                        </div>
-                        <div class="lg:w-5/12"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Preview Section -->
-    <section id="products" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">محصولات ما</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-4"></div>
-            <p class="text-center text-gray-600 mb-12">
-                بخشی از محصولات با کیفیت ما
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- عنوان اصلی -->
+        <div class="text-center mb-16" data-aos="fade-up">
+            
+            <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-8">به‌رچاو؛ از ایده تا اجرای صنعت ساختمان</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-teal-light to-teal mx-auto rounded-full"></div>
+            <p class="text-gray-300 max-w-3xl mx-auto mt-6 text-lg leading-relaxed">
+                به‌رچاو مجموعه‌ای پویا و تخصصی در حوزه تامین، مشاوره و اجرای محصولات صنعت ساختمان است. ما فقط فروشنده نیستیم؛ شریک مطمئن شما در تمام مراحل پروژه‌تان هستیم.
             </p>
+        </div>
 
-            <div id="products-loading" class="text-center py-12">
-                <i class="fas fa-spinner fa-spin text-5xl text-teal"></i>
-                <p class="text-gray-600 mt-4">در حال بارگذاری محصولات...</p>
+        <!-- کارت‌های خدمات اصلی (با افکت ۳ بعدی پویا) -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- کارت ۱: اجرای حرفه‌ای -->
+            <div class="tilt-card group bg-navy-light/70 backdrop-blur-md border border-teal/20 rounded-2xl p-8 hover:border-teal transition-all duration-300 shadow-xl cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-teal/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal transition-colors duration-300">
+                    <i class="fas fa-hard-hat text-3xl text-teal-light group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-white">اجرای حرفه‌ای</h3>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    اجرای دقیق پروژه‌ها توسط تیم مهندسی و اجرایی متخصص با رعایت بالاترین استانداردهای فنی و بین‌المللی.
+                </p>
             </div>
 
-            <div id="products-categories-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <!-- کارت ۲: تامین مطمئن -->
+            <div class="tilt-card group bg-navy-light/70 backdrop-blur-md border border-teal/20 rounded-2xl p-8 hover:border-teal transition-all duration-300 shadow-xl cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-teal/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal transition-colors duration-300">
+                    <i class="fas fa-shield-alt text-3xl text-teal-light group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-white">تامین مطمئن</h3>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    تامین مستقیم و بی‌واسطه مصالح ساختمانی با ضمانت کیفیت و بهترین قیمت از معتبرترین برندها.
+                </p>
             </div>
 
-            <div class="text-center">
-                <a href="products.html" class="inline-block bg-teal text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-navy transition shadow-xl hover:shadow-2xl hover:scale-105 transform">
-                    <i class="fas fa-th ml-2"></i>
-                    مشاهده تمام محصولات
-                    <i class="fas fa-arrow-left mr-2"></i>
-                </a>
-                <p class="text-gray-500 mt-4 text-sm">
-                    <i class="fas fa-box ml-1"></i>
-                    <span id="total-products-count">...</span> محصول
+            <!-- کارت ۳: مشاوره تخصصی -->
+            <div class="tilt-card group bg-navy-light/70 backdrop-blur-md border border-teal/20 rounded-2xl p-8 hover:border-teal transition-all duration-300 shadow-xl cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-teal/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal transition-colors duration-300">
+                    <i class="fas fa-users text-3xl text-teal-light group-hover:text-white transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-white">مشاوره تخصصی</h3>
+                <p class="text-gray-300 leading-relaxed text-sm">
+                    ارائه مشاوره رایگان و کارشناسی‌شده از گام نخست انتخاب مصالح تا تحویل کامل پروژه.
                 </p>
             </div>
         </div>
-    </section>
 
-    <!-- Catalogs Section -->
-    <section id="catalogs" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">کاتالوگ‌های محصولات</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-12"></div>
-
-            <div class="flex flex-wrap justify-center gap-3 mb-12" id="catalog-filters">
-                <button class="filter-btn active px-6 py-2 rounded-full bg-teal text-white font-medium transition" data-category="all">
-                    همه
-                </button>
+        <!-- بخش ماموریت، چشم‌انداز و ارزش‌ها -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- ماموریت -->
+            <div class="tilt-card bg-navy/80 border border-teal/15 p-6 rounded-xl flex items-start gap-4 hover:border-teal/50 transition duration-300">
+                <div class="w-12 h-12 bg-teal/20 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fas fa-bullseye text-teal-light text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-2">ماموریت ما</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">تامین بهترین محصولات و ارائه خدمات مهندسی با رویکردی حرفه‌ای، دقیق و متعهدانه برای خلق ارزش ماندگار.</p>
+                </div>
             </div>
 
-            <div id="catalogs-loading" class="text-center py-12">
-                <i class="fas fa-spinner fa-spin text-5xl text-teal"></i>
-                <p class="text-gray-600 mt-4">در حال بارگذاری کاتالوگ‌ها...</p>
+            <!-- چشم‌انداز -->
+            <div class="tilt-card bg-navy/80 border border-teal/15 p-6 rounded-xl flex items-start gap-4 hover:border-teal/50 transition duration-300">
+                <div class="w-12 h-12 bg-teal/20 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fas fa-eye text-teal-light text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-2">چشم‌انداز ما</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">تبدیل شدن به مرجع قابل اعتماد و پیشرو در ارائه راهکارهای جامع صنعت ساختمان در کردستان و سطح کشور.</p>
+                </div>
             </div>
 
-            <div id="catalogs-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- ارزش‌ها -->
+            <div class="tilt-card bg-navy/80 border border-teal/15 p-6 rounded-xl flex items-start gap-4 hover:border-teal/50 transition duration-300">
+                <div class="w-12 h-12 bg-teal/20 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fas fa-gem text-teal-light text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-2">ارزش‌های ما</h4>
+                    <ul class="text-gray-300 text-sm space-y-1">
+                        <li class="flex items-center gap-1.5"><i class="fas fa-check text-teal-light text-xs"></i> کیفیت و ماندگاری بالا</li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-check text-teal-light text-xs"></i> صداقت، شفافیت و تعهد</li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-check text-teal-light text-xs"></i> نوآوری و احترام به مشتری</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Portfolio Section -->
-<section id="portfolio" class="py-20 bg-white">
-    <div class="container mx-auto px-4">
+    <!-- Process Timeline Section (S-Curve Graphic Layout - Light Theme) -->
+<section id="process" class="py-12 lg:py-20 bg-slate-50 text-slate-800 relative overflow-hidden flex flex-col justify-center min-h-[calc(100vh-80px)] z-0">
+    
+    <!-- Background Graphic Elements -->
+    <div class="absolute inset-0 opacity-40 pointer-events-none z-[-1]">
+        <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(32,178,170,.05) 35px, rgba(32,178,170,.05) 70px);"></div>
+        <div class="absolute top-1/4 right-0 w-80 h-80 bg-teal/20 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-teal/15 rounded-full blur-[120px]"></div>
+    </div>
 
-        <!-- Title -->
-        <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">
-            نمونه کارهای اجرایی
-        </h2>
-
-        <div class="w-24 h-1 bg-teal mx-auto mb-6"></div>
-
-        <p class="text-center text-gray-600 mb-12" data-aos="fade-up" data-aos-delay="100">
-            بخشی از پروژه‌های اجرا شده توسط تیم به‌رچاو
-        </p>
-
-        <!-- Loading -->
-        <div id="portfolio-loading" class="text-center py-12">
-            <i class="fas fa-spinner fa-spin text-5xl text-teal"></i>
-            <p class="text-gray-600 mt-4">در حال بارگذاری نمونه کارها...</p>
+    <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+        <div class="text-center mb-12 md:mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">فرآیند همکاری با به‌رچاو</h2>
+            <div class="w-24 h-1.5 bg-gradient-to-r from-teal to-teal-light mx-auto rounded-full shadow-[0_2px_8px_rgba(32,178,170,0.3)]"></div>
         </div>
 
-        <!-- Grid (فقط 3 مورد توسط JS پر می‌شود) -->
-        <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-        </div>
+        <!-- 3x3 Snake Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-y-14 gap-x-8 md:gap-x-12 relative">
 
-        <!-- View All Button -->
-        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-            <a href="portfolio.html"
-               class="inline-block bg-teal text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-navy transition shadow-xl hover:shadow-2xl hover:scale-105 transform">
-                <i class="fas fa-images ml-2"></i>
-                مشاهده تمام نمونه کارها
-                <i class="fas fa-arrow-left mr-2"></i>
-            </a>
-        </div>
+            <!-- Step 01 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-1 md:order-1" data-aos="fade-up" data-aos-delay="50">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">1</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-comments text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">مشاوره اولیه</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">بررسی نیازها و گفت‌وگوی اولیه</p>
 
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute top-1/2 -left-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-left text-xs"></i></div>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-2 md:order-2" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">2</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-clipboard-list text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">بازدید از پروژه</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">بررسی شرایط ساختمان و برداشت اطلاعات</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute top-1/2 -left-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-left text-xs"></i></div>
+            </div>
+
+            <!-- Step 03 (Drops Down) -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-3 md:order-3" data-aos="fade-up" data-aos-delay="150">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">3</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-drafting-compass text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">نیازسنجی و طراحی</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">انتخاب بهترین راهکار متناسب با پروژه</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <!-- Vertical arrow down -->
+                <div class="hidden md:flex absolute -bottom-11 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-down text-xs"></i></div>
+            </div>
+
+            <!-- Step 04 (Reverse flow RTL: Moves to Left Col, order-6) -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-4 md:order-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">4</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-file-invoice text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">ارائه پیشنهاد فنی</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">مشخصات فنی، برآورد هزینه و زمان اجرا</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <!-- Points Right in RTL meaning it flows visually to the item on its right -->
+                <div class="hidden md:flex absolute top-1/2 -right-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-right text-xs"></i></div>
+            </div>
+
+            <!-- Step 05 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-5 md:order-5" data-aos="fade-up" data-aos-delay="250">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">5</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-handshake text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">عقد قرارداد</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">توافق نهایی و برنامه‌ریزی اجرای پروژه</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute top-1/2 -right-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-right text-xs"></i></div>
+            </div>
+
+            <!-- Step 06 (Drops Down) -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-6 md:order-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">6</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-industry text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">تامین و تولید</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">سفارش، کنترل کیفیت و آماده‌سازی</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute -bottom-11 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-down text-xs"></i></div>
+            </div>
+
+            <!-- Step 07 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-7 md:order-7" data-aos="fade-up" data-aos-delay="350">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">7</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-tools text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">نصب و اجرا</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">اجرای استاندارد توسط تیم متخصص</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute top-1/2 -left-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-left text-xs"></i></div>
+            </div>
+
+            <!-- Step 08 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-8 md:order-8" data-aos="fade-up" data-aos-delay="400">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">8</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-certificate text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">تحویل پروژه</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">تست، کنترل نهایی و تحویل به کارفرما</p>
+
+                <!-- Arrows -->
+                <div class="md:hidden absolute -bottom-9 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white border border-teal/50 rounded-full flex items-center justify-center text-teal shadow-sm z-20"><i class="fas fa-chevron-down text-[10px]"></i></div>
+                <div class="hidden md:flex absolute top-1/2 -left-10 transform -translate-y-1/2 w-8 h-8 bg-white border-2 border-teal rounded-full items-center justify-center text-teal shadow-md z-20"><i class="fas fa-chevron-left text-xs"></i></div>
+            </div>
+
+            <!-- Step 09 -->
+            <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 hover:border-teal/60 rounded-xl p-5 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 group order-9 md:order-9" data-aos="fade-up" data-aos-delay="450">
+                <div class="absolute -top-3 -right-3 w-8 h-8 bg-teal text-white font-black rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform z-10">9</div>
+                <div class="flex items-center gap-3 mb-2 mt-1">
+                    <div class="w-10 h-10 rounded-lg bg-teal/10 flex items-center justify-center text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                        <i class="fas fa-headset text-lg"></i>
+                    </div>
+                    <h3 class="text-base md:text-lg font-bold text-slate-900">خدمات پس از فروش</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed pr-[52px]">پشتیبانی، سرویس و پاسخگویی مستمر</p>
+                <!-- No Arrows on final step -->
+            </div>
+
+        </div>
     </div>
 </section>
 
@@ -646,188 +599,164 @@
                         </p>
                     </div>
                 </div>
+
+                <div class="faq-item bg-navy-light rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <button class="faq-question w-full text-right px-6 py-5 flex justify-between items-center hover:bg-teal/10 transition">
+                        <span class="font-semibold text-lg">زمان تحویل مصالح چقدر طول می‌کشد؟</span>
+                        <i class="fas fa-plus text-teal transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 hidden">
+                        <p class="text-gray-300 leading-relaxed">
+                            بسته به نوع محصول و حجم سفارش، زمان تحویل متغیر است. معمولاً محصولات موجود ظرف 2-3 روز کاری و سفارش‌های ویژه تا 2 هفته تحویل داده می‌شود.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-navy-light rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <button class="faq-question w-full text-right px-6 py-5 flex justify-between items-center hover:bg-teal/10 transition">
+                        <span class="font-semibold text-lg">زمان تحویل مصالح چقدر طول می‌کشد؟</span>
+                        <i class="fas fa-plus text-teal transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 hidden">
+                        <p class="text-gray-300 leading-relaxed">
+                            بسته به نوع محصول و حجم سفارش، زمان تحویل متغیر است. معمولاً محصولات موجود ظرف 2-3 روز کاری و سفارش‌های ویژه تا 2 هفته تحویل داده می‌شود.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-navy mb-4" data-aos="fade-up">تماس با ما</h2>
-            <div class="w-24 h-1 bg-teal mx-auto mb-12"></div>
+    <!-- Contact Section (Compact & Dynamic Side-by-Side Layout) -->
+<section id="contact" class="py-10 md:py-14 bg-slate-50 text-slate-800 relative overflow-hidden">
+    
+    <!-- Subtle Background Accents -->
+    <div class="absolute inset-0 pointer-events-none z-0 opacity-40">
+        <div class="absolute top-1/2 -right-20 w-72 h-72 bg-teal/15 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-0 -left-20 w-72 h-72 bg-teal/10 rounded-full blur-[100px]"></div>
+    </div>
 
-            <div class="grid lg:grid-cols-3 gap-8 mb-12">
-                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:shadow-xl transition" data-aos="fade-up">
-                    <div class="w-16 h-16 bg-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-phone text-3xl text-teal"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-navy mb-2">تلفن تماس</h3>
-                    <a href="tel:09188797939" class="text-lg text-gray-700 hover:text-teal transition">
-                        09188797939
-                    </a>
-                </div>
+    <div class="container mx-auto px-4 max-w-6xl relative z-10">
+        <!-- Compact Section Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2" data-aos="fade-up">تماس با ما</h2>
+            <div class="w-16 h-1 bg-gradient-to-r from-teal to-teal-light mx-auto rounded-full"></div>
+        </div>
 
-                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-map-marker-alt text-3xl text-teal"></i>
+        <!-- Main Split Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Left Side: Interactive Contact Cards Grid (5 cols on lg) -->
+            <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 h-full" data-aos="fade-right">
+                
+                <!-- Card 1: Phone -->
+                <a href="tel:09188797939" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                            <i class="fas fa-phone-alt text-base"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">تلفن تماس</span>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-2">آدرس</h3>
-                    <p class="text-gray-700">
-                        کردستان، تکیه و چمن، نبش پارک IT
+                    <div class="text-left dir-ltr">
+                        <span class="text-sm font-bold text-slate-800 group-hover:text-teal transition-colors font-mono">09188797939</span>
+                    </div>
+                </a>
+
+                <!-- Card 2: Address -->
+                <div class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between sm:col-span-1">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                            <i class="fas fa-map-marker-alt text-base"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500">آدرس</span>
+                    </div>
+                    <p class="text-xs text-slate-700 leading-relaxed font-medium">
+                        سنندج، تکیه و چمن، نبش پارک IT
                     </p>
                 </div>
 
-                <div class="text-center p-8 bg-gray-50 rounded-2xl hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fab fa-instagram text-3xl text-teal"></i>
+                <!-- Card 3: Instagram -->
+                <a href="https://instagram.com/bercaw_marketing" target="_blank" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">اینستاگرام</span>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-2">اینستاگرام</h3>
-                    <a href="https://instagram.com/bercaw_marketing" target="_blank" class="text-lg text-gray-700 hover:text-teal transition">
-                        @bercaw_marketing
-                    </a>
-                </div>
+                    <div class="text-left dir-ltr">
+                        <span class="text-xs font-bold text-slate-700 group-hover:text-teal transition-colors font-mono">bercaw_marketing@</span>
+                    </div>
+                </a>
+
+                <!-- Card 4: Telegram (Fixed Link & Icon) -->
+                <a href="https://t.me/bercaw_bot" target="_blank" class="group bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-teal/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+                            <i class="fab fa-telegram-plane text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500 group-hover:text-teal transition-colors">ربات تلگرام</span>
+                    </div>
+                    <div class="text-left dir-ltr">
+                        <span class="text-xs font-bold text-slate-700 group-hover:text-teal transition-colors font-mono">bercaw_bot@</span>
+                    </div>
+                </a>
+
             </div>
 
-            <div class="rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-up">
+            <!-- Right Side: Integrated Compact Map (7 cols on lg) -->
+            <div class="lg:col-span-7 relative rounded-xl overflow-hidden border border-slate-200/80 shadow-md min-h-[280px] lg:min-h-full" data-aos="fade-left">
+                <!-- Location Label Overlay Badge -->
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm border border-slate-200/60 z-10 flex items-center gap-2 pointer-events-none">
+                    <span class="w-2 h-2 rounded-full bg-teal animate-pulse"></span>
+                    <span class="text-xs font-bold text-slate-800">موقعیت دفتر به‌رچاو</span>
+                </div>
+                
                 <iframe 
                     src="https://www.google.com/maps?q=35.308114,46.980841&hl=fa&z=15&output=embed"
-                    width="100%" 
-                    height="450" 
-                    style="border:0;" 
+                    class="w-full h-full min-h-[280px] border-0 grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
             </div>
-        </div>
-    </section>
 
-
-    <!-- Consultation Modal -->
-    <div id="consultation-modal" class="fixed inset-0 bg-black/70 z-[100] hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="bg-navy text-white p-6 flex justify-between items-center rounded-t-2xl">
-                <h3 class="text-2xl font-bold">
-                    <i class="fas fa-comments ml-2"></i>
-                    درخواست مشاوره رایگان
-                </h3>
-                <button onclick="closeConsultationModal()" class="text-2xl hover:text-teal transition">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <form id="consultation-form" class="p-6 space-y-6">
-                <div>
-                    <label class="block text-navy font-semibold mb-2">نام و نام خانوادگی *</label>
-                    <input type="text" name="fullName" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-teal outline-none transition">
-                </div>
-
-                <div>
-                    <label class="block text-navy font-semibold mb-2">شماره تماس *</label>
-                    <input type="tel" name="phone" required pattern="[0-9]{11}" placeholder="09xxxxxxxxx" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-teal outline-none transition">
-                </div>
-
-                <div>
-                    <label class="block text-navy font-semibold mb-2">نوع پروژه *</label>
-                    <select name="projectType" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-teal outline-none transition">
-                        <option value="">انتخاب کنید</option>
-                        <option value="مسکونی">مسکونی</option>
-                        <option value="تجاری">تجاری</option>
-                        <option value="صنعتی">صنعتی</option>
-                        <option value="اداری">اداری</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-navy font-semibold mb-2">اجرا توسط *</label>
-                    <div class="flex gap-6">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="executedBy" value="مالک" required class="w-5 h-5 text-teal">
-                            <span>مالک</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="executedBy" value="پیمانکار" required class="w-5 h-5 text-teal">
-                            <span>پیمانکار</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-navy font-semibold mb-2">حوزه درخواست مشاوره (چند گزینه‌ای) *</label>
-                    <div class="space-y-2">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="طراحی معماری" class="w-5 h-5 text-teal">
-                            <span>طراحی معماری</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="طراحی نما" class="w-5 h-5 text-teal">
-                            <span>طراحی نما</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="طراحی داخلی" class="w-5 h-5 text-teal">
-                            <span>طراحی داخلی</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="آجر نسوز" class="w-5 h-5 text-teal">
-                            <span>آجر نسوز</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="اجرای نمای ساختمانی" class="w-5 h-5 text-teal">
-                            <span>اجرای نمای ساختمانی</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="درب و پنجره PVC یا فلزی" class="w-5 h-5 text-teal">
-                            <span>درب و پنجره PVC یا فلزی</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="آسانسور" class="w-5 h-5 text-teal">
-                            <span>آسانسور</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="میلگرد بستر و والمش" class="w-5 h-5 text-teal">
-                            <span>میلگرد بستر و والمش</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="consultationAreas" value="سایر مصالح ساختمانی" class="w-5 h-5 text-teal">
-                            <span>سایر مصالح ساختمانی</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-navy font-semibold mb-2">توضیحات پروژه</label>
-                    <textarea name="description" rows="4" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-teal outline-none transition" placeholder="توضیحات تکمیلی درباره پروژه خود را بنویسید..."></textarea>
-                </div>
-
-                <div class="flex gap-4">
-                    <button type="submit" class="flex-1 bg-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-navy transition">
-                        <i class="fas fa-paper-plane ml-2"></i>
-                        ارسال درخواست
-                    </button>
-                    <button type="button" onclick="closeConsultationModal()" class="px-6 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                        انصراف
-                    </button>
-                </div>
-
-                <div id="form-loading" class="hidden text-center py-4">
-                    <i class="fas fa-spinner fa-spin text-3xl text-teal"></i>
-                </div>
-                <div id="form-success" class="hidden bg-green-50 border-2 border-green-500 text-green-700 p-4 rounded-lg">
-                    <i class="fas fa-check-circle ml-2"></i>
-                    درخواست شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.
-                </div>
-                <div id="form-error" class="hidden bg-red-50 border-2 border-red-500 text-red-700 p-4 rounded-lg">
-                    <i class="fas fa-exclamation-circle ml-2"></i>
-                    خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.
-                </div>
-            </form>
         </div>
     </div>
+</section>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-top" class="fixed bottom-8 left-8 w-12 h-12 bg-teal text-white rounded-full shadow-lg hover:bg-navy transition opacity-0 pointer-events-none z-40">
+<!-- Floating Action Buttons Container -->
+<div id="floating-actions" class="fixed bottom-4 left-4 md:bottom-6 md:left-6 flex flex-row md:flex-col-reverse gap-2 md:gap-3 z-40 opacity-0 pointer-events-none transition-all duration-300">
+    
+    <!-- Back to Top Button -->
+    <button id="scroll-top" class="w-9 h-9 md:w-11 md:h-11 bg-[#1e3a5f] text-white rounded-full shadow-md hover:bg-teal transition flex items-center justify-center text-xs md:text-sm" title="بازگشت به بالا">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Phone Call Button -->
+    <a href="tel:09188797939" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fas fa-phone-alt"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300" dir="ltr">
+            09188797939
+        </span>
+    </a>
+
+    <!-- Telegram Bot Button -->
+    <a href="https://t.me/bercaw_bot" target="_blank" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fab fa-telegram-plane"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+            bercaw_bot
+        </span>
+    </a>
+
+    <!-- Instagram Button -->
+    <a href="https://instagram.com/bercaw_marketing" target="_blank" class="group relative w-9 h-9 md:w-11 md:h-11 bg-teal text-white rounded-full shadow-md hover:bg-[#1e3a5f] transition flex items-center justify-center text-xs md:text-sm">
+        <i class="fab fa-instagram"></i>
+        <span class="hidden md:block absolute left-14 bg-[#1e3a5f] text-white text-xs px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+            bercaw_marketing
+        </span>
+    </a>
+
+</div>
 
     <!-- Image Lightbox -->
     <div id="lightbox" class="fixed inset-0 bg-black/90 z-[110] hidden items-center justify-center p-4">
@@ -839,119 +768,96 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/sheets.js"></script>
-    <script src="assets/js/form.js"></script>
-    <!-- پاپ‌آور دو بخشی جزئیات پروژه (مطابق portfolio.html) -->
-<!-- پاپ‌آوری دو بخشی جزئیات پروژه (اصلاح شده) -->
-<div id="project-modal" class="fixed inset-0 bg-black/80 z-[110] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative flex flex-col md:flex-row max-h-[90vh] dir-rtl">
+    <script src="./assets/js/main.js"></script>
+
+  <!-- Footer Section with Hero Ambient Background -->
+<footer class="relative bg-slate-900 text-slate-300 pt-10 pb-8 overflow-hidden border-t border-slate-800/80 z-10">
+    
+    <!-- Hero-style Ambient Glows & Grid Pattern Background -->
+    <div class="absolute inset-0 pointer-events-none z-[-1] overflow-hidden">
+        <!-- Subtle Grid Pattern -->
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#20B2AA 1px, transparent 1px), linear-gradient(to right, #20B2AA 1px, transparent 1px); background-size: 36px 36px;"></div>
         
-        <!-- دکمه بستن -->
-        <button onclick="closeProjectModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 text-2xl transition z-30 bg-white/80 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center shadow">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <!-- سمت راست: اسلایدر عکس‌ها -->
-        <div class="w-full md:w-1/2 bg-gray-100 relative min-h-[350px] md:min-h-[520px] overflow-hidden">
-            <img id="modal-img" src="" alt="" class="w-full h-full object-cover absolute inset-0">
-
-            <!-- دکمه قبلی (راست) -->
-            <button id="modal-prev-btn" onclick="changeModalImg(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-
-            <!-- دکمه بعدی (چپ) -->
-            <button id="modal-next-btn" onclick="changeModalImg(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg z-20">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-
-            <!-- شمارنده عکس -->
-            <div id="modal-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs px-3 py-1 rounded-full dir-ltr z-20 font-sans">
-                1 / 1
-            </div>
-        </div>
-
-        <!-- سمت چپ: مشخصات و اطلاعات پروژه (بخش اضافه شده) -->
-        <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
-            <div>
-                <!-- دسته‌بندی و شهر -->
-                <div class="flex flex-wrap items-center gap-2 mb-4">
-                    <span id="modal-category" class="bg-teal/10 text-teal px-3.5 py-1 rounded-full text-xs font-semibold"></span>
-                    <span id="modal-city" class="text-xs text-gray-500 flex items-center"></span>
-                </div>
-
-                <!-- عنوان پروژه -->
-                <h2 id="modal-title" class="text-2xl font-bold text-navy mb-4 leading-snug"></h2>
-
-                <!-- توضیحات -->
-                <div class="border-t border-gray-100 pt-4 mb-4">
-                    <h4 class="text-sm font-bold text-gray-700 mb-2 flex items-center">
-                        <i class="fas fa-info-circle text-teal ml-2"></i>توضیحات پروژه:
-                    </h4>
-                    <p id="modal-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
-                </div>
-            </div>
-
-            <div class="pt-4 border-t border-gray-100 mt-auto">
-                <button onclick="closeProjectModal()" class="w-full bg-navy hover:bg-teal text-white py-3 rounded-xl transition font-medium">
-                    بستن صفحه
-                </button>
-            </div>
-        </div>
-
+        <!-- Glowing Light Orbs -->
+        <div class="absolute -top-28 right-1/4 w-96 h-96 bg-teal/20 rounded-full blur-[140px]"></div>
+        <div class="absolute -bottom-20 left-1/3 w-[30rem] h-[30rem] bg-teal/15 rounded-full blur-[160px]"></div>
+        
+        <!-- Top Gradient Glowing Border Line -->
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/60 to-transparent"></div>
     </div>
-</div>
 
-  <!-- Footer -->
-    <footer class="bg-navy text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <img src="assets/images/logo.png" alt="به‌رچاو" class="h-12 mb-4 brightness-0 invert">
-                    <h3 class="text-xl font-bold mb-2">به‌رچاو</h3>
-                    <p class="text-gray-400 mb-4">راهکارهای هوشمند تامین و اجرای صنعت ساختمان</p>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        شریک مطمئن شما در تامین مصالح و اجرای پروژه‌های ساختمانی
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4">دسترسی سریع</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-400 hover:text-teal transition">درباره ما</a></li>
-                        <li><a href="products.html" class="text-gray-400 hover:text-teal transition">محصولات</a></li>
-                        <li><a href="#portfolio" class="text-gray-400 hover:text-teal transition">نمونه کارها</a></li>
-                        <li><a href="prices.html" class="text-gray-400 hover:text-teal transition">لیست قیمت</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-teal transition">تماس با ما</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4">اطلاعات تماس</h4>
-                    <ul class="space-y-3 text-gray-400">
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-phone text-teal"></i>
-                            <span>09188797939</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fas fa-map-marker-alt text-teal mt-1"></i>
-                            <span>کردستان، تکیه و چمن، نبش پارک IT</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fab fa-instagram text-teal"></i>
-                            <a href="https://instagram.com/bercaw_marketing" target="_blank" class="hover:text-teal transition">@bercaw_marketing</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="container mx-auto px-4 max-w-6xl relative z-10">
+        <div class="grid md:grid-cols-3 gap-10 mb-12">
+            
+            <!-- Column 1: Brand & Logo -->
+            <div class="space-y-4">
+                <img src="assets/images/logo-light.png" alt="به‌رچاو" class="h-12">
+                <h3 class="text-xl font-bold text-white">به‌رچاو</h3>
+                <p class="text-teal font-medium text-sm">راهکارهای هوشمند تامین و اجرای صنعت ساختمان</p>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    شریک مطمئن شما در تامین مصالح و اجرای پروژه‌های ساختمانی
+                </p>
             </div>
 
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
-                <p>© 2026 به‌رچاو. تمامی حقوق محفوظ است.</p>
-                <p class="mt-2 text-sm">طراحی و توسعه با <i class="fas fa-heart text-red-500"></i></p>
+            <!-- Column 2: Quick Links -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                    دسترسی سریع
+                    <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                </h4>
+                <ul class="space-y-3 text-slate-400 text-sm">
+                    <li><a href="#categories" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> حوزه‌های فعالیت</a></li>
+                    <li><a href="#about" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> درباره ما</a></li>
+                    <li><a href="#faq" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> سوالات متداول</a></li>
+                    <li><a href="#contact" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> تماس با ما</a></li>
+                </ul>
             </div>
+
+            <!-- Column 3: Contact Info -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                    اطلاعات تماس
+                    <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                </h4>
+                <ul class="space-y-3.5 text-slate-400 text-sm">
+                    <li class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                            <i class="fas fa-phone text-xs"></i>
+                        </div>
+                        <a href="tel:09188797939" dir="ltr" class="hover:text-teal transition-colors font-mono">09188797939</a>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0 mt-0.5">
+                            <i class="fas fa-map-marker-alt text-xs"></i>
+                        </div>
+                        <span class="leading-relaxed">سنندج، تکیه و چمن، نبش پارک IT</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                            <i class="fab fa-instagram text-xs"></i>
+                        </div>
+                        <a href="https://instagram.com/bercaw_marketing" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_marketing</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                            <i class="fab fa-telegram text-xs"></i>
+                        </div>
+                        <a href="https://t.me/bercaw_bot" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_bot</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
-    </footer>
+
+        <!-- Copyright Line -->
+        <div class="border-t border-slate-800/80 pt-2 text-center text-slate-500 text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© 2026 به‌رچاو. تمامی حقوق محفوظ است.</p>
+            <p class="flex items-center gap-1.5">طراحی و توسعه با <i class="fas fa-heart text-red-500 text-xs"></i> توسط 
+                    <a href="https://www.telegram.me/zeya_hashemi" target="_blank" rel="noopener noreferrer">zeya_hashemi</a>
+                </p>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

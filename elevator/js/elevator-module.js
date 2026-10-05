@@ -829,33 +829,16 @@ async function downloadSummaryPDF() {
                 '<i class="fas fa-spinner fa-spin ml-2"></i> در انتظار Telegram...';
 
 
-            tg.downloadFile(
+            // ======================================================
+// باز کردن PDF در مرورگر خارجی
+// ======================================================
 
-                {
-                    url: result.url,
+console.log(
+    'Opening PDF in external browser:',
+    result.url
+);
 
-                    file_name:
-                        'برآورد-آسانسور.pdf'
-                },
-
-                function (accepted) {
-
-                    console.log(
-                        'Telegram download accepted:',
-                        accepted
-                    );
-
-                    if (!accepted) {
-
-                        alert(
-                            'دانلود توسط Telegram لغو شد.'
-                        );
-
-                    }
-
-                }
-
-            );
+tg.openLink(result.url);
 
 
             return;
@@ -1066,3 +1049,138 @@ if (downloadPdfBtn) {
 }
 
 });
+
+
+
+
+// ==========================================
+// توابع مدیریت هدر (اسکرول، منوی موبایل و اسپسر)
+// ==========================================
+
+// ۱. تنظیم خودکار ارتفاع فاصله‌ی زیر هدر ثابت
+function adjustHeaderSpacer() {
+    const header = document.getElementById('window-header') || document.getElementById('header') || document.getElementById('elevator-header');
+    const spacer = document.getElementById('header-spacer');
+    if (header && spacer) {
+        spacer.style.height = header.offsetHeight + 'px';
+    }
+}
+
+// ۲. مقداردهی و مدیریت کشوی منوی موبایل
+function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('mobile-menu-icon');
+    if (!btn || !menu) return;
+
+    function closeMenu() {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+        if (icon) { 
+            icon.classList.remove('fa-times'); 
+            icon.classList.add('fa-bars'); 
+        }
+        adjustHeaderSpacer();
+    }
+
+    function openMenu() {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        if (icon) { 
+            icon.classList.remove('fa-bars'); 
+            icon.classList.add('fa-times'); 
+        }
+        adjustHeaderSpacer();
+    }
+
+    btn.addEventListener('click', () => {
+        const isOpen = !menu.classList.contains('hidden');
+        isOpen ? closeMenu() : openMenu();
+    });
+
+    menu.querySelectorAll('.mobile-menu-link').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024) closeMenu();
+    });
+}
+
+// ۳. تغییر حالت هدر هنگام اسکرول (تبدیل از سرمه‌ای/دارک به سفید/لایت)
+function initHeaderScroll() {
+    const header = document.getElementById('window-header') || document.getElementById('header') || document.getElementById('elevator-header');
+    const logoDark = document.getElementById('header-logo-dark');
+    const logoLight = document.getElementById('header-logo-light');
+    const title = document.getElementById('header-title');
+    const subtitle = document.getElementById('header-subtitle');
+    const desktopMenu = document.getElementById('desktop-menu');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const homeBtn = document.getElementById('header-home-btn');
+
+    if (!header) return;
+
+    function handleScroll() {
+        if (window.scrollY > 50) {
+            header.style.cssText = 'background-color: #ffffff !important; backdrop-filter: none;';
+            header.classList.remove('text-white');
+            header.classList.add('text-slate-800', 'shadow-md');
+
+            if (logoDark && logoLight) { 
+                logoLight.classList.add('hidden'); 
+                logoDark.classList.remove('hidden'); 
+            }
+            if (desktopMenu) { 
+                desktopMenu.classList.remove('text-white'); 
+                desktopMenu.classList.add('text-slate-800'); 
+            }
+            if (mobileMenuBtn) { 
+                mobileMenuBtn.classList.remove('bg-white/20', 'text-white', 'border-white/30'); 
+                mobileMenuBtn.classList.add('bg-slate-100', 'text-slate-800', 'border-slate-300'); 
+            }
+            if (homeBtn) { 
+                homeBtn.classList.remove('bg-white/10', 'text-white'); 
+                homeBtn.classList.add('bg-slate-100', 'text-slate-800'); 
+            }
+            if (title) { title.style.setProperty('color', '#0f172a', 'important'); }
+            if (subtitle) { subtitle.style.setProperty('color', '#64748b', 'important'); }
+
+        } else {
+            header.style.cssText = 'background-color: #0f172a !important; backdrop-filter: blur(12px) !important;';
+            header.classList.remove('text-slate-800', 'shadow-md');
+            header.classList.add('text-white');
+
+            if (logoDark && logoLight) { 
+                logoDark.classList.add('hidden'); 
+                logoLight.classList.remove('hidden'); 
+            }
+            if (desktopMenu) { 
+                desktopMenu.classList.remove('text-slate-800'); 
+                desktopMenu.classList.add('text-white'); 
+            }
+            if (mobileMenuBtn) { 
+                mobileMenuBtn.classList.remove('bg-slate-100', 'text-slate-800', 'border-slate-300'); 
+                mobileMenuBtn.classList.add('bg-white/20', 'text-white', 'border-white/30'); 
+            }
+            if (homeBtn) { 
+                homeBtn.classList.remove('bg-slate-100', 'text-slate-800'); 
+                homeBtn.classList.add('bg-white/10', 'text-white'); 
+            }
+            if (title) { title.style.setProperty('color', '#ffffff', 'important'); }
+            if (subtitle) { subtitle.style.setProperty('color', '#d1d5db', 'important'); }
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+}
+
+// ۴. فراخوانی اولیه در هنگام بارگذاری صفحه
+document.addEventListener('DOMContentLoaded', () => {
+    initHeaderScroll();
+    initMobileMenu();
+    adjustHeaderSpacer();
+});
+
+window.addEventListener('load', adjustHeaderSpacer);
+window.addEventListener('resize', adjustHeaderSpacer);

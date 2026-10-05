@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>درخواست سفارش ویدیو | به‌رچاو</title>
     <meta name="description" content="فرم آنلاین ثبت سفارش تولید ویدیو و تیزر تبلیغاتی آژانس مارکتینگ به‌رچاو">
-    <link rel="canonical" href="https://bercaw-group.github.io/video.html">
+    <link rel="canonical" href="https://bercaw-group.github.io/video/video-form.html">
 
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
     
     <!-- فونت و استایل‌های اصلی -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     
     <!-- اسکریپت وب‌اپ تلگرام -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -43,21 +43,89 @@
 </head>
 <body class="font-vazir bg-gray-50 pb-20">
 
-    <!-- هدر -->
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="assets/images/logo.png" alt="بَرچاو" class="h-10 w-auto">
-                <div>
-                    <h1 class="text-lg font-bold text-navy">به‌رچاو</h1>
-                    <p class="text-xs text-gray-600">فرم سفارش تولید ویدیو (BER-VID-001)</p>
-                </div>
-            </div>
-            <a href="index.html" class="text-gray-500 hover:text-teal transition" id="close-btn">
-                <i class="fas fa-times text-2xl"></i>
+<!-- Header -->
+<header id="window-header" class="fixed top-0 left-0 right-0 z-50 bg-navy text-white transition-all duration-300">
+    <nav class="container mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5 flex justify-between items-center flex-nowrap gap-2 sm:gap-3">
+        
+        <!-- ۱. سمت راست: لوگو + عنوان (در دسکتاپ) | دکمه همبرگری + لوگو (در موبایل) -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
+            <!-- دکمه همبرگری (فقط موبایل - ابعاد دقیق و مربع) -->
+            <button id="mobile-menu-btn" type="button" aria-controls="mobile-menu" aria-expanded="false" 
+                    class="lg:hidden flex items-center justify-center rounded-lg bg-white/20 border border-white/30 text-white hover:bg-teal transition-all shadow-md shrink-0"
+                    style="width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important;">
+                <span class="sr-only">باز کردن منو</span>
+                <i id="mobile-menu-icon" class="fas fa-bars text-sm"></i>
+            </button>
+
+            <!-- لوگو -->
+            <a href="../index.html" class="flex items-center shrink-0">
+                <img src="../assets/images/logo-light.png" alt="به‌رچاو" id="header-logo-light" 
+                     class="w-auto object-contain transition-opacity duration-300 h-8 sm:h-11"
+                     style="max-height: 32px; max-width: 110px;"
+                     onerror="this.src='../assets/images/logo.png'; this.classList.add('brightness-0','invert');">
+                <img src="../assets/images/logo.png" alt="به‌رچاو" id="header-logo-dark" 
+                     class="w-auto object-contain hidden transition-opacity duration-300 h-8 sm:h-11"
+                     style="max-height: 32px; max-width: 110px;">
             </a>
-        </nav>
-    </header>
+
+            <!-- متون عنوان و زیرعنوان (فقط در دسکتاپ سمت راست کنار لوگو) -->
+            <div class="hidden lg:block min-w-0 text-right mr-1">
+                <h1 class="text-base lg:text-lg font-bold text-white transition-colors duration-300 truncate leading-tight" id="header-title">به‌رچاو | استدیو به‌رچاو</h1>
+                <p class="text-[11px] lg:text-xs text-gray-300 transition-colors duration-300 truncate mt-0.5" id="header-subtitle">فرم درخواست تولید محتوا</p>
+            </div>
+        </div>
+
+        <!-- ۲. وسط: منوی دسکتاپ -->
+        <ul id="desktop-menu" class="hidden lg:flex gap-6 font-medium text-white transition-colors duration-300 text-sm">
+            <li><a href="./video-index.html" class="hover:text-teal-light transition">صفحه اصلی</a></li>
+            <li><a href="#contact" class="hover:text-teal-light transition">تماس با ما</a></li>
+        </ul>
+
+        <!-- ۳. سمت چپ: دکمه‌های اقدام (در دسکتاپ) | متون عنوان (در موبایل) -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink min-w-0 justify-end">
+            <!-- متون عنوان و زیرعنوان (فقط در موبایل سمت چپ - ارث‌بری رنگ) -->
+            <div class="lg:hidden min-w-0 text-left">
+                <h1 class="text-xs font-bold transition-colors duration-300 truncate leading-tight" id="header-title-mobile">به‌رچاو | استودیو به‌رچاو</h1>
+                <p class="text-[9px] opacity-80 transition-colors duration-300 truncate mt-0.5" id="header-subtitle-mobile">فرم درخواست تولید محتوا</p>
+            </div>
+
+            <!-- دکمه‌های اقدام دسکتاپ (سمت چپ) -->
+            <a href="../form.html" class="hidden md:inline-block bg-teal text-white px-4 py-2 rounded-lg hover:bg-teal-light hover:text-navy transition shadow-md text-xs font-medium">
+                درخواست مشاوره
+            </a>
+            <a href="./video-index.html" id="header-home-btn" class="hidden md:inline-flex items-center bg-white/10 text-white px-3 py-2 rounded-lg hover:bg-white/20 transition text-xs">
+                <span>بازگشت</span>
+            </a>
+        </div>
+
+    </nav>
+
+    <!-- کشوی منوی موبایل -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-[#0f172a] border-t border-slate-700 shadow-2xl">
+        <ul class="flex flex-col font-medium text-white px-4 py-3 gap-1.5">
+            <!-- لینک‌های اصلی -->
+            <li><a href="./video-index.html" class="mobile-menu-link block px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-sm">صفحه اصلی</a></li>
+            <li><a href="#contact" class="mobile-menu-link block px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-sm">تماس با ما</a></li>
+
+            <!-- دکمه‌های ویژه (در انتهای منوی موبایل) -->
+            <li class="pt-2 border-t border-slate-700/60 mt-1">
+                <a href="./video-index.html" class="mobile-menu-link flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-sm">
+                    <i class="fas fa-arrow-right ml-2.5 text-base"></i>
+                    <span>بازگشت به صفحه قبلی</span>
+                </a>
+            </li>
+            <li>
+                <a href="../form.html" class="mobile-menu-link flex items-center justify-center px-3 py-2.5 rounded-lg bg-teal text-white hover:bg-teal-light hover:text-navy transition text-sm">
+                    <i class="fas fa-comments ml-2 text-base"></i>
+                    <span>درخواست مشاوره رایگان</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<!-- فاصله‌انداز هدر جهت جلوگیری از پوشانده شدن محتوا -->
+<div id="header-spacer"></div>
 
     <main class="container mx-auto px-4 py-8 max-w-3xl">
         
@@ -205,8 +273,82 @@
 
         </form>
     </main>
+
+    <!-- Footer Section -->
+    <footer class="relative bg-slate-900 text-slate-300 pt-10 pb-8 overflow-hidden border-t border-slate-800/80 z-10">
+        <div class="absolute inset-0 pointer-events-none z-[-1] overflow-hidden">
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#20B2AA 1px, transparent 1px), linear-gradient(to right, #20B2AA 1px, transparent 1px); background-size: 36px 36px;"></div>
+            <div class="absolute -top-28 right-1/4 w-96 h-96 bg-teal/20 rounded-full blur-[140px]"></div>
+            <div class="absolute -bottom-20 left-1/3 w-[30rem] h-[30rem] bg-teal/15 rounded-full blur-[160px]"></div>
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/60 to-transparent"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-6xl relative z-10">
+            <div class="grid md:grid-cols-3 gap-10 mb-12">
+                <div class="space-y-4">
+                    <img src="../assets/images/logo-light.png" alt="به‌رچاو" class="h-12 brightness-100">
+                    <h3 class="text-xl font-bold text-white">به‌رچاو</h3>
+                    <p class="text-teal font-medium text-sm">استودیو حرفه‌ای تولید محتوا</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        شریک مطمئن شما در مسیر رشد و نمایان شدن
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                        دسترسی سریع
+                        <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                    </h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="#intro" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> صفحه اصلی استودیو به‌رچاو</a></li>
+                        <li><a href="../form.html" class="hover:text-teal transition-colors flex items-center gap-2"><i class="fas fa-chevron-left text-[10px] text-teal"></i> فرم درخواست مشاوره</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-5 relative inline-block">
+                        اطلاعات تماس
+                        <span class="block h-0.5 bg-teal w-8 mt-1.5 rounded-full"></span>
+                    </h4>
+                    <ul class="space-y-3.5 text-slate-400 text-sm">
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fas fa-phone text-xs"></i>
+                            </div>
+                            <a href="tel:09188797939" dir="ltr" class="hover:text-teal transition-colors font-mono">09188797939</a>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0 mt-0.5">
+                                <i class="fas fa-map-marker-alt text-xs"></i>
+                            </div>
+                            <span class="leading-relaxed">کردستان، تکیه و چمن، نبش پارک IT</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fab fa-instagram text-xs"></i>
+                            </div>
+                            <a href="https://instagram.com/bercaw_marketing" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_marketing</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-teal shrink-0">
+                                <i class="fab fa-telegram text-xs"></i>
+                            </div>
+                            <a href="https://t.me/bercaw_bot" target="_blank" dir="ltr" class="hover:text-teal transition-colors font-mono">@bercaw_bot</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800/80 pt-2 text-center text-slate-500 text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+                <p>© 2026 به‌رچاو. تمامی حقوق محفوظ است.</p>
+                <p class="flex items-center gap-1.5">طراحی و توسعه با <i class="fas fa-heart text-red-500 text-xs"></i> توسط 
+                    <a href="https://www.telegram.me/zeya_hashemi" target="_blank" rel="noopener noreferrer">zeya_hashemi</a>
+                </p>
+            </div>
+        </div>
+    </footer>
     
-    <script src="assets/js/video.js"></script>
+    <script src="js/video-form.js"></script>
     
 </body>
 </html>

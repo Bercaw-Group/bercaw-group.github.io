@@ -64,6 +64,22 @@
         <!-- ۲. وسط: منوی دسکتاپ -->
         <ul id="desktop-menu" class="hidden lg:flex gap-6 font-medium text-white transition-colors duration-300">
             <li><a href="./brick-index.html" class="hover:text-teal-light transition">صفحه اصلی</a></li>
+            <li class="relative group flex items-center">
+              <a href="#" class="hover:text-teal-light transition">
+               <span>حوزه‌های فعالیت</span>
+              </a>
+             <div class="absolute right-0 top-full hidden group-hover:block w-56 pt-2 z-50">
+               <div class="bg-white rounded-lg shadow-lg py-2 border border-gray-100">
+                <a href="../brick/brick-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">آجر نما نسوز</a>
+                <a href="../elevator/elevator-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">آسانسور</a>
+                <a href="../window/window-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">درب و پنجره</a>
+                <a href="../architect/architect-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">طراحی معماری، دکوراسیون و نما</a>
+                <a href="../wallmesh/wallmesh-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">میلگرد بستر و والمش</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">سایر مصالح ساختمانی</a>
+                <a href="../video/video-index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal hover:text-white transition-colors duration-200">تصویربرداری، تدوین و خدمات تولید محتوا</a>
+               </div>
+             </div>
+            </li>
             <li><a href="./brick-portfolio.html" class="hover:text-teal-light transition">نمونه‌کارها</a></li>
             <li><a href="./brick-products.html" class="text-teal-light font-bold border-b-2 border-teal-light pb-1">محصولات</a></li>
             <li><a href="#contact" class="hover:text-teal-light transition">تماس با ما</a></li>
@@ -100,6 +116,25 @@
                 </a>
             </li>
             <li><a href="./brick-index.html" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">صفحه اصلی</a></li>
+            <li>
+                <div class="flex justify-between items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base cursor-pointer" id="mobile-categories-btn">
+                       <span>حوزه‌های فعالیت</span>
+                       <svg id="mobile-arrow" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                       </svg>
+                  </div>
+                
+                          <!-- زیرمنوی کشویی موبایل -->
+                     <div id="mobile-categories-submenu" class="hidden flex-col gap-2 pr-4 pt-2 pb-1 border-r-2 border-teal-light/30 my-1 text-sm text-slate-300">
+                       <a href="./brick/brick-index.html" class="block py-1.5 hover:text-teal-light transition-colors">آجر نما نسوز</a>
+                       <a href="./elevator/elevator-index.html" class="block py-1.5 hover:text-teal-light transition-colors">آسانسور</a>
+                       <a href="./window/window-index.html" class="block py-1.5 hover:text-teal-light transition-colors">درب و پنجره</a>
+                       <a href="./architect/architect-index.html" class="block py-1.5 hover:text-teal-light transition-colors">طراحی معماری، دکوراسیون و نما</a>
+                       <a href="./wallmesh/wallmesh-index.html" class="block py-1.5 hover:text-teal-light transition-colors">میلگرد بستر و والمش</a>
+                       <a href="#" class="block py-1.5 hover:text-teal-light transition-colors">سایر مصالح ساختمانی</a>
+                       <a href="./video/video-index.html" class="block py-1.5 hover:text-teal-light transition-colors">تصویربرداری، تدوین و خدمات تولید محتوا</a>
+                     </div>
+            </li>
             <li><a href="./brick-products.html" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base text-teal-light font-bold">محصولات</a></li>
             <li><a href="./brick-portfolio.html" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">نمونه‌کارها</a></li>
             <li><a href="#contact" class="mobile-menu-link block px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-teal-light transition text-base">تماس با ما</a></li>

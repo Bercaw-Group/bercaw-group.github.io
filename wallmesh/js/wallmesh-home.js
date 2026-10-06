@@ -404,3 +404,32 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCatalogs();
     loadPortfolioPreview();
 });
+
+
+
+// ===== Mobile Categories Accordion Logic =====
+const mobileCategoriesBtn = document.getElementById('mobile-categories-btn');
+const mobileCategoriesSubmenu = document.getElementById('mobile-categories-submenu');
+const mobileArrow = document.getElementById('mobile-arrow');
+
+if (mobileCategoriesBtn && mobileCategoriesSubmenu) {
+    mobileCategoriesBtn.addEventListener('click', function (e) {
+        // جلوگیری از رفتار پیش‌فرض لینک بودن
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isOpen = !mobileCategoriesSubmenu.classList.contains('hidden');
+
+        if (!isOpen) {
+            // کلیک اول: باز کردن زیرمنوی آکاردئونی
+            mobileCategoriesSubmenu.classList.remove('hidden');
+            mobileCategoriesSubmenu.classList.add('flex');
+            if (mobileArrow) mobileArrow.classList.add('rotate-180');
+        } else {
+            // کلیک دوم: بستن زیرمنوی آکاردئونی
+            mobileCategoriesSubmenu.classList.add('hidden');
+            mobileCategoriesSubmenu.classList.remove('flex');
+            if (mobileArrow) mobileArrow.classList.remove('rotate-180');
+        }
+    });
+}

@@ -19,6 +19,41 @@ function getState(winId) {
 }
 
 // ==========================================
+// توابع تغییر ابعاد از طریق کلیک روی نقشه
+// ==========================================
+window.promptDimension = function(winId, type, rIdx, cIdx) {
+    let newVal = prompt("لطفاً اندازه جدید را بر حسب سانتی‌متر وارد کنید:");
+    if (newVal && !isNaN(newVal)) {
+        if (type === 'totalW') document.getElementById(`total-w-${winId}`).value = newVal;
+        if (type === 'totalH') document.getElementById(`total-h-${winId}`).value = newVal;
+        if (type === 'archH') {
+            const archInp = document.getElementById(`arch-h-${winId}`);
+            if (archInp) archInp.value = newVal;
+        }
+        if (type === 'row' && rIdx !== null) {
+            const rows = document.getElementById(`window-${winId}`).querySelectorAll('.row-container');
+            if (rows[rIdx]) rows[rIdx].querySelector('.row-h-input').value = newVal;
+        }
+        if (type === 'col' && rIdx !== null && cIdx !== null) {
+            const rows = document.getElementById(`window-${winId}`).querySelectorAll('.row-container');
+            if (rows[rIdx]) {
+                const cols = rows[rIdx].querySelectorAll('.col-item');
+                if (cols[cIdx]) cols[cIdx].querySelector('.col-w-input').value = newVal;
+            }
+        }
+        updateDrawing(winId);
+    }
+};
+
+window.toggleArchInput = function(winId) {
+    const isArched = document.getElementById(`is-arched-${winId}`).checked;
+    const container = document.getElementById(`arch-h-container-${winId}`);
+    if (container) {
+        container.style.display = isArched ? 'flex' : 'none';
+    }
+};
+
+// ==========================================
 // ایجاد صفحه اول (شناسنامه و مشخصات ثابت پروژه)
 // ==========================================
 function ensureProjectSummary() {
@@ -50,7 +85,7 @@ function ensureProjectSummary() {
                     <div class="flex justify-between text-xs text-slate-700"><span>نوع سازه / کاربری:</span> <span class="font-bold">پروژه ساختمانی / مسکونی</span></div>
                     <div class="flex justify-between text-xs text-slate-700"><span>استاندارد مرجع تولید:</span> <span class="font-bold">RAL GZ 716 / استاندارد ملی</span></div>
                     <div class="flex justify-between text-xs text-slate-700"><span>تقویت‌کننده گالوانیزه:</span> <span class="font-bold">ضخامت 1.5 میلی‌متر فرم‌داده‌شده سراسری</span></div>
-                    <div class="flex justify-between text-xs text-slate-700"><span>سیستم واشراب‌بندی:</span> <span class="font-bold">لاستیک لاستیک EPDM ضد اشعه UV</span></div>
+                    <div class="flex justify-between text-xs text-slate-700"><span>سیستم واشراب‌بندی:</span> <span class="font-bold">لاستیک EPDM ضد اشعه UV</span></div>
                 </div>
 
                 <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 space-y-3">
@@ -66,7 +101,7 @@ function ensureProjectSummary() {
                 <div class="font-bold flex items-center"><i class="fas fa-exclamation-triangle ml-1 text-amber-600"></i> راهنمای کنترل کیفیت و اجرای خط تولید:</div>
                 <ul class="list-disc list-inside space-y-1 text-amber-800 pr-2">
                     <li>تمامی ابعاد بر حسب سانتی‌متر بوده و تلرانس‌های بادخور و نصب در نقشه‌های تفکیکی اعمال گردیده‌است.</li>
-                    <li>در صفحات بعدی جزئیات ابعادی، مشخصات متغیر هر پنجره، ابعاد برش شیشه و نوع بازشوها به تفکیک درج شده است.</li>
+                    <li>برای ویرایش ابعاد روی نقشه، می‌توانید مستقیماً روی اعداد (ابعاد) کلیک نمایید.</li>
                 </ul>
             </div>
         </div>
@@ -95,7 +130,7 @@ function addNewWindow() {
         <input type="hidden" id="frame-type-${winId}" value="T-1101">
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 print-grid">
-            <!-- پنل مشخصات ابعادی و ساخت (کوچک‌تر شده به 3 ستون) -->
+            <!-- پنل مشخصات ابعادی و ساخت -->
             <div class="lg:col-span-3 builder-ui bg-slate-100 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center border-b border-slate-300 pb-3 mb-4 no-print">
@@ -103,6 +138,17 @@ function addNewWindow() {
                         <button type="button" onclick="document.getElementById('window-${winId}').remove(); updateAllDrawings();" class="text-red-500 hover:text-red-700 text-xs font-bold bg-red-50 px-2 py-1 rounded transition cursor-pointer"><i class="fas fa-trash"></i> حذف</button>
                     </div>
                     
+                    <div class="flex justify-between items-center mb-4 bg-white p-2 rounded-lg border border-slate-200 shadow-sm no-print">
+                        <label class="text-xs font-bold text-slate-700 cursor-pointer flex items-center gap-2 select-none">
+                            <input type="checkbox" id="is-arched-${winId}" onchange="toggleArchInput(${winId}); updateDrawing(${winId})" class="w-4 h-4 text-blue-600 rounded">
+                            کتیبه هلالی در بالا
+                        </label>
+                        <div id="arch-h-container-${winId}" style="display: none;" class="flex-row items-center gap-1">
+                            <span class="text-[10px] text-slate-500">ارتفاع:</span>
+                            <input type="number" id="arch-h-${winId}" value="50" oninput="updateDrawing(${winId})" class="w-10 p-1 border border-slate-300 rounded text-xs text-center font-bold">
+                        </div>
+                    </div>
+
                     <div id="general-summary-${winId}" class="mb-4 print-show"></div>
                     
                     <div class="flex gap-2 mb-4 no-print">
@@ -117,8 +163,8 @@ function addNewWindow() {
                     </div>
 
                     <div class="flex justify-between items-center mb-2 bg-slate-200 p-2 rounded-lg no-print">
-                        <span class="text-xs font-bold text-slate-700">ساختار شبکه‌ها (ردیف و ستون)</span>
-                        <button type="button" onclick="addRow(${winId})" class="bg-navy text-white px-2 py-1 rounded text-[10px] font-bold hover:bg-slate-700 transition shadow cursor-pointer"><i class="fas fa-plus"></i> ردیف</button>
+                        <span class="text-xs font-bold text-slate-700">ساختار شبکه‌ها</span>
+                        <button type="button" onclick="addRow(${winId}, 0, true, true)" class="bg-navy text-white px-2 py-1 rounded text-[10px] font-bold hover:bg-slate-700 transition shadow cursor-pointer"><i class="fas fa-plus"></i> ردیف</button>
                     </div>
                     
                     <div id="rows-container-${winId}" class="space-y-2.5 mb-4 no-print"></div>
@@ -127,15 +173,15 @@ function addNewWindow() {
                 <div id="production-report-container-${winId}" class="mt-2 print-show"></div>
             </div>
 
-            <!-- پنل نمایش نقشه (بزرگ‌تر شده به 9 ستون) -->
+            <!-- پنل نمایش نقشه -->
             <div class="lg:col-span-9 bg-white border-2 border-slate-300 rounded-xl p-3 relative shadow-sm svg-wrapper flex flex-col justify-between" style="min-height: 480px; max-height: 760px;">
                 <div class="absolute top-2 right-4 z-10 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-slate-500 border border-slate-200 shadow-sm pointer-events-none no-print">
                     <i class="fas fa-info-circle text-blue-500"></i> برای ویرایش مشخصات، روی یک پروفیل یا شیشه در نقشه کلیک کنید.
                 </div>
                 
-                <div id="element-toolbar-${winId}" class="absolute top-12 left-0 right-0 z-20 flex justify-center px-2 no-print pointer-events-auto"></div>
+                <div id="element-toolbar-${winId}" class="absolute top-2 left-0 right-0 z-20 flex justify-center px-2 no-print pointer-events-auto"></div>
                 
-                <div id="svg-container-${winId}" class="flex-1 flex justify-center items-center overflow-hidden p-2"></div>
+                <div id="svg-container-${winId}" class="flex-1 flex justify-center items-center overflow-hidden p-2 pt-14"></div>
                 
                 <div id="col-summaries-${winId}" class="mt-2 border-t border-slate-200 pt-2 space-y-1.5 print-show"></div>
             </div>
@@ -144,49 +190,70 @@ function addNewWindow() {
 
     document.getElementById('windows-container').appendChild(wrapper);
     
-    addRow(winId, 200, false);
-    const firstRowId = `r-${winId}-0`;
-    addCol(winId, firstRowId, 75, 'fixed', 'left'); 
-    addCol(winId, firstRowId, 75, 'turn', 'left');  
+    addRow(winId, 200, false, false);
+    const firstRow = document.getElementById(`rows-container-${winId}`).firstElementChild;
+    if (firstRow) {
+        addCol(winId, firstRow.id, 75, 'fixed', 'left', false); 
+        addCol(winId, firstRow.id, 75, 'turn', 'left', false);  
+    }
 }
 
-function addRow(winId, defaultHeight = 0, autoAddCol = true) {
+function addRow(winId, defaultHeight = 0, autoAddCol = true, isUserAction = false) {
     const container = document.getElementById(`rows-container-${winId}`);
-    const rowCount = container.children.length;
-    const rowId = `r-${winId}-${rowCount}`;
+    if (!container) return;
+    
+    if (isUserAction) {
+        defaultHeight = 50;
+        const totalHInp = document.getElementById(`total-h-${winId}`);
+        if (totalHInp) totalHInp.value = (parseFloat(totalHInp.value) || 0) + 50;
+    }
+
+    const uniqueRowId = `r-${winId}-${Date.now()}-${Math.floor(Math.random()*1000)}`;
     
     const rowDiv = document.createElement('div');
-    rowDiv.className = 'row-container border border-slate-300 border-dashed rounded-lg p-2 bg-white relative';
-    rowDiv.id = rowId;
+    // تغییر کلاس‌ها برای فشرده‌سازی ظاهر ردیف‌ها
+    rowDiv.className = 'row-container border-b border-slate-200 pb-2 mb-2 bg-white relative';
+    rowDiv.id = uniqueRowId;
     
     rowDiv.innerHTML = `
-        <div class="flex items-center gap-2 mb-2 border-b border-slate-100 pb-1.5">
-            <button type="button" onclick="this.parentElement.parentElement.remove(); updateDrawing(${winId});" class="text-red-400 hover:text-red-600 p-1 transition cursor-pointer"><i class="fas fa-times text-xs"></i></button>
-            <button type="button" onclick="addCol(${winId}, '${rowId}')" class="text-blue-500 hover:text-blue-700 px-2 py-1 bg-blue-50 rounded transition cursor-pointer text-xs font-bold"><i class="fas fa-plus"></i> ستون</button>
-            <div class="flex-1 flex items-center justify-end gap-1">
-                <span class="text-[10px] text-slate-400">ارتفاع:</span>
-                <input type="number" class="row-h-input w-14 p-1 border rounded text-xs text-center font-bold bg-slate-50" value="${defaultHeight}" oninput="updateDrawing(${winId})" placeholder="خودکار">
+        <div class="flex items-center justify-between gap-2 mb-1.5 bg-slate-50 p-1 rounded">
+            <div class="flex items-center gap-1.5">
+                <button type="button" onclick="this.closest('.row-container').remove(); updateDrawing(${winId});" class="text-red-400 hover:text-red-600 px-1 transition cursor-pointer"><i class="fas fa-times text-[10px]"></i></button>
+                <span class="text-[10px] text-slate-500 font-bold">ارتفاع ردیف:</span>
+                <input type="number" class="row-h-input w-12 p-0.5 border border-slate-300 rounded text-[10px] text-center font-bold bg-white" value="${defaultHeight || ''}" oninput="updateDrawing(${winId})" placeholder="خودکار">
             </div>
+            <button type="button" onclick="addCol(${winId}, '${uniqueRowId}', 50, 'turn', 'left', true)" class="text-blue-500 hover:text-blue-700 px-2 py-0.5 bg-blue-50 border border-blue-100 rounded transition cursor-pointer text-[10px] font-bold"><i class="fas fa-plus"></i> ستون</button>
         </div>
-        <div class="cols-wrapper flex flex-wrap gap-2 justify-center"></div>
+        <div class="cols-wrapper flex flex-wrap gap-1"></div>
     `;
     container.appendChild(rowDiv);
     
     if (autoAddCol) {
-        addCol(winId, rowId, 0, 'turn', 'left'); 
+        // تغییر عرض پیش‌فرض ستونِ اولیه از 0 به 50
+        addCol(winId, uniqueRowId, 50, 'turn', 'left', false); 
     }
+    if (isUserAction) updateDrawing(winId);
 }
 
-function addCol(winId, rowId, defaultWidth = 0, defaultMech = 'turn', defaultDir = 'left') {
-    const wrapper = document.getElementById(rowId).querySelector('.cols-wrapper');
+function addCol(winId, rowId, defaultWidth = 0, defaultMech = 'turn', defaultDir = 'left', isUserAction = false) {
+    const rowEl = document.getElementById(rowId);
+    if (!rowEl) return;
+    
+    if (isUserAction) {
+        defaultWidth = 50;
+        const totalWInp = document.getElementById(`total-w-${winId}`);
+        if (totalWInp) totalWInp.value = (parseFloat(totalWInp.value) || 0) + 50;
+    }
+
+    const wrapper = rowEl.querySelector('.cols-wrapper');
     const colDiv = document.createElement('div');
-    colDiv.className = 'col-item bg-slate-50 border border-slate-200 rounded p-1.5 w-full flex items-center justify-between gap-1';
+    // تغییر کلاس‌ها برای فشرده‌سازی ظاهر ستون‌ها
+    colDiv.className = 'col-item bg-white border border-slate-200 rounded px-1.5 py-1 flex-1 flex items-center gap-1 min-w-[70px] shadow-sm';
     
     colDiv.innerHTML = `
-        <button type="button" onclick="this.parentElement.remove(); updateDrawing(${winId});" class="text-red-300 hover:text-red-500 px-1 transition cursor-pointer"><i class="fas fa-times text-[10px]"></i></button>
-        <div class="flex-1 text-center">
-            <input type="number" class="col-w-input w-full p-1 border border-slate-300 bg-white rounded text-[10px] text-center font-bold shadow-inner" value="${defaultWidth}" oninput="updateDrawing(${winId})" placeholder="عرض خودکار">
-        </div>
+        <button type="button" onclick="this.closest('.col-item').remove(); updateDrawing(${winId});" class="text-red-300 hover:text-red-500 transition cursor-pointer"><i class="fas fa-times text-[9px]"></i></button>
+        <span class="text-[9px] text-slate-400">عرض:</span>
+        <input type="number" class="col-w-input w-full p-0.5 border-none bg-transparent rounded text-[10px] text-center font-bold focus:ring-0 focus:outline-none" value="${defaultWidth || ''}" oninput="updateDrawing(${winId})" placeholder="خودکار">
         <input type="hidden" class="col-mech" value="${defaultMech}">
         <input type="hidden" class="col-dir" value="${defaultDir}">
         <input type="hidden" class="col-fill" value="glass">
@@ -235,19 +302,25 @@ function autoCalculateRemainders(winId) {
     });
 }
 
-function drawDimLine(x1, y1, x2, y2, text, isVertical) {
+function drawDimLine(x1, y1, x2, y2, text, isVertical, onClickStr) {
     let svg = '';
-    svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="0.8" />`;
+    const groupTag = onClickStr ? `<g class="interactive-svg cursor-pointer hover:opacity-60 transition-opacity" onclick="${onClickStr}">` : '<g>';
+    svg += groupTag;
     
     if (isVertical) {
+        svg += `<rect x="${x1-15}" y="${y1}" width="30" height="${y2-y1}" fill="transparent" stroke="none"/>`;
+        svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="0.8" />`;
         svg += `<line x1="${x1-3}" y1="${y1}" x2="${x1+3}" y2="${y1}" stroke="#64748b" stroke-width="1.2" />`;
         svg += `<line x1="${x1-3}" y1="${y2}" x2="${x1+3}" y2="${y2}" stroke="#64748b" stroke-width="1.2" />`;
-        svg += `<text x="${x1-6}" y="${(y1+y2)/2}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle" transform="rotate(-90 ${x1-6},${(y1+y2)/2})">${text}</text>`;
+        svg += `<text x="${x1-6}" y="${(y1+y2)/2}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle" direction="ltr" unicode-bidi="embed" transform="rotate(-90 ${x1-6},${(y1+y2)/2})">${text}</text>`;
     } else {
+        svg += `<rect x="${x1}" y="${y1-5}" width="${x2-x1}" height="25" fill="transparent" stroke="none"/>`;
+        svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="0.8" />`;
         svg += `<line x1="${x1}" y1="${y1-3}" x2="${x1}" y2="${y1+3}" stroke="#64748b" stroke-width="1.2" />`;
         svg += `<line x1="${x2}" y1="${y2-3}" x2="${x2}" y2="${y2+3}" stroke="#64748b" stroke-width="1.2" />`;
-        svg += `<text x="${(x1+x2)/2}" y="${y1+12}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle">${text}</text>`;
+        svg += `<text x="${(x1+x2)/2}" y="${y1+12}" fill="#334155" font-size="9" font-weight="bold" font-family="Vazirmatn" text-anchor="middle" direction="ltr" unicode-bidi="embed">${text}</text>`;
     }
+    svg += `</g>`;
     return svg;
 }
 
@@ -296,12 +369,15 @@ function renderColSummaries(winId) {
             let m = c.querySelector('.col-mech').value;
             let dir = c.querySelector('.col-dir').value;
             let screen = c.querySelector('.col-screen-type').value;
-            let w = c.querySelector('.col-w-input').value;
+            let wInput = c.querySelector('.col-w-input');
+            let w = wInput.value || wInput.dataset.autoVal || 0;
             let fill = c.querySelector('.col-fill').value;
             
-            let text = `<span class="bg-white px-1 py-0.5 rounded border border-slate-200 shadow-sm ml-1 text-slate-800">${w || 0} cm</span> `;
+            let text = `<span class="bg-white px-1 py-0.5 rounded border border-slate-200 shadow-sm ml-1 text-slate-800">${w} cm</span> `;
             
-            if (m === 'fixed') {
+            if (m === 'empty') {
+                text += 'فضای خالی (بدون فریم)';
+            } else if (m === 'fixed') {
                 text += 'ثابت';
             } else {
                 text += m === 'turn' ? 'تک‌حالته' : (m === 'tilt_turn' ? 'دوحالته' : 'کلنگی');
@@ -310,9 +386,11 @@ function renderColSummaries(winId) {
                 }
             }
             
-            text += fill === 'glass' ? ' - شیشه دوجداره' : ' - پنل UPVC';
+            if (m !== 'empty') {
+                text += fill === 'glass' ? ' - شیشه دوجداره' : ' - پنل UPVC';
+            }
             
-            if (m !== 'fixed' && screen !== 'none') {
+            if (m !== 'fixed' && m !== 'empty' && screen !== 'none') {
                 const screenNames = { fixed: 'توری ثابت', pleated: 'توری پلیسه', sliding: 'توری کشویی', rolling: 'توری رولینگ', hardware: 'توری یراق‌خور' };
                 text += ` <span class="text-orange-600 font-bold">+ ${screenNames[screen]}</span>`;
             }
@@ -357,20 +435,20 @@ function renderProductionReport(winId) {
     let glassDetails = [];
 
     let framePerimeter = ((totalW + totalH) * 2) / 100;
-    let mullionHorizontalCount = rows.length - 1;
-    let totalMullionHLength = mullionHorizontalCount * totalW;
-    let totalMullionVLength = 0;
-    let mullionVerticalCount = 0;
 
     rows.forEach((r, rIdx) => {
-        let rowH = parseFloat(r.querySelector('.row-h-input').value) || 0;
+        let rowHInp = r.querySelector('.row-h-input');
+        let rowH = parseFloat(rowHInp.value || rowHInp.dataset.autoVal) || 0;
         let cols = r.querySelectorAll('.col-item');
 
         cols.forEach((c, cIdx) => {
-            let w = parseFloat(c.querySelector('.col-w-input').value) || 0;
+            let wInp = c.querySelector('.col-w-input');
+            let w = parseFloat(wInp.value || wInp.dataset.autoVal) || 0;
             let mech = c.querySelector('.col-mech').value;
             let fill = c.querySelector('.col-fill').value;
             let screen = c.querySelector('.col-screen-type').value;
+
+            if (mech === 'empty') return; // نادیده گرفتن در محاسبات تولید
 
             if (mech === 'fixed') totalFixedCount++;
             else totalSashCount++;
@@ -380,14 +458,12 @@ function renderProductionReport(winId) {
                 screensList.push(`ردیف ${rIdx+1} ستون ${cIdx+1}: ${sNames[screen]} (${w}×${rowH} cm)`);
             }
 
-            let fillTitle = fill === 'glass' ? 'شیشه دوجداره' : 'پنل UPVC';
-            glassDetails.push(`قطعه [${rIdx+1}, ${cIdx+1}] (${w} × ${rowH} cm): ${fillTitle}`);
-        });
+            let glassW = Math.max(0, w - (mech === 'fixed' ? 7 : 12)).toFixed(1);
+            let glassH = Math.max(0, rowH - (mech === 'fixed' ? 7 : 12)).toFixed(1);
 
-        if (cols.length > 1) {
-            mullionVerticalCount += (cols.length - 1);
-            totalMullionVLength += (cols.length - 1) * rowH;
-        }
+            let fillTitle = fill === 'glass' ? 'شیشه دوجداره' : 'پنل UPVC';
+            glassDetails.push(`قطعه [${rIdx+1}, ${cIdx+1}]: ${fillTitle} ≈ (${glassW} × ${glassH} cm)`);
+        });
     });
 
     let reportHTML = `
@@ -401,13 +477,13 @@ function renderProductionReport(winId) {
                 <div><strong>ابعاد کل:</strong> ${totalW} × ${totalH} cm</div>
                 <div><strong>نوع فریم:</strong> ${frameType}</div>
                 <div><strong>بازشو / ثابت:</strong> ${totalSashCount} لنگه / ${totalFixedCount} ثابت</div>
-                <div><strong>پروفیل فریم:</strong> ~${framePerimeter.toFixed(2)} متر</div>
+                <div><strong>محیط فریم:</strong> ~${framePerimeter.toFixed(2)} متر</div>
             </div>
 
             <div>
-                <div class="font-bold text-slate-700 mb-0.5"><i class="fas fa-window-maximize text-slate-400 ml-1"></i> ابعاد شیشه / پنل‌ها (جهت برش):</div>
+                <div class="font-bold text-slate-700 mb-0.5"><i class="fas fa-window-maximize text-slate-400 ml-1"></i> ابعاد تقریبی برش شیشه/پنل:</div>
                 <div class="space-y-0.5 pl-2 text-slate-600 text-[10px]">
-                    ${glassDetails.map(g => `<div>• ${g}</div>`).join('')}
+                    ${glassDetails.length > 0 ? glassDetails.map(g => `<div>• ${g}</div>`).join('') : '<span class="text-slate-400">فضای کاملا خالی</span>'}
                 </div>
             </div>
     `;
@@ -428,7 +504,7 @@ function renderProductionReport(winId) {
 }
 
 // ==========================================
-// موتور رندر اصلی نقشه (ابعاد سفارشی و بزرگ‌تر روی 400)
+// موتور رندر اصلی نقشه SVG
 // ==========================================
 function updateDrawing(winId) {
     autoCalculateRemainders(winId);
@@ -438,12 +514,17 @@ function updateDrawing(winId) {
 
     const totalW = parseFloat(document.getElementById(`total-w-${winId}`).value) || 100;
     const totalH = parseFloat(document.getElementById(`total-h-${winId}`).value) || 100;
+    const isArched = document.getElementById(`is-arched-${winId}`)?.checked;
 
-    const svgMaxDim = 450; // تنظیم اندازه روی 400 برای نمایش بزرگ‌تر و ایده‌آل‌تر
+    const svgMaxDim = 450; 
     const scale = svgMaxDim / Math.max(totalW, totalH);
     const W = totalW * scale;
     const H = totalH * scale;
     
+    // دریافت ارتفاع هلال
+    const archHInput = parseFloat(document.getElementById(`arch-h-${winId}`)?.value) || 50;
+    const archH = isArched ? (archHInput * scale) : 0; 
+
     const frameTypeInput = document.getElementById(`frame-type-${winId}`);
     const frameVal = frameTypeInput ? frameTypeInput.value : 'T-1101';
     
@@ -460,7 +541,7 @@ function updateDrawing(winId) {
     const Tb = 3.5 * scale;            
 
     const offsetX = 50; 
-    const offsetY = 35; 
+    let offsetYToUse = Math.max(35, archH + 20); 
 
     const st = getState(winId);
     const isSel = (elId) => st.selected && st.selected.elId === elId;
@@ -468,8 +549,9 @@ function updateDrawing(winId) {
     const rows = winEl.querySelectorAll('.row-container');
     let yOffsets = [0]; let rowHeights = []; let currentY = 0; let rawHs = [];
     rows.forEach(r => { 
-        let rawH = r.querySelector('.row-h-input').value;
-        let h = (parseFloat(rawH) || 0) * scale; 
+        let hInp = r.querySelector('.row-h-input');
+        let rawH = hInp.value || hInp.dataset.autoVal || 0;
+        let h = parseFloat(rawH) * scale; 
         rowHeights.push(h); rawHs.push(rawH); currentY += h; yOffsets.push(currentY); 
     });
     
@@ -478,8 +560,9 @@ function updateDrawing(winId) {
         let cols = r.querySelectorAll('.col-item');
         let xOffsets = [0]; let colWidths = []; let currentX = 0; let rawWs = [];
         cols.forEach(c => { 
-            let rawW = c.querySelector('.col-w-input').value;
-            let w = (parseFloat(rawW) || 0) * scale; 
+            let wInp = c.querySelector('.col-w-input');
+            let rawW = wInp.value || wInp.dataset.autoVal || 0;
+            let w = parseFloat(rawW) * scale; 
             colWidths.push(w); rawWs.push(rawW); currentX += w; xOffsets.push(currentX); 
         });
         grid.push({ colWidths, rawWs, xOffsets, cols });
@@ -491,11 +574,47 @@ function updateDrawing(winId) {
     let highlight = '';
     let mechLines = ''; 
 
+    // رسم هلال در صورت فعال بودن
+    // رسم هلال در صورت فعال بودن
+    if (isArched) {
+        // ایجاد متغیر مخفی برای ذخیره وضعیت شیشه/پنل هلال در صورت عدم وجود
+        let archFillInput = document.getElementById(`arch-fill-${winId}`);
+        if (!archFillInput) {
+            archFillInput = document.createElement('input');
+            archFillInput.type = 'hidden';
+            archFillInput.id = `arch-fill-${winId}`;
+            archFillInput.value = 'glass';
+            document.getElementById(`window-${winId}`).appendChild(archFillInput);
+        }
+        
+        const archFillType = archFillInput.value;
+        const archFill = archFillType === 'glass' ? `url(#glassGrad-${winId})` : `url(#pvcPanel-${winId})`;
+
+        // شناسه های تعاملی هلال
+        const archFrameId = `arch-frame`;
+        const archBeadId = `arch-bead`;
+        const archGlassId = `arch-glass`;
+
+        // فریم اصلی هلال (همباد با عرض خارجی پروفیل اصلی از -Tm تا W+Tm)
+        shapes += `<path d="M ${-Tm} 0 Q ${W/2} ${-2*archH - Tm} ${W+Tm} 0 Z" fill="#e4e4e7" stroke="#71717a" stroke-width="2" class="interactive-svg cursor-pointer" onclick="selectElement(${winId},'${archFrameId}','frame','پروفیل فریم هلال',event)"/>`;
+        if(isSel(archFrameId)) highlight += `<path d="M ${-Tm} 0 Q ${W/2} ${-2*archH - Tm} ${W+Tm} 0 Z" fill="none" stroke="${STATIC_COLORS.highlight}" stroke-width="2.5" stroke-dasharray="6 4"/>`;
+
+        // زهوار هلال
+        shapes += `<path d="M 0 0 Q ${W/2} ${-2*archH + Tf} ${W} 0 Z" fill="#ffffff" stroke="#52525b" stroke-width="1.5" class="interactive-svg cursor-pointer" onclick="selectElement(${winId},'${archBeadId}','bead','زهوار هلال',event)"/>`;
+        if(isSel(archBeadId)) highlight += `<path d="M 0 0 Q ${W/2} ${-2*archH + Tf} ${W} 0 Z" fill="none" stroke="${STATIC_COLORS.highlight}" stroke-width="2.5" stroke-dasharray="6 4"/>`;
+
+        // شیشه یا پنل هلال
+        shapes += `<path d="M ${Tf} 0 Q ${W/2} ${-2*archH + Tf*2.5} ${W-Tf} 0 Z" fill="${archFill}" stroke="#cbd5e1" stroke-width="1.5" class="interactive-svg cursor-pointer" onclick="selectElement(${winId},'${archGlassId}','arch-glass','شیشه / پنل هلال',event)"/>`;
+        if(isSel(archGlassId)) highlight += `<path d="M ${Tf} 0 Q ${W/2} ${-2*archH + Tf*2.5} ${W-Tf} 0 Z" fill="none" stroke="${STATIC_COLORS.highlight}" stroke-width="2.5" stroke-dasharray="6 4"/>`;
+    }
+
+    // فریم اصلی
     shapes += `<rect x="${-Tm}" y="${-Tm}" width="${W + 2*Tm}" height="${H + 2*Tm}" fill="#e4e4e7" stroke="#71717a" stroke-width="2"/>`;
     shapes += `<rect x="0" y="0" width="${W}" height="${H}" fill="none" stroke="#52525b" stroke-width="1.5"/>`; 
     shapes += `<rect x="0" y="0" width="${W}" height="${H}" fill="#ffffff" class="interactive-svg cursor-pointer" onclick="selectElement(${winId},'frame','frame','پروفیل اصلی/فریم',event)"/>`;
     if (isSel('frame')) highlight += `<rect x="-3" y="-3" width="${W+6}" height="${H+6}" fill="none" stroke="${STATIC_COLORS.highlight}" stroke-width="2.5" stroke-dasharray="6 4" rx="2"/>`;
 
+    // رسم وادارها
     rows.forEach((r, i) => {
         if (i > 0) {
             const mId = `mullion-h-${i}`; const my = yOffsets[i];
@@ -511,9 +630,12 @@ function updateDrawing(winId) {
         });
     });
 
+    // رسم محتویات سلول‌ها
     rows.forEach((r, i) => {
         grid[i].cols.forEach((c, j) => {
             const cellId = `${i}-${j}`;
+            const mech = c.querySelector('.col-mech').value;
+            
             const leftInset = (j === 0) ? Tf : Tmullion / 2;
             const rightInset = (j === grid[i].cols.length - 1) ? Tf : Tmullion / 2;
             const topInset = (i === 0) ? Tf : Tmullion / 2;
@@ -524,11 +646,30 @@ function updateDrawing(winId) {
             const aw = grid[i].colWidths[j] - leftInset - rightInset;
             const ah = rowHeights[i] - topInset - bottomInset;
 
+            if (mech === 'empty') {
+                let maskX = grid[i].xOffsets[j];
+                let maskY = yOffsets[i];
+                let maskW = grid[i].colWidths[j];
+                let maskH = rowHeights[i];
+                
+                let mExt = 3; 
+                if (j === 0) { maskX -= Tf + mExt; maskW += Tf + mExt; }
+                if (j === grid[i].cols.length - 1) { maskW += Tf + mExt; }
+                if (i === 0) { maskY -= Tf + mExt; maskH += Tf + mExt; }
+                if (i === rows.length - 1) { maskH += Tf + mExt; }
+
+                shapes += `<rect x="${maskX}" y="${maskY}" width="${maskW}" height="${maskH}" fill="#ffffff" pointer-events="auto" class="interactive-svg cursor-pointer" onclick="selectElement(${winId},'glass-${cellId}','glass','فضای خالی (فرورفتگی)',event, ${i}, ${j})"/>`;
+                shapes += `<rect x="${maskX+5}" y="${maskY+5}" width="${Math.max(0,maskW-10)}" height="${Math.max(0,maskH-10)}" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4 4" pointer-events="none"/>`;
+                shapes += `<text x="${maskX + maskW/2}" y="${maskY + maskH/2}" fill="#94a3b8" font-size="10" font-family="Vazirmatn" text-anchor="middle" pointer-events="none">بدون پروفیل</text>`;
+                
+                if(isSel(`glass-${cellId}`)) highlight += `<rect x="${maskX}" y="${maskY}" width="${maskW}" height="${maskH}" fill="none" stroke="${STATIC_COLORS.highlight}" stroke-width="2.5" stroke-dasharray="6 4" rx="1"/>`;
+                return;
+            }
+
             if (aw > 0 && ah > 0) {
                 shapes += `<rect x="${ax}" y="${ay}" width="${aw}" height="${ah}" fill="none" stroke="#94a3b8" stroke-width="1.5" pointer-events="none"/>`;
             }
 
-            const mech = c.querySelector('.col-mech').value;
             const dir = c.querySelector('.col-dir').value;
             const fill = c.querySelector('.col-fill').value;
             const screenType = c.querySelector('.col-screen-type').value;
@@ -553,23 +694,23 @@ function updateDrawing(winId) {
                 
                 let hgX_left = ax; 
                 let hgX_right = ax + aw - 5;
-                let hdX_left = ax + Ts + 16;
-                let hdX_right = ax + aw - Ts - 24;
+                let hdX_left = ax + Math.min(Ts + 16, aw / 2);
+                let hdX_right = ax + aw - Math.min(Ts + 24, aw / 2);
 
                 if (mech === 'awning') {
                     hardwareShapes += `<rect x="${ax + aw*0.15}" y="${ay + ah - 5}" width="20" height="5" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
-                    hardwareShapes += `<rect x="${ax + aw*0.85 - 20}" y="${ay + ah - 5}" width="20" height="5" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
-                    hardwareShapes += `<rect x="${mx - 20}" y="${ay + Ts + 16}" width="40" height="8" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
+                    hardwareShapes += `<rect x="${ax + aw*0.85 - 20}" y="${ay + aw*0.85 > 20 ? 0 : 0}" width="20" height="5" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
+                    hardwareShapes += `<rect x="${mx - 15}" y="${ay + Ts + 8}" width="30" height="6" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
                 } 
                 else {
                     if (dir === 'right') {
                         hardwareShapes += `<rect x="${hgX_right}" y="${ay + ah*0.15}" width="5" height="20" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
                         hardwareShapes += `<rect x="${hgX_right}" y="${ay + ah*0.85 - 20}" width="5" height="20" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
-                        hardwareShapes += `<rect x="${hdX_left}" y="${my - 20}" width="8" height="40" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
+                        hardwareShapes += `<rect x="${hdX_left}" y="${my - 15}" width="6" height="30" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
                     } else {
                         hardwareShapes += `<rect x="${hgX_left}" y="${ay + ah*0.15}" width="5" height="20" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
                         hardwareShapes += `<rect x="${hgX_left}" y="${ay + ah*0.85 - 20}" width="5" height="20" fill="${STATIC_COLORS.hinge}" rx="1" stroke="${STATIC_COLORS.hingeEdge}" stroke-width="0.5" pointer-events="none"/>`;
-                        hardwareShapes += `<rect x="${hdX_right}" y="${my - 20}" width="8" height="40" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
+                        hardwareShapes += `<rect x="${hdX_right}" y="${my - 15}" width="6" height="30" fill="${STATIC_COLORS.handle}" rx="2" stroke="${STATIC_COLORS.handleEdge}" stroke-width="1" pointer-events="none"/>`;
                     }
                 }
 
@@ -622,9 +763,20 @@ function updateDrawing(winId) {
 
     shapes += hardwareShapes;
 
-    dimensions += drawDimLine(0, H + Tm + 14, W, H + Tm + 14, `${totalW} cm`, false); 
-    dimensions += drawDimLine(-Tm - 16, 0, -Tm - 16, H, `${totalH} cm`, true); 
+    // ----------------------------------------------------
+    // رسم خطوط اندازه (Dimensions)
+    // ----------------------------------------------------
     
+    // ۱. دایمنشن کلی عرض و ارتفاع (روی خط بیرونی)
+    dimensions += drawDimLine(0, H + Tm + 28, W, H + Tm + 28, `${totalW} cm`, false, `promptDimension(${winId}, 'totalW', null, null)`); 
+    dimensions += drawDimLine(-Tm - 30, 0, -Tm - 30, H, `${totalH} cm`, true, `promptDimension(${winId}, 'totalH', null, null)`); 
+    
+    // ۲. دایمنشن جزئی ارتفاع هلال (در صورت فعال بودن)
+    if (isArched) {
+        dimensions += drawDimLine(-Tm - 12, -archH, -Tm - 12, 0, `${archHInput} cm`, true, `promptDimension(${winId}, 'archH', null, null)`);
+    }
+
+    // ۳. دایمنشن جزئی عرض برای ستون‌ها
     let maxColsRowIdx = 0; let maxColsCount = 0;
     grid.forEach((r, idx) => {
         if (r.cols.length > maxColsCount) {
@@ -633,25 +785,23 @@ function updateDrawing(winId) {
         }
     });
     
-    if (maxColsCount > 1) {
-        let lx = 0;
-        grid[maxColsRowIdx].colWidths.forEach((cw, idx) => {
-            const rawW = grid[maxColsRowIdx].rawWs[idx];
-            dimensions += drawDimLine(lx, H + Tm + 6, lx+cw, H + Tm + 6, `${rawW || 0} cm`, false);
-            lx += cw;
-        });
-    }
+    let lx = 0;
+    grid[maxColsRowIdx].colWidths.forEach((cw, idx) => {
+        const rawW = grid[maxColsRowIdx].rawWs[idx];
+        dimensions += drawDimLine(lx, H + Tm + 10, lx+cw, H + Tm + 10, `${rawW || 0} cm`, false, `promptDimension(${winId}, 'col', ${maxColsRowIdx}, ${idx})`);
+        lx += cw;
+    });
 
-    if (rowHeights.length > 1) {
-        let ly = 0;
-        rowHeights.forEach((rh, idx) => {
-            dimensions += drawDimLine(-Tm - 8, ly, -Tm - 8, ly+rh, `${rawHs[idx] || 0} cm`, true);
-            ly += rh;
-        });
-    }
+    // ۴. دایمنشن جزئی ارتفاع برای تک‌تک ردیف‌ها (روی خط داخلی سمت چپ)
+    let ly = 0;
+    rowHeights.forEach((rh, idx) => {
+        dimensions += drawDimLine(-Tm - 12, ly, -Tm - 12, ly+rh, `${rawHs[idx] || 0} cm`, true, `promptDimension(${winId}, 'row', ${idx}, null)`);
+        ly += rh;
+    });
 
+    // افزایش viewBox برای نمایش کامل عرض در پایین نقشه
     const svgHTML = `
-        <svg width="100%" height="100%" viewBox="${-offsetX} ${-offsetY} ${W + offsetX*2} ${H + offsetY*2}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="font-family: Vazirmatn, sans-serif; display: block; width: 100%; height: 100%;">
+        <svg width="100%" height="100%" viewBox="${-offsetX} ${-offsetYToUse} ${W + offsetX*2} ${H + offsetYToUse + 85}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="font-family: Vazirmatn, sans-serif; display: block; width: 100%; height: 100%;">
             <defs>
                 <pattern id="hatch-${winId}" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="#475569" stroke-width="1" /></pattern>
                 
@@ -677,7 +827,28 @@ function updateDrawing(winId) {
         </svg>
     `;
 
-    document.getElementById(`svg-container-${winId}`).innerHTML = svgHTML;
+    // ایجاد دکمه‌های شناور (Overlay Buttons)
+    const overlayButtons = `
+        <div class="absolute bottom-3 right-3 flex flex-col gap-1.5 z-20">
+            <button type="button" onclick="addColToLastRow(${winId})" class="flex items-center justify-center gap-1.5 bg-white/90 hover:bg-blue-50 text-blue-600 border border-blue-200 px-2 py-1.5 rounded shadow-sm text-[10px] font-bold cursor-pointer transition backdrop-blur-sm" title="افزودن ستون به آخرین ردیف">
+                <i class="fas fa-plus"></i> ستون
+            </button>
+            <button type="button" onclick="addRow(${winId}, 0, true, true)" class="flex items-center justify-center gap-1.5 bg-white/90 hover:bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-1.5 rounded shadow-sm text-[10px] font-bold cursor-pointer transition backdrop-blur-sm" title="افزودن ردیف جدید">
+                <i class="fas fa-plus"></i> ردیف
+            </button>
+        </div>
+    `;
+
+    // قرار دادن SVG و دکمه‌های شناور داخل ظرف رندر
+    const renderContainer = document.getElementById(`svg-container-${winId}`);
+    
+    if (renderContainer) {
+        // حتماً مطمئن شوید که ظرف رندر کلاس relative را داشته باشد تا دکمه‌ها از کادر بیرون نزنند
+        renderContainer.classList.add('relative'); 
+        
+        // svgHTML متغیری است که در خطوط بالاترِ همین تابع ساخته شده است
+        renderContainer.innerHTML = svgHTML + overlayButtons;
+    }
     renderToolbar(winId);
     renderGeneralSummary(winId);
     renderColSummaries(winId);
@@ -709,50 +880,66 @@ function renderToolbar(winId) {
     let html = `<div class="bg-slate-900 text-white px-3 py-2 rounded-xl shadow-2xl flex flex-wrap items-center justify-center gap-2 animate-fade-in border border-slate-700 max-w-full mx-2 text-xs" onclick="event.stopPropagation()" ontouchstart="event.stopPropagation()">`;
     html += `<div class="font-bold text-xs border-l border-slate-700 pl-2 text-slate-200">${sel.name}</div>`;
 
-    if (sel.type === 'glass' || sel.type === 'sash') {
-        const winEl = document.getElementById(`window-${winId}`);
-        if(!winEl) return;
-        const rEl = winEl.querySelectorAll('.row-container')[sel.rIdx];
-        if(!rEl) return;
-        const cEl = rEl.querySelectorAll('.col-item')[sel.cIdx];
-        if(!cEl) return;
+    if (sel.type === 'glass' || sel.type === 'arch-glass') {
         
-        const curMech = cEl.querySelector('.col-mech').value;
-        const curDir = cEl.querySelector('.col-dir').value;
-        const curFill = cEl.querySelector('.col-fill').value;
-        const curScreen = cEl.querySelector('.col-screen-type').value;
+        // اگر المان انتخاب شده شیشه هلال بود
+        if (sel.type === 'arch-glass') {
+            const curArchFill = document.getElementById(`arch-fill-${winId}`)?.value || 'glass';
+            html += `<select onchange="changeArchFill(${winId}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
+                <option value="glass" ${curArchFill==='glass'?'selected':''}>شیشه دوجداره</option>
+                <option value="panel" ${curArchFill==='panel'?'selected':''}>پنل UPVC</option>
+            </select>`;
+        } 
+        // اگر شیشه شبکه‌های معمولی بود
+        else {
+            const winEl = document.getElementById(`window-${winId}`);
+            if(!winEl) return;
+            const rows = winEl.querySelectorAll('.row-container');
+            if (!rows[sel.rIdx]) return;
+            const cols = rows[sel.rIdx].querySelectorAll('.col-item');
+            if (!cols[sel.cIdx]) return;
+            
+            const cEl = cols[sel.cIdx];
+            const curMech = cEl.querySelector('.col-mech').value;
+            const curDir = cEl.querySelector('.col-dir').value;
+            const curFill = cEl.querySelector('.col-fill').value;
+            const curScreen = cEl.querySelector('.col-screen-type').value;
 
-        html += `<select onchange="changeMech(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
-            <option value="fixed" ${curMech==='fixed'?'selected':''}>ثابت</option>
-            <option value="turn" ${curMech==='turn'?'selected':''}>تک‌حالته</option>
-            <option value="tilt_turn" ${curMech==='tilt_turn'?'selected':''}>دوحالته</option>
-            <option value="awning" ${curMech==='awning'?'selected':''}>کلنگی</option>
-        </select>`;
+            html += `<select onchange="changeMech(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
+                <option value="fixed" ${curMech==='fixed'?'selected':''}>ثابت</option>
+                <option value="turn" ${curMech==='turn'?'selected':''}>تک‌حالته</option>
+                <option value="tilt_turn" ${curMech==='tilt_turn'?'selected':''}>دوحالته</option>
+                <option value="awning" ${curMech==='awning'?'selected':''}>کلنگی</option>
+                <option value="empty" ${curMech==='empty'?'selected':''}>فضای خالی / فرورفتگی</option>
+            </select>`;
 
-        if (curMech !== 'fixed') {
-            if (curMech !== 'awning') {
-                html += `<select onchange="changeDir(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
-                    <option value="left" ${curDir==='left'?'selected':''}>چپ‌بازشو</option>
-                    <option value="right" ${curDir==='right'?'selected':''}>راست‌بازشو</option>
+            if (curMech !== 'fixed' && curMech !== 'empty') {
+                if (curMech !== 'awning') {
+                    html += `<select onchange="changeDir(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
+                        <option value="left" ${curDir==='left'?'selected':''}>چپ‌بازشو</option>
+                        <option value="right" ${curDir==='right'?'selected':''}>راست‌بازشو</option>
+                    </select>`;
+                }
+                
+                html += `<select onchange="changeScreen(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
+                    <option value="none" ${curScreen==='none'?'selected':''}>بدون توری</option>
+                    <option value="fixed" ${curScreen==='fixed'?'selected':''}>توری ثابت</option>
+                    <option value="pleated" ${curScreen==='pleated'?'selected':''}>توری پلیسه</option>
+                    <option value="sliding" ${curScreen==='sliding'?'selected':''}>توری کشویی</option>
+                    <option value="rolling" ${curScreen==='rolling'?'selected':''}>توری رولینگ</option>
+                    <option value="hardware" ${curScreen==='hardware'?'selected':''}>توری یراق‌خور</option>
                 </select>`;
             }
-            
-            html += `<select onchange="changeScreen(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
-                <option value="none" ${curScreen==='none'?'selected':''}>بدون توری</option>
-                <option value="fixed" ${curScreen==='fixed'?'selected':''}>توری ثابت</option>
-                <option value="pleated" ${curScreen==='pleated'?'selected':''}>توری پلیسه</option>
-                <option value="sliding" ${curScreen==='sliding'?'selected':''}>توری کشویی</option>
-                <option value="rolling" ${curScreen==='rolling'?'selected':''}>توری رولینگ</option>
-                <option value="hardware" ${curScreen==='hardware'?'selected':''}>توری یراق‌خور</option>
-            </select>`;
+
+            if (curMech !== 'empty') {
+                html += `<select onchange="changeFill(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
+                    <option value="glass" ${curFill==='glass'?'selected':''}>شیشه دوجداره</option>
+                    <option value="panel" ${curFill==='panel'?'selected':''}>پنل UPVC</option>
+                </select>`;
+            }
         }
 
-        html += `<select onchange="changeFill(${winId}, ${sel.rIdx}, ${sel.cIdx}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
-            <option value="glass" ${curFill==='glass'?'selected':''}>شیشه دوجداره</option>
-            <option value="panel" ${curFill==='panel'?'selected':''}>پنل UPVC</option>
-        </select>`;
-
-    } else if (sel.type === 'frame') {
+    } else if (sel.type === 'frame' || sel.type === 'sash') {
         const frameInput = document.getElementById(`frame-type-${winId}`);
         const curFrame = frameInput ? frameInput.value : 'T-1101';
         html += `<select onchange="changeFrameType(${winId}, this.value)" class="bg-slate-800 text-white text-xs p-1.5 rounded border border-slate-600 focus:outline-none cursor-pointer">
@@ -771,18 +958,35 @@ function renderToolbar(winId) {
 
 function changeFrameType(wId, val) { document.getElementById(`frame-type-${wId}`).value = val; updateDrawing(wId); }
 function changeMech(wId, rIdx, cIdx, val) { 
-    document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx].querySelector('.col-mech').value = val;
+    const winEl = document.getElementById(`window-${wId}`);
+    if (!winEl) return;
+    const rEl = winEl.querySelectorAll('.row-container')[rIdx];
+    if (!rEl) return;
+    const cEl = rEl.querySelectorAll('.col-item')[cIdx];
+    if (!cEl) return;
+
+    cEl.querySelector('.col-mech').value = val;
     const st = getState(wId);
-    if (st.selected && st.selected.type === 'glass' && val !== 'fixed') st.selected.type = 'sash';
-    else if (st.selected && st.selected.type === 'sash' && val === 'fixed') {
+    
+    if (st.selected && st.selected.type === 'glass' && val !== 'fixed' && val !== 'empty') {
+    } else if (st.selected && (st.selected.type === 'sash' || st.selected.type === 'glass') && (val === 'fixed' || val === 'empty')) {
         st.selected.type = 'glass';
-        document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx].querySelector('.col-screen-type').value = 'none';
+        cEl.querySelector('.col-screen-type').value = 'none';
     }
     updateDrawing(wId); 
 }
-function changeDir(wId, rIdx, cIdx, val) { document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx].querySelector('.col-dir').value = val; updateDrawing(wId); }
-function changeFill(wId, rIdx, cIdx, val) { document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx].querySelector('.col-fill').value = val; updateDrawing(wId); }
-function changeScreen(wId, rIdx, cIdx, val) { document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx].querySelector('.col-screen-type').value = val; updateDrawing(wId); }
+function changeDir(wId, rIdx, cIdx, val) { 
+    const cEl = document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx];
+    if(cEl) { cEl.querySelector('.col-dir').value = val; updateDrawing(wId); }
+}
+function changeFill(wId, rIdx, cIdx, val) { 
+    const cEl = document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx];
+    if(cEl) { cEl.querySelector('.col-fill').value = val; updateDrawing(wId); }
+}
+function changeScreen(wId, rIdx, cIdx, val) { 
+    const cEl = document.getElementById(`window-${wId}`).querySelectorAll('.row-container')[rIdx].querySelectorAll('.col-item')[cIdx];
+    if(cEl) { cEl.querySelector('.col-screen-type').value = val; updateDrawing(wId); }
+}
 
 function updateAllDrawings() {
     document.querySelectorAll('.window-item').forEach(win => {
@@ -793,35 +997,19 @@ function updateAllDrawings() {
     });
 }
 
+window.changeArchFill = function(wId, val) { 
+    const inp = document.getElementById(`arch-fill-${wId}`);
+    if(inp) { inp.value = val; updateDrawing(wId); }
+}
+
 // ==========================================
-// تزریق استایل‌های مخصوص چاپ A4 Landscape و کادر نقشه
+// تزریق استایل‌های مخصوص چاپ A4 Landscape
 // ==========================================
 function injectPrintStyles() {
     if (document.getElementById('a4-print-styles')) return;
     const style = document.createElement('style');
     style.id = 'a4-print-styles';
     style.innerHTML = `
-        @media (max-width: 768px) {
-            header, .top-header, .header-container, [class*="header"] {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 10px !important;
-            }
-            img, svg.logo, .logo img, header img {
-                max-width: 100% !important;
-                width: auto !important;
-                height: auto !important;
-                object-fit: contain !important;
-                flex-shrink: 0 !important;
-            }
-            header button, header a, .header-btn, .top-actions button {
-                font-size: 13px !important;
-                padding: 8px 12px !important;
-                width: 100% !important;
-                max-width: none !important;
-            }
-        }
-
         @media print {
             @page {
                 size: A4 landscape;
@@ -957,20 +1145,15 @@ if (document.readyState === 'loading') {
     initApp();
 }
 
-
-
 // ==========================================
 // توابع اختصاصی هدر (تغییر استایل و منوی موبایل)
 // ==========================================
-
 document.addEventListener("DOMContentLoaded", function () {
-    // فراخوانی توابع هدر پس از بارگذاری کامل DOM
     initMobileMenu();
     initHeaderScroll();
     adjustHeaderSpacer();
 });
 
-// ۱. مدیریت باز و بسته شدن منوی موبایل (همبرگری)
 function initMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
@@ -1005,7 +1188,6 @@ function initMobileMenu() {
     });
 }
 
-// ۲. مدیریت افکت اسکرول و تغییر رنگ هدر
 function initHeaderScroll() {
     const header = document.getElementById('window-header') || document.getElementById('header');
     const logoDark = document.getElementById('header-logo-dark');
@@ -1059,7 +1241,6 @@ function initHeaderScroll() {
     handleScroll();
 }
 
-// ۳. تنظیم فاصله زیر هدر برای جلوگیری از هم‌پوشانی با محتوا
 function adjustHeaderSpacer() {
     const header = document.getElementById('window-header') || document.getElementById('header');
     const spacer = document.getElementById('header-spacer');
@@ -1070,32 +1251,47 @@ function adjustHeaderSpacer() {
 window.addEventListener('load', adjustHeaderSpacer);
 window.addEventListener('resize', adjustHeaderSpacer);
 
-
-
-
-// ===== Mobile Categories Accordion Logic =====
+// آکاردئون حوزه‌های فعالیت منوی موبایل
 const mobileCategoriesBtn = document.getElementById('mobile-categories-btn');
 const mobileCategoriesSubmenu = document.getElementById('mobile-categories-submenu');
 const mobileArrow = document.getElementById('mobile-arrow');
 
 if (mobileCategoriesBtn && mobileCategoriesSubmenu) {
     mobileCategoriesBtn.addEventListener('click', function (e) {
-        // جلوگیری از رفتار پیش‌فرض لینک بودن
         e.preventDefault();
         e.stopPropagation();
         
         const isOpen = !mobileCategoriesSubmenu.classList.contains('hidden');
 
         if (!isOpen) {
-            // کلیک اول: باز کردن زیرمنوی آکاردئونی
             mobileCategoriesSubmenu.classList.remove('hidden');
             mobileCategoriesSubmenu.classList.add('flex');
             if (mobileArrow) mobileArrow.classList.add('rotate-180');
         } else {
-            // کلیک دوم: بستن زیرمنوی آکاردئونی
             mobileCategoriesSubmenu.classList.add('hidden');
             mobileCategoriesSubmenu.classList.remove('flex');
             if (mobileArrow) mobileArrow.classList.remove('rotate-180');
         }
     });
 }
+
+
+window.addColToLastRow = function(winId) {
+    // پیدا کردن ظرف ردیف‌های این پنجره
+    const container = document.getElementById(`rows-container-${winId}`);
+    if (!container) return;
+    
+    const rows = container.querySelectorAll('.row-container');
+    if (rows.length === 0) {
+        // اگر هیچ ردیفی وجود نداشت، اول یک ردیف می‌سازد
+        addRow(winId, 0, true, true);
+        return;
+    }
+    
+    // گرفتن ID آخرین ردیف
+    const lastRow = rows[rows.length - 1];
+    const rowId = lastRow.id;
+    
+    // افزودن ستون به آخرین ردیف
+    addCol(winId, rowId, 50, 'turn', 'left', true);
+};
